@@ -45,11 +45,28 @@ Page {
 
         Button {
             text: "Toggle spinner"
-            onClicked: spinner.enabled = !spinner.enabled
+            onClicked: {
+                nemoSpiner.enabled = !nemoSpiner.enabled
+                spinner.enabled = !spinner.enabled
+            }
+        }
+
+        Label {
+            text: "Spinner in QML"
         }
 
         Spinner {
             id: spinner
+            width: Theme.itemHeightMedium;
+            height: Theme.itemHeightMedium;
+        }
+
+        Label {
+            text: "Spinner in C++"
+        }
+
+        NemoSpiner{
+            id: nemoSpiner
         }
     }
 
