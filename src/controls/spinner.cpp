@@ -133,7 +133,7 @@ Spinner::Spinner(QQuickItem *parent)
 
 /*Start by default*/
     spinAnim->start();
-    m_updateTimer->start(8);
+    m_updateTimer->start(40);
 }
 
 void Spinner::paint(QPainter *painter)

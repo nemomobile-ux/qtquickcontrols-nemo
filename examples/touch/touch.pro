@@ -50,4 +50,5 @@ SOURCES += \
     src/main.cpp
 
 DISTFILES += \
+    content/RingIndicatorPage.qml \
     content/TimePickerPage.qml

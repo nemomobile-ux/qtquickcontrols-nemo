@@ -1,6 +1,6 @@
 /****************************************************************************************
 **
-** Copyright (C) 2013 Lucien Xu <sfietkonstantin@free.fr>
+** Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -32,42 +32,60 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.0 //needed for the Stack attached property
 import QtQuick.Controls.Nemo 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
 
 Page {
     id: root
 
-    headerTools: HeaderToolsLayout { showBackButton: true; title: "Spinner" }
+    headerTools: HeaderToolsLayout { showBackButton: true; title: "Ring Indicator" }
 
     Column {
         spacing: 40
         anchors.centerIn: parent
 
-/*        Button {
-            text: "Toggle spinner"
-            onClicked: {
-                nemoSpiner.enabled = !nemoSpiner.enabled
-                spinner.enabled = !spinner.enabled
-            }
+        RingIndicator{
+            id: ring
+            width: 200
+            height: 200
+            startAngle: startAngineSlider.value
+            stopAngle: stopAngineSlider.value
+            lineHeight: lineHeightSlider.value
+            color: Theme.accentColor
         }
 
-        Label {
-            text: "Spinner in QML"
+        Slider {
+            width: 250
+            id: startAngineSlider
+            anchors.margins: 20
+            value: 0
+            showValue: true
+            minimumValue: 0
+            maximumValue: 360
+            stepSize: 1
+            alwaysUp: true
         }
 
-        Spinner {
-            id: spinner
-            width: Theme.itemHeightMedium;
-            height: Theme.itemHeightMedium;
+        Slider {
+            width: 250
+            id: stopAngineSlider
+            anchors.margins: 20
+            value: 90
+            showValue: true
+            minimumValue: 0
+            maximumValue: 360
+            stepSize: 1
+            alwaysUp: true
         }
 
-        Label {
-            text: "Spinner in C++"
-        }
-*/
-        NemoSpiner{
-            id: nemoSpiner
+        Slider {
+            width: 250
+            id: lineHeightSlider
+            anchors.margins: 20
+            value: 10
+            showValue: true
+            minimumValue: 0
+            maximumValue: 100
+            stepSize: 1
+            alwaysUp: true
         }
     }
-
 }
