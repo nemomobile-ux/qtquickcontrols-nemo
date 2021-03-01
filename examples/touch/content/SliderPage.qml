@@ -85,6 +85,15 @@ Page {
             style: touchStyle
             value: 1.0
         }
+
+        NemoSlider {
+            width: parent.width
+            anchors.margins: 20
+            minimumValue: 0
+            maximumValue: 100
+            value: 0
+            showValue: true;
+        }
     }
 
     Component {

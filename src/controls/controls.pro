@@ -47,6 +47,7 @@ HEADERS += \
     qquickfilteringmousearea.h \
     nemoimageprovider.h \
     ringindicator.h \
+    slider.h \
     spinner.h \
     themedaemon/mlocalthemedaemonclient.h \
     themedaemon/mabstractthemedaemonclient.h \
@@ -63,6 +64,7 @@ SOURCES += \
     qquickfilteringmousearea.cpp \
     nemoimageprovider.cpp \
     ringindicator.cpp \
+    slider.cpp \
     spinner.cpp \
     themedaemon/mlocalthemedaemonclient.cpp \
     themedaemon/mabstractthemedaemonclient.cpp \
