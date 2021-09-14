@@ -31,8 +31,8 @@ Item {
         id: shadow
         width: parent.width
         height: inline ? (parent.height-accept.height)/3 : parent.height-accept.height
-        opacity: shell.bgOpacity
-        color: Theme.backgroundColor
+        opacity: shell.bgOpacity        
+        color: Theme.dimOverlayColor
         anchors.bottom: accept.top
     }
 

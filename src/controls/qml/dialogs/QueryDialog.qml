@@ -32,7 +32,7 @@ Item {
         width: parent.width
         height: inline ? (parent.height-cancel.height)/3 : parent.height-cancel.height
         opacity: shell.bgOpacity
-        color: Theme.backgroundColor
+        color: Theme.dimOverlayColor
         anchors.bottom: cancel.top
     }
 

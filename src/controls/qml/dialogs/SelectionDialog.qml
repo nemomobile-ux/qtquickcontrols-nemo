@@ -42,7 +42,7 @@ Item {
         width: parent.width
         height: parent.height-cancel.height
         opacity: shell.bgOpacity
-        color: Theme.backgroundColor
+        color: Theme.dimOverlayColor
         anchors.bottom: cancel.top
     }
 
