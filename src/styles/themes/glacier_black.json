@@ -31,6 +31,7 @@
     "fillColor" : "#474747",
     "fillDarkColor" : "#313131",
     "textColor" : "#ffffff",
-    "backgroundColor" : "#000000",
-    "backgroundAccentColor" : "#ffffff"
+    "backgroundColor" : "#00000000",
+    "backgroundAccentColor" : "#ffffff",
+    "dimOverlayColor" : "#60000000"
 }

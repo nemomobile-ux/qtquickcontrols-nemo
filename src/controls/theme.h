@@ -45,6 +45,8 @@ class Theme : public QObject
     Q_PROPERTY(QString textColor READ textColor NOTIFY textColorChanged)
     Q_PROPERTY(QString backgroundColor READ backgroundColor NOTIFY backgroundColorChanged)
     Q_PROPERTY(QString backgroundAccentColor READ backgroundAccentColor NOTIFY backgroundAccentColorChanged)
+    Q_PROPERTY(QString dimOverlayColor READ dimOverlayColor NOTIFY dimOverlayColorChanged)
+
 
     Q_PROPERTY(bool desktopMode READ desktopMode NOTIFY desktopModeChanged)
     Q_PROPERTY(QString themePath READ themePath NOTIFY themeUpdate)
@@ -87,6 +89,7 @@ public:
     QString textColor(){return m_textColor;}
     QString backgroundColor(){return m_backgroundColor;}
     QString backgroundAccentColor(){return m_backgroundAccentColor;}
+    QString dimOverlayColor(){return m_dimOverlayColor;}
 
     qreal iconSizeLauncher() {return m_iconSizeLauncher;}
 
@@ -131,6 +134,7 @@ signals:
     void textColorChanged();
     void backgroundColorChanged();
     void backgroundAccentColorChanged();
+    void dimOverlayColorChanged();
 
     void iconSizeLauncherChanged();
 
@@ -176,6 +180,7 @@ private:
     QString m_textColor;              //#ffffff
     QString m_backgroundColor;        //#000000
     QString m_backgroundAccentColor;  //#ffffff
+    QString m_dimOverlayColor;
 
     qreal m_dp;
     qreal m_scaleRatio;

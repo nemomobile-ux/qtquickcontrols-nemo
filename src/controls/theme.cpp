@@ -305,6 +305,14 @@ void Theme::setThemeValues()
         emit backgroundAccentColorChanged();
         updated = true;
     }
+    if(theme.value("dimOverlayColor").toString() != "" &&
+            theme.value("dimOverlayColor").toString() != m_dimOverlayColor)
+    {
+        m_dimOverlayColor = theme.value("dimOverlayColor").toString();
+        emit dimOverlayColorChanged();
+        updated = true;
+    }
+
 
     if(updated)
     {
