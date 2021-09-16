@@ -24,6 +24,11 @@ import QtQuick.Window 2.2
 import QtQuick 2.6
 import QtQuick.Controls 1.0
 
+import QtGraphicalEffects 1.0
+import QtSensors 5.2
+
+import Nemo.Configuration 1.0
+
 import QtQuick.Controls.Private 1.0
 import QtQuick.Controls.Nemo 1.0
 import QtQuick.Controls.Styles.Nemo 1.0
@@ -44,8 +49,7 @@ NemoWindow {
     //is this safe? can there be some situation in which it's neither portrait nor landscape?
     readonly property int isUiLandscape: !isUiPortrait
 
-    readonly property var _bgColor: Theme.backgroundColor
-    color: _bgColor
+    color: "transparent"
 
     //Handles orientation of keyboard, MInputMethodQuick.appOrientation.
     //contentOrientation: orientation
@@ -184,6 +188,8 @@ NemoWindow {
     }
 
     SystemPalette {id: syspal}
+
+    Wallpaper {id: wallpaper}
 
     Item {
         id: backgroundItem
