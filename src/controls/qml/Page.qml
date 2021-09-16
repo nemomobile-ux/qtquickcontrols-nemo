@@ -41,7 +41,6 @@ NemoPage {
     width: parent.width
     height: parent.height
 
-    property alias color: background.color
     property int status: pageStack ? Stack.status : Stack.Inactive
     property variant headerTools
     readonly property StackView pageStack: Stack.view
@@ -68,12 +67,6 @@ NemoPage {
     allowedOrientations: Qt.PortraitOrientation | Qt.LandscapeOrientation | Qt.InvertedPortraitOrientation | Qt.InvertedLandscapeOrientation
 
     property bool __isNemoPage
-
-    Rectangle {
-        id: background
-        anchors.fill: parent
-        color: Theme.backgroundColor
-    }
 
     MouseArea {
         id: content

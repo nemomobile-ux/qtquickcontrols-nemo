@@ -8,7 +8,8 @@ ListView {
 
     signal hideAllActions(int hideIndex)
 
-    property color delegateColor: Theme.backgroundColor
+    //property color delegateColor: Theme.backgroundColor
+    property color delegateColor: "transparent"
     property color bottomGradientColor: Theme.backgroundColor
 
     section.criteria: ViewSection.FullString

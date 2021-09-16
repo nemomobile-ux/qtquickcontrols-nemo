@@ -196,15 +196,6 @@ Item {
                     right: parent.right
                 }
                 visible: showNext ? !mouse.pressed : false
-                LinearGradient{
-                    anchors.fill: parent
-                    start: Qt.point(0, 0)
-                    end: Qt.point( Theme.itemHeightExtraSmall / 2, 0)
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "transparent" }
-                        GradientStop { position: 1.0; color: Theme.backgroundColor }
-                    }
-                }
             }
         }
 

@@ -33,7 +33,7 @@ SliderStyle{
         anchors.verticalCenter:useSpecSlider ? undefined : parent.verticalCenter
         y: useSpecSlider ? (control.pressed ? alwaysUp ? parent.y - Theme.itemHeightLarge : ((handleValue  > 0.8) ? parent.y - (Theme.itemHeightLarge*_multiple2) : parent.y ) :  parent.y) : 0
         x: useSpecSlider ? (control.pressed ? alwaysUp ? Theme.itemHeightExtraSmall / 2 : (handleValue > 0.8) ? (_multiple*Theme.itemHeightHuge)  : Theme.itemHeightHuge : 0) : 0
-        color: Theme.backgroundColor
+        color: "transparent"
         border.color: Theme.textColor
         border.width: size.ratio(2)
         implicitWidth: Theme.itemHeightExtraSmall

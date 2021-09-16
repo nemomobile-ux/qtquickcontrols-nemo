@@ -35,6 +35,7 @@ QML_FILES += \
     qml/TextField.qml \
     qml/NemoIcon.qml \
     qml/ErrorStackPage.qml \
+    qml/Wallpaper.qml \
     qml/dialogs/QueryDialog.qml \
     qml/dialogs/SelectionDialog.qml \
     qml/dialogs/Dialog.qml

@@ -27,7 +27,7 @@ SliderStyle{
     handle: Rectangle {
         id: handle
         anchors.centerIn: parent
-        color: Theme.backgroundColor
+        color: "transparent"
         border.color: Theme.accentColor
         border.width: 2
         implicitWidth: Theme.itemHeightExtraSmall
