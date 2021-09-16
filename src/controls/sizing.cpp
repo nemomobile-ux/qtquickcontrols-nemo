@@ -31,10 +31,8 @@ Sizing::Sizing(QObject *parent) : QObject(parent)
     m_dp_factor = 1;
 
     m_densitie = mdpi;
-    qreal refHeight =  854.; //N9
-    qreal refWidth = 480.; //N9
-    qreal refDpi = 251; //N9
-    Q_UNUSED(refDpi);
+    qreal refHeight =  1440; //HD
+    qreal refWidth = 720; //HD
 
     m_p_height = qEnvironmentVariableIntValue("QT_QPA_EGLFS_PHYSICAL_HEIGHT");
     m_p_width = qEnvironmentVariableIntValue("QT_QPA_EGLFS_PHYSICAL_WIDTH");
