@@ -89,7 +89,7 @@ Item {
         font.family: Theme.fontFamily
         color: Theme.textColor
         font.pixelSize: Theme.fontSizeLarge
-        font.weight: Font.Bold
+        font.weight: Font.ExtraBold
         LinearGradient {
             anchors.right: parent.right
             width: Theme.itemHeightMedium
