@@ -88,7 +88,7 @@ Item {
         clip: true
         font.family: Theme.fontFamily
         color: Theme.textColor
-        font.pixelSize: Theme.fontSizeMedium
+        font.pixelSize: Theme.fontSizeLarge
         font.weight: Font.Bold
         LinearGradient {
             anchors.right: parent.right
