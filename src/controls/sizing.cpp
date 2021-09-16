@@ -36,9 +36,9 @@ Sizing::Sizing(QObject *parent) : QObject(parent)
     qreal refDpi = 251; //N9
     Q_UNUSED(refDpi);
 
-    m_p_height = qgetenv("QT_QPA_EGLFS_PHYSICAL_HEIGHT").toInt();
-    m_p_width = qgetenv("QT_QPA_EGLFS_PHYSICAL_WIDTH").toInt();
-    m_dpi = qgetenv("QT_WAYLAND_FORCE_DPI").toInt();
+    m_p_height = qEnvironmentVariableIntValue("QT_QPA_EGLFS_PHYSICAL_HEIGHT");
+    m_p_width = qEnvironmentVariableIntValue("QT_QPA_EGLFS_PHYSICAL_WIDTH");
+    m_dpi = qEnvironmentVariableIntValue("QT_WAYLAND_FORCE_DPI");
 
     QScreen *screen = QGuiApplication::primaryScreen();
 
