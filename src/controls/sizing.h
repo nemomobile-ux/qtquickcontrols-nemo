@@ -30,8 +30,6 @@
 class Sizing : public QObject
 {
     Q_OBJECT
-public:
-    explicit Sizing(QObject *parent = 0);
 
     enum Densitie{
         ldpi,
@@ -41,33 +39,43 @@ public:
         xxhdpi,
         xxxhdpi
     };
-#if QT_VERSION < QT_VERSION_CHECK(5,6,0)
-    Q_ENUM(Densities)
-#else
     Q_ENUMS(Densities)
-#endif
-    bool isValid(){return m_valid;}
 
-    float getMmScaleFactor(){return m_mm_factor;}
-    float getDpScaleFactor(){return m_dp_factor;}
-    qreal getScaleRatio(){return m_scaleRatio;}
-    qreal getFontRatio(){return m_fontRatio;}
+    Q_PROPERTY(float mmScaleFactor READ mmScaleFactor WRITE setMmScaleFactor NOTIFY mmScaleFactorChanged)
+    Q_PROPERTY(float dpScaleFactor READ dpScaleFactor WRITE setDpScaleFactor NOTIFY dpScaleFactorChanged)
+    Q_PROPERTY(qreal scaleRatio READ scaleRatio WRITE setScaleRatio NOTIFY scaleRatioChanged)
+    Q_PROPERTY(qreal fontRatio READ fontRatio WRITE setFontRatio NOTIFY fontRatioChanged)
 
+    Q_PROPERTY(bool valid READ valid NOTIFY validChanged)
+    Q_PROPERTY(Densitie densitie READ densitie NOTIFY densitieChanged)
 
-    int getLauncherIconSize(){return m_launcher_icon_size;}
+public:
+    explicit Sizing(QObject *parent = 0);
 
-    Densitie getDensitie();
+    bool valid(){return m_valid;}
 
-    Q_INVOKABLE float mm(float value);
-    Q_INVOKABLE float dp(float value);
-    Q_INVOKABLE float ratio(float value);
+    float mmScaleFactor() {return m_mm_factor;}
+    float dpScaleFactor() {return m_dp_factor;}
+    qreal scaleRatio() {return m_scaleRatio;}
+    qreal fontRatio() {return m_fontRatio;}
 
-    Q_INVOKABLE void setMmScaleFactor(float value);
-    Q_INVOKABLE void setDpScaleFactor(float value);
+    Densitie densitie();
 
-    Q_INVOKABLE void setScaleRatio(qreal scaleRatio);
-
+    void setMmScaleFactor(float value);
+    void setDpScaleFactor(float value);
+    void setScaleRatio(qreal scaleRatio);
     void setFontRatio(qreal fontRatio);
+
+    Q_INVOKABLE float dp(float value);
+    Q_INVOKABLE float mm(float value);
+
+signals:
+    void mmScaleFactorChanged();
+    void dpScaleFactorChanged();
+    void scaleRatioChanged();
+    void fontRatioChanged();
+    void validChanged();
+    void densitieChanged();
 
 private:
     bool m_valid;
@@ -80,18 +88,12 @@ private:
     qreal m_scaleRatio;
     qreal m_fontRatio;
 
-    int m_launcher_icon_size;
-
     float m_mm_factor;
     float m_dp_factor;
 
     qreal m_dpi;
 
     Densitie m_densitie;
-
-    void setMmScaleFactor();
-    void setDpScaleFactor();
-
 };
 
 #endif // SIZING_H
