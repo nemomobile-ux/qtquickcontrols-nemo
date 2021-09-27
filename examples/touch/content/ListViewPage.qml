@@ -93,6 +93,9 @@ Page {
                 }
 
             ]
+            onClicked: {
+                selected = !selected
+            }
         }
         section.property: "size"
     }

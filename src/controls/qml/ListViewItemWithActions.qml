@@ -48,6 +48,7 @@ Item {
     property bool showNext: true
     property bool iconVisible: true
     property bool iconColorized: true
+    property bool selected: false
 
     property bool showActions: true
 
@@ -98,7 +99,7 @@ Item {
         id: listArea
         width: root.width
         height: root.height
-        color: "transparent"
+        color: selected ? Theme.accentColor :"transparent"
 
         Behavior on x{
             NumberAnimation { duration: 200}
