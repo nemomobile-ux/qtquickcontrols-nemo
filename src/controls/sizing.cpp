@@ -26,7 +26,6 @@
 
 Sizing::Sizing(QObject *parent)
     : QObject(parent)
-    , m_valid(false)
     , m_physicalScreenWidth(67)
     , m_physicalScreenHeight(136)
     , m_screenWidth(720)
@@ -94,7 +93,6 @@ Sizing::Sizing(QObject *parent)
     }
 
     if (m_physicalScreenHeight > 0 && m_physicalScreenWidth > 0) {
-        m_valid = true;
         m_mmScaleFactor = (float)m_screenWidth/(float)m_physicalScreenWidth;
     } else {
         if (m_physicalScreenHeight == 0) {
@@ -104,7 +102,6 @@ Sizing::Sizing(QObject *parent)
         if (m_physicalScreenWidth == 0) {
             qWarning("QT_QPA_EGLFS_PHYSICAL_WIDTH is not set!");
         }
-        qWarning("Device mm sizing don`t work");
     }
 
     qDebug() << "Screen size: " << m_screenHeight << " x " << m_screenWidth;
@@ -129,7 +126,6 @@ void Sizing::setMmScaleFactor(float value) {
         emit mmScaleFactorChanged();
     }
 }
-
 
 void Sizing::setScaleRatio(qreal scaleRatio) {
     if(m_scaleRatio != scaleRatio && scaleRatio != 0) {

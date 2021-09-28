@@ -41,13 +41,10 @@ class Sizing : public QObject
     Q_PROPERTY(qreal scaleRatio READ scaleRatio WRITE setScaleRatio NOTIFY scaleRatioChanged)
     Q_PROPERTY(qreal fontRatio READ fontRatio WRITE setFontRatio NOTIFY fontRatioChanged)
 
-    Q_PROPERTY(bool valid READ valid NOTIFY validChanged)
     Q_PROPERTY(Densitie densitie READ densitie NOTIFY densitieChanged)
 
 public:
     explicit Sizing(QObject *parent = 0);
-
-    bool valid(){return m_valid;}
 
     float mmScaleFactor() {return m_mmScaleFactor;}
     float dpScaleFactor() {return m_dpScaleFactor;}
@@ -69,12 +66,9 @@ signals:
     void dpScaleFactorChanged();
     void scaleRatioChanged();
     void fontRatioChanged();
-    void validChanged();
     void densitieChanged();
 
 private:
-    bool m_valid;
-
     int m_physicalScreenWidth;
     int m_physicalScreenHeight;
 
