@@ -27,6 +27,10 @@
 Sizing::Sizing(QObject *parent)
     : QObject(parent)
     , m_valid(false)
+    , m_physicalScreenWidth(67)
+    , m_physicalScreenHeight(136)
+    , m_screenWidth(720)
+    , m_screenHeight(1440)
     , m_mmScaleFactor(10)
     , m_dpScaleFactor(1.5)
     , m_densitie(mdpi)
@@ -38,25 +42,28 @@ Sizing::Sizing(QObject *parent)
     m_physicalScreenWidth = qEnvironmentVariableIntValue("QT_QPA_EGLFS_PHYSICAL_WIDTH");
     m_screenDPI = qEnvironmentVariableIntValue("QT_WAYLAND_FORCE_DPI");
 
-    QScreen *screen = QGuiApplication::primaryScreen();
-
-    /*If we dont have everoment of physical size try get it from screen*/
-    if (m_physicalScreenHeight == 0 || m_physicalScreenWidth == 0) {
-        qWarning("QT_QPA_EGLFS_PHYSICAL_WIDTH or QT_QPA_EGLFS_PHYSICAL_HEIGHT is not set! \n"
-                 "Trying to use QScreenSize");
-
-        m_physicalScreenHeight = screen->physicalSize().height();
-        m_physicalScreenWidth = screen->physicalSize().width();
-        qInfo() << "Set size to " <<  m_physicalScreenHeight  <<  " x " << m_physicalScreenWidth;
-    }
-
-    m_screenHeight = qMax(screen->size().width(), screen->size().height());
-    m_screenWidth = qMin(screen->size().width(), screen->size().height());
-
-    if (m_screenDPI == 0) {
-        m_screenDPI = screen->physicalDotsPerInch();
+    if(QGuiApplication::screens().count() == 0) {
+        qWarning() << "Qt not see any screens. Use defaults values";
     } else {
-        qInfo() << "Use DPI from QT_WAYLAND_FORCE_DPI enveroment = " << m_screenDPI;
+        QScreen *screen = QGuiApplication::primaryScreen();
+
+        /*If we dont have everoment of physical size try get it from screen*/
+        if (m_physicalScreenHeight == 0 || m_physicalScreenWidth == 0) {
+            qWarning("QT_QPA_EGLFS_PHYSICAL_WIDTH or QT_QPA_EGLFS_PHYSICAL_HEIGHT is not set! \n"
+                     "Trying to use QScreenSize");
+
+            m_physicalScreenHeight = screen->physicalSize().height();
+            m_physicalScreenWidth = screen->physicalSize().width();
+        }
+
+        m_screenHeight = qMax(screen->size().width(), screen->size().height());
+        m_screenWidth = qMin(screen->size().width(), screen->size().height());
+
+        if (m_screenDPI == 0) {
+            m_screenDPI = screen->physicalDotsPerInch();
+        } else {
+            qInfo() << "Use DPI from QT_WAYLAND_FORCE_DPI enveroment = " << m_screenDPI;
+        }
     }
 
     m_scaleRatio = qMin((qreal)m_screenHeight/refHeight, (qreal)m_screenWidth/refWidth);
@@ -100,7 +107,8 @@ Sizing::Sizing(QObject *parent)
         qWarning("Device mm sizing don`t work");
     }
 
-    qDebug() << "Height: " << m_screenHeight << "Width: " << m_screenWidth;
+    qDebug() << "Screen size: " << m_screenHeight << " x " << m_screenWidth;
+    qDebug() << "Screen physical size: " << m_physicalScreenHeight << " x " << m_physicalScreenWidth;
     qDebug() << "Scale ratio: " << m_scaleRatio;
     qDebug() << "Font scale ratio: " << m_fontRatio;
     qDebug() << "DPI is " << m_screenDPI;
