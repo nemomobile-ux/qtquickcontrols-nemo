@@ -22,11 +22,6 @@
 
 #include <QObject>
 
-#if QT_VERSION < QT_VERSION_CHECK(5,6,0)
-#ifndef Q_ENUM
-#define Q_ENUM(x) Q_ENUMS(x)
-#endif
-#endif
 class Sizing : public QObject
 {
     Q_OBJECT
@@ -54,8 +49,8 @@ public:
 
     bool valid(){return m_valid;}
 
-    float mmScaleFactor() {return m_mm_factor;}
-    float dpScaleFactor() {return m_dp_factor;}
+    float mmScaleFactor() {return m_mmScaleFactor;}
+    float dpScaleFactor() {return m_dpScaleFactor;}
     qreal scaleRatio() {return m_scaleRatio;}
     qreal fontRatio() {return m_fontRatio;}
 
@@ -80,18 +75,18 @@ signals:
 private:
     bool m_valid;
 
-    int m_p_width;
-    int m_p_height;
+    int m_physicalScreenWidth;
+    int m_physicalScreenHeight;
 
-    int m_width;
-    int m_height;
+    int m_screenWidth;
+    int m_screenHeight;
     qreal m_scaleRatio;
     qreal m_fontRatio;
 
-    float m_mm_factor;
-    float m_dp_factor;
+    float m_mmScaleFactor;
+    float m_dpScaleFactor;
 
-    qreal m_dpi;
+    qreal m_screenDPI;
 
     Densitie m_densitie;
 };
