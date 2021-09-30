@@ -67,13 +67,17 @@ signals:
     void scaleRatioChanged();
     void fontRatioChanged();
     void densitieChanged();
+    void screenDPIChanged();
+
+private slots:
+    void physicalDotsPerInchChanged(qreal dpi);
+    void physicalSizeChanged(const QSizeF &size);
+    void geometryChanged(const QRect &geometry);
 
 private:
-    int m_physicalScreenWidth;
-    int m_physicalScreenHeight;
+    QSizeF m_physicalScreenSize;
+    QSize m_screenSize;
 
-    int m_screenWidth;
-    int m_screenHeight;
     qreal m_scaleRatio;
     qreal m_fontRatio;
 
