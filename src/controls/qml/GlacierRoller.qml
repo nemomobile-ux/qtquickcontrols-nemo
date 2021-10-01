@@ -33,7 +33,7 @@ Item {
     Rectangle{
         id: topLine
         width: parent.width
-        height: size.ratio(1)
+        height: size.dp(1)
         color: Theme.backgroundAccentColor
         anchors.top: view.top
         z: 2
@@ -42,7 +42,7 @@ Item {
     Rectangle{
         id: bottomLine
         width: parent.width
-        height: size.ratio(3)
+        height: size.dp(3)
         color: Theme.backgroundAccentColor
         anchors.bottom: view.bottom
         z: 2

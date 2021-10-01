@@ -103,7 +103,6 @@ void Sizing::setFontRatio(qreal fontRatio) {
 }
 
 float Sizing::dp(float value) {
-    qWarning("Dont use size.dp(value)! Use value*size.dpScaleFactor");
     return value*m_dpScaleFactor;
 }
 

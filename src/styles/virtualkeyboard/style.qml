@@ -41,7 +41,7 @@ KeyboardStyle {
     readonly property real keyIconScale: scaleHint * 0.6
     readonly property string resourcePrefix: ""
 
-    readonly property real horizontalBorder: size.ratio(1)
+    readonly property real horizontalBorder: size.dp(1)
     readonly property real topBorder: Theme.itemSpacingExtraSmall/2
 
     readonly property string inputLocale: InputContext.locale
@@ -55,8 +55,8 @@ KeyboardStyle {
         inputLocaleIndicatorHighlightTimer.restart()
     }
 
-    keyboardDesignWidth: size.ratio(854)//N9
-    keyboardDesignHeight: size.ratio(480)
+    keyboardDesignWidth: size.dp(854)//N9
+    keyboardDesignHeight: size.dp(480)
     keyboardRelativeLeftMargin: Theme.itemSpacingMedium / keyboardDesignWidth
     keyboardRelativeRightMargin: Theme.itemSpacingMedium / keyboardDesignWidth
     keyboardRelativeTopMargin: Theme.itemSpacingSmall / keyboardDesignWidth

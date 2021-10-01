@@ -45,13 +45,13 @@ TabViewStyle {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 anchors.margins: Theme.itemSpacingExtraSmall
-                width: size.ratio(1)
+                width: size.dp(1)
                 color: Theme.fillDarkColor
             }
             Rectangle{
                 visible: styleData.selected
                 width: parent.width
-                height: size.ratio(1)
+                height: size.dp(1)
                 color: Theme.accentColor
                 anchors{
                     bottom: parent.bottom

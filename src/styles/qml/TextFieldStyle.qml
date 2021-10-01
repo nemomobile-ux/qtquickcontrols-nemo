@@ -48,7 +48,7 @@ TextFieldStyle {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            height: size.ratio(2)
+            height: size.dp(2)
             width: parent.width
             color: control.readOnly ? Theme.fillDarkColor : Theme.accentColor
         }
