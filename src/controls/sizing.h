@@ -21,6 +21,8 @@
 #define SIZING_H
 
 #include <QObject>
+#include <QSize>
+#include <QSizeF>
 
 class Sizing : public QObject
 {
