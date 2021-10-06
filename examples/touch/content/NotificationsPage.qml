@@ -1,6 +1,6 @@
 /****************************************************************************************
 **
-** Copyright (C) 2017 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2017-2021 Chupligin Sergey <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -49,8 +49,6 @@ Page {
     Notification{
         id: simpleNotify
         category: "x-nemo.example"
-        summary: ""
-        body: ""
         itemCount: 1
         remoteActions: [ {
             "name": "default",
@@ -62,14 +60,74 @@ Page {
         }]
     }
 
+    Notification{
+        id: criticalNotify
+        category: "x-nemo.critical"
+        itemCount: 1
+        urgency: Notification.Critical
+        remoteActions: [ {
+            "name": "default",
+                "service": "org.nemomobile.notify",
+                "path": "/org/nemomobile/notify",
+                "iface": "org.nemomobile.notify",
+                "method": "activateApp",
+                "arguments": [ "Hello Nemo! You have a critical notification" ]
+        }]
+    }
+
+    Notification{
+        id: progressNotify
+        category: "x-nemo.critical"
+        itemCount: 1
+        progress: 0
+        remoteActions: [ {
+            "name": "default",
+                "service": "org.nemomobile.notify",
+                "path": "/org/nemomobile/notify",
+                "iface": "org.nemomobile.notify",
+                "method": "activateApp",
+                "arguments": [ "Hello Nemo! You have a critical notification" ]
+        }]
+    }
+
     Column {
         spacing: 40
         anchors.centerIn: parent
         Button {
-            text: "Test label"
+            text: qsTr("Simple notification")
             onClicked:{
                 simpleNotify.summary = "Hello Nemo! You have a notification"
                 simpleNotify.publish()
+            }
+        }
+
+        Button {
+            text: qsTr("Critical notification")
+            onClicked:{
+                criticalNotify.summary = "Hello Nemo! You have a critical notification"
+                criticalNotify.publish()
+            }
+        }
+
+        Button {
+            text: qsTr("Progress notification")
+            onClicked:{
+                progressNotify.summary = "Hello Nemo! You have a progress notification"
+                progressNotify.publish()
+                progressTimer.start()
+            }
+        }
+    }
+
+    Timer{
+        id: progressTimer
+        interval:1000
+        repeat: true
+        onTriggered: {
+            if(progressNotify.progress == 1) {
+                progressTimer.stop();
+            } else {
+                progressNotify.progress = progressNotify.progress + 0.1
             }
         }
     }
