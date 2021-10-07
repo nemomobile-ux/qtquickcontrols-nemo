@@ -99,4 +99,8 @@ Page {
         }
         section.property: "size"
     }
+    ScrollDecorator {
+        flickable: view
+    }
+
 }
