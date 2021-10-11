@@ -24,180 +24,169 @@
 #include <QGuiApplication>
 #include <math.h>
 
-Sizing::Sizing(QObject *parent) : QObject(parent)
+const qreal refHeight =  1440; //HD
+const qreal refWidth = 720; //HD
+
+Sizing::Sizing(QObject *parent)
+    : QObject(parent)
+    , m_physicalScreenSize(QSize(67,136))
+    , m_screenSize(QSize(refWidth, refHeight))
+    , m_mmScaleFactor(10)
+    , m_dpScaleFactor(1.5)
+    , m_densitie(mdpi)
 {
-    m_valid = false;
-    m_mm_factor = 10;
-    m_dp_factor = 1;
+    int physicalScreenHeight = qEnvironmentVariableIntValue("QT_QPA_EGLFS_PHYSICAL_HEIGHT");
+    int physicalScreenWidth = qEnvironmentVariableIntValue("QT_QPA_EGLFS_PHYSICAL_WIDTH");
+    qreal screenDPI = qEnvironmentVariableIntValue("QT_WAYLAND_FORCE_DPI");
 
-    m_densitie = mdpi;
-    qreal refHeight =  1440; //HD
-    qreal refWidth = 720; //HD
+    QScreen *primaryScreen = QGuiApplication::primaryScreen();
+    connect(primaryScreen, &QScreen::physicalDotsPerInchChanged, this, &Sizing::physicalDotsPerInchChanged);
+    connect(primaryScreen, &QScreen::physicalSizeChanged, this, &Sizing::physicalSizeChanged);
+    connect(primaryScreen, &QScreen::geometryChanged, this, &Sizing::geometryChanged);
 
-    m_p_height = qEnvironmentVariableIntValue("QT_QPA_EGLFS_PHYSICAL_HEIGHT");
-    m_p_width = qEnvironmentVariableIntValue("QT_QPA_EGLFS_PHYSICAL_WIDTH");
-    m_dpi = qEnvironmentVariableIntValue("QT_WAYLAND_FORCE_DPI");
-
-    QScreen *screen = QGuiApplication::primaryScreen();
-
-    /*If we dont have everoment of physical size try get it from screen*/
-    if(m_p_height == 0 || m_p_width == 0) {
-        qWarning("QT_QPA_EGLFS_PHYSICAL_WIDTH or QT_QPA_EGLFS_PHYSICAL_HEIGHT is not set! \n"
-                 "Trying to use QScreenSize");
-        QSizeF p_size = screen->physicalSize();
-        m_p_height = p_size.height();
-        m_p_width = p_size.width();
-        qInfo() << "Set size to " <<  m_p_height  <<  " x " << m_p_width;
-    }
-
-    m_height = qMax(screen->size().width(), screen->size().height());
-    m_width = qMin(screen->size().width(), screen->size().height());
-
-    if(m_dpi == 0) {
-        m_dpi = screen->physicalDotsPerInch();
+    if(QGuiApplication::screens().count() == 0) {
+        qWarning() << "Qt not see any screens. Use defaults values";
     } else {
-        qInfo() << "Use QPI from QT_WAYLAND_FORCE_DPI enveroment = " << m_dpi;
-    }
-
-    m_scaleRatio = qMin(m_height/refHeight, m_width/refWidth);
-    m_fontRatio = floor(m_scaleRatio*10) /10; //qMin(m_height*refDpi/(m_dpi*refHeight), m_width*refDpi/(m_dpi*refWidth))*10)/10;
-    qDebug() << "Height: " << m_height << "Width: " << m_width;
-    qDebug() << "Scale ratio: " << m_scaleRatio << " Font: " << m_fontRatio;
-
-    if(m_width >= 2160){
-        //>2160
-        m_launcher_icon_size = 256;
-    }else if (m_width >= 1080 && m_width < 2160){
-        //1080-2159
-        m_launcher_icon_size = 128;
-    }else if(m_width >= 720 && m_width < 1080){
-        //720-1079
-        m_launcher_icon_size = 108;
-    }else {
-        //>720
-        m_launcher_icon_size = 86;
-    }
-
-    qDebug() << "DPI is " << m_dpi;
-
-    if(m_dpi < 140){
-        m_densitie = ldpi;
-    }else if(m_dpi >= 140 && m_dpi < 200){
-        //~160dpi
-        m_densitie = mdpi;
-    }else if(m_dpi >= 200 && m_dpi < 300){
-        //~240dpi
-        m_densitie = hdpi;
-    }else if(m_dpi >= 300 && m_dpi < 420){
-        //~320dpi
-        m_densitie = xhdpi;
-    }else if(m_dpi >= 420 && m_dpi < 560){
-        //~480dpi
-        m_densitie = xxhdpi;
-    }else{
-        m_densitie = xxxhdpi;
-    }
-
-    if(m_p_height > 0 && m_p_width >0){
-        m_valid = true;
-        setMmScaleFactor();
-    }else{
-        if(m_p_height == 0){
-            qWarning("QT_QPA_EGLFS_PHYSICAL_HEIGHT is not set!");
+        /*If we dont have everoment of physical size try get it from screen*/
+        if (physicalScreenHeight == 0 || physicalScreenWidth == 0) {
+            qWarning("QT_QPA_EGLFS_PHYSICAL_WIDTH or QT_QPA_EGLFS_PHYSICAL_HEIGHT is not set! \n"
+                     "Trying to use QScreenSize");
+            physicalSizeChanged(primaryScreen->physicalSize());
+        } else {
+            physicalSizeChanged(QSizeF(physicalScreenHeight, physicalScreenWidth));
         }
 
-        if(m_p_width == 0){
-            qWarning("QT_QPA_EGLFS_PHYSICAL_WIDTH is not set!");
+        geometryChanged(primaryScreen->geometry());
+
+        if (screenDPI == 0) {
+            screenDPI = primaryScreen->physicalDotsPerInch();
+        } else {
+            qInfo() << "Use DPI from QT_WAYLAND_FORCE_DPI enveroment = " << screenDPI;
         }
-        qWarning("Device mm sizing don`t work");
-    }
-    setDpScaleFactor();
-}
 
-void Sizing::setMmScaleFactor()
-{
-    if(m_p_width != 0){
-        m_mm_factor = m_width/m_p_width;
-    }
-
-    qDebug() << "MM scale factor is " << m_mm_factor;
-}
-
-void Sizing::setDpScaleFactor()
-{
-    switch (m_densitie) {
-    case ldpi:
-        m_dp_factor = 0.5;
-        break;
-    case mdpi:
-        m_dp_factor = 0.6;
-        break;
-    case hdpi:
-        m_dp_factor = 1;
-        break;
-    case xhdpi:
-        m_dp_factor = 1.5;
-        break;
-    case xxhdpi:
-        m_dp_factor = 2;
-        break;
-    case xxxhdpi:
-        m_dp_factor = 2.5;
-        break;
-    default:
-        m_dp_factor = 1.5;
-        break;
-    }
-
-    qDebug() << "DP scale factor is " << m_dp_factor;
-}
-
-float Sizing::mm(float value)
-{
-    return value*m_mm_factor;
-}
-
-float Sizing::dp(float value)
-{
-    return value*m_dp_factor;
-}
-
-float Sizing::ratio(float value)
-{
-    return floor(value*m_scaleRatio);
-}
-
-
-void Sizing::setMmScaleFactor(float value)
-{
-    if(value != 0)
-    {
-        qDebug() << "Set custom mm scale factor";
-
-        m_p_width = value;
-        setMmScaleFactor();
+        physicalDotsPerInchChanged(screenDPI);
     }
 }
 
-
-void Sizing::setDpScaleFactor(float value)
-{
-    if(value != 0)
-    {
-        qDebug() << "Set custom dp scale factor";
-
-        m_dp_factor = value;
+void Sizing::setDpScaleFactor(float value) {
+    if(value != m_dpScaleFactor && value != 0) {
+        m_dpScaleFactor = value;
+        emit dpScaleFactorChanged();
     }
 }
 
-void Sizing::setScaleRatio(qreal scaleRatio)
-{
-    if(scaleRatio != 0)
+void Sizing::setMmScaleFactor(float value) {
+    if(value != m_mmScaleFactor && value != 0) {
+        m_mmScaleFactor = value;
+        emit mmScaleFactorChanged();
+    }
+}
+
+void Sizing::setScaleRatio(qreal scaleRatio) {
+    if(m_scaleRatio != scaleRatio && scaleRatio != 0) {
         m_scaleRatio = scaleRatio;
+        emit scaleRatioChanged();
+
+        float fontRatio = floor(m_scaleRatio*10)/10;
+        if(fontRatio != m_fontRatio) {
+            m_fontRatio = floor(m_scaleRatio*10)/10;
+            emit fontRatioChanged();
+        }
+    }
 }
 
-void Sizing::setFontRatio(qreal fontRatio)
-{
-    if(fontRatio !=0 )
+void Sizing::setFontRatio(qreal fontRatio) {
+    if(m_fontRatio != fontRatio && fontRatio !=0 ) {
         m_fontRatio = fontRatio;
+        emit fontRatioChanged();
+    }
+}
+
+float Sizing::dp(float value) {
+    return value*m_dpScaleFactor;
+}
+
+float Sizing::mm(float value) {
+    qWarning("Dont use size.mm(value)! Use value*size.mmScaleFactor");
+    return value*m_mmScaleFactor;
+}
+
+void Sizing::physicalDotsPerInchChanged(qreal dpi)
+{
+    if(dpi == m_screenDPI) {
+        return;
+    }
+
+    Densitie densitie;
+    float dpScaleFactor;
+
+    if (dpi < 140) {
+        densitie = ldpi;
+        dpScaleFactor = 0.5;
+    } else if (dpi >= 140 && dpi < 200) {
+        //~160dpi
+        densitie = mdpi;
+        dpScaleFactor = 0.6;
+    } else if (dpi >= 200 && dpi < 300) {
+        //~240dpi
+        densitie = hdpi;
+        dpScaleFactor = 1;
+    } else if(dpi >= 300 && dpi < 420) {
+        //~320dpi
+        densitie = xhdpi;
+        dpScaleFactor = 1.5;
+    } else if(dpi >= 420 && dpi < 560) {
+        //~480dpi
+        densitie = xxhdpi;
+        dpScaleFactor = 2;
+    } else {
+        densitie = xxxhdpi;
+        dpScaleFactor = 2.5;
+    }
+
+    m_screenDPI = dpi;
+    emit screenDPIChanged();
+
+    if(densitie != m_densitie) {
+        m_densitie = densitie;
+        emit densitieChanged();
+    }
+
+    if(dpScaleFactor != m_dpScaleFactor) {
+        m_dpScaleFactor = dpScaleFactor;
+        emit dpScaleFactorChanged();
+    }
+}
+
+void Sizing::physicalSizeChanged(const QSizeF &size)
+{
+    if(size != m_physicalScreenSize) {
+        m_physicalScreenSize = size;
+        float mmScaleFactor = m_screenSize.width()/size.width();
+
+        if(mmScaleFactor != m_mmScaleFactor) {
+            emit mmScaleFactorChanged();
+        }
+    }
+}
+
+void Sizing::geometryChanged(const QRect &geometry)
+{
+    QSize screenSize = QSize(geometry.width(), geometry.width());
+    if(screenSize != m_screenSize) {
+        m_screenSize = screenSize;
+
+        double scaleRatio = qMin((qreal)m_screenSize.height()/refHeight, (qreal)m_screenSize.width()/refWidth);
+        double fontRatio = floor(scaleRatio*10)/10;
+
+        if(scaleRatio != m_scaleRatio) {
+            m_scaleRatio = scaleRatio;
+            emit scaleRatioChanged();
+        }
+
+        if(fontRatio != m_fontRatio) {
+            m_fontRatio = fontRatio;
+            emit fontRatioChanged();
+        }
+    }
 }

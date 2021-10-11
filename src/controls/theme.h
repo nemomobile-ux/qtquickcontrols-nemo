@@ -186,6 +186,7 @@ private:
 
     void loadDefaultValue();
     void setThemeValues();
+    void recalcFromSizing();
 
     MGConfItem *m_themeValue;
 };

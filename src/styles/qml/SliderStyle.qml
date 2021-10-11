@@ -35,7 +35,7 @@ SliderStyle{
         x: useSpecSlider ? (control.pressed ? alwaysUp ? Theme.itemHeightExtraSmall / 2 : (handleValue > 0.8) ? (_multiple*Theme.itemHeightHuge)  : Theme.itemHeightHuge : 0) : 0
         color: Theme.backgroundColor
         border.color: Theme.textColor
-        border.width: size.ratio(2)
+        border.width: Theme.itemSpacingExtraSmall/4
         implicitWidth: Theme.itemHeightExtraSmall
         implicitHeight: Theme.itemHeightExtraSmall
         radius: implicitHeight / 2

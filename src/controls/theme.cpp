@@ -28,10 +28,9 @@
 Theme::Theme(QObject *parent) : QObject(parent)
 {
     size = new Sizing;
-    m_dp = size->getDpScaleFactor();
-    m_iconSizeLauncher = size->getLauncherIconSize();
-    m_scaleRatio = size->getScaleRatio();
-    m_fontRatio = size->getFontRatio();
+    m_dp = size->dpScaleFactor();
+    m_scaleRatio = size->scaleRatio();
+    m_fontRatio = size->fontRatio();
 
     loadDefaultValue();
 
@@ -43,6 +42,10 @@ Theme::Theme(QObject *parent) : QObject(parent)
 
     connect(desktopModeValue, &MGConfItem::valueChanged, this, &Theme::desktopModeValueChanged);
     connect(m_themeValue, &MGConfItem::valueChanged, this, &Theme::themeValueChanged);
+
+    connect(size, &Sizing::dpScaleFactorChanged, this, &Theme::recalcFromSizing);
+    connect(size, &Sizing::scaleRatioChanged, this, &Theme::recalcFromSizing);
+    connect(size, &Sizing::fontRatioChanged, this, &Theme::recalcFromSizing);
 
     loadTheme(m_theme);
 }
@@ -309,6 +312,31 @@ void Theme::setThemeValues()
     if(updated)
     {
         emit themeUpdate();
+    }
+}
+
+void Theme::recalcFromSizing()
+{
+    bool changed = false;
+
+    float dp = size->dpScaleFactor();
+    if (m_dp != dp) {
+        changed = true;
+        m_dp = dp;
+    }
+    float scaleRatio = size->scaleRatio();
+    if (m_scaleRatio != scaleRatio) {
+        changed = true;
+        m_scaleRatio = scaleRatio;
+    }
+    float fontRatio = size->fontRatio();
+    if(m_fontRatio != fontRatio) {
+        changed = true;
+        m_fontRatio = fontRatio;
+    }
+
+    if(changed) {
+        setThemeValues();
     }
 }
 

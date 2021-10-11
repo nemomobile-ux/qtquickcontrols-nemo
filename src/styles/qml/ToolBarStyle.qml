@@ -29,7 +29,7 @@ Style {
 
     property Component panel: Item {
         implicitHeight:Theme.itemHeightExtraLarge
-        implicitWidth: size.dp(40)
+        implicitWidth: Theme.itemHeightSmall
         Rectangle {
             anchors.fill: parent
             color: Theme.backgroundColor
