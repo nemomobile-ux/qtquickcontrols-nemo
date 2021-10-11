@@ -53,7 +53,7 @@ public:
     qreal scaleRatio() {return m_scaleRatio;}
     qreal fontRatio() {return m_fontRatio;}
 
-    Densitie densitie();
+    Densitie densitie() {return m_densitie;};
 
     void setMmScaleFactor(float value);
     void setDpScaleFactor(float value);
