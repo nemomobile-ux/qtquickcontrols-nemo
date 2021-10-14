@@ -177,16 +177,11 @@ private:
     QString m_backgroundColor;        //#000000
     QString m_backgroundAccentColor;  //#ffffff
 
-    qreal m_dp;
-    qreal m_scaleRatio;
-    qreal m_fontRatio;
-
     bool m_desktopMode;
     QString m_theme;
 
     void loadDefaultValue();
     void setThemeValues();
-    void recalcFromSizing();
 
     MGConfItem *m_themeValue;
 };
