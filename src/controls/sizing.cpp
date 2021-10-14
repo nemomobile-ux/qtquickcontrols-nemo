@@ -119,6 +119,8 @@ void Sizing::physicalDotsPerInchChanged(qreal dpi)
         return;
     }
 
+    qDebug() << "Screen DPI is: " << dpi;
+
     Densitie densitie;
     float dpScaleFactor;
 
