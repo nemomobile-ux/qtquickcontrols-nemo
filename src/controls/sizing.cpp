@@ -101,24 +101,21 @@ void Sizing::physicalDotsPerInchChanged(qreal dpi)
     Densitie densitie;
     qreal dpScaleFactor;
 
-    if (dpi < 100) {
+    if (dpi < 200) {
         densitie = ldpi;
         dpScaleFactor = 1;
-    } else if (dpi >= 100 && dpi < 200) {
-        densitie = mdpi;
-        dpScaleFactor = 1.5;
     } else if (dpi >= 200 && dpi < 300) {
         densitie = hdpi;
-        dpScaleFactor = 2;
+        dpScaleFactor = 1.5;
     } else if(dpi >= 300 && dpi < 450) {
         densitie = xhdpi;
-        dpScaleFactor = 2.5;
+        dpScaleFactor = 2;
     } else if(dpi >= 450 && dpi < 600) {
         densitie = xxhdpi;
-        dpScaleFactor = 3;
+        dpScaleFactor = 2.5;
     } else {
         densitie = xxxhdpi;
-        dpScaleFactor = 3.5;
+        dpScaleFactor = 3;
     }
 
     m_screenDPI = dpi;
