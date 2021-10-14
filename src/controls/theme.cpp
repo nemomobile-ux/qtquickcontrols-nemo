@@ -41,8 +41,6 @@ Theme::Theme(QObject *parent) : QObject(parent)
     connect(m_themeValue, &MGConfItem::valueChanged, this, &Theme::themeValueChanged);
 
     connect(size, &Sizing::dpScaleFactorChanged, this, &Theme::setThemeValues);
-    connect(size, &Sizing::scaleRatioChanged, this, &Theme::setThemeValues);
-    connect(size, &Sizing::fontRatioChanged, this, &Theme::setThemeValues);
 
     loadTheme(m_theme);
 }
@@ -90,28 +88,28 @@ void Theme::setThemeValues()
     if(theme.value("itemWidthLarge").toString().toFloat() != 0 &&
            floor(theme.value("itemWidthLarge").toString().toFloat()) != m_itemWidthLarge)
     {
-        m_itemWidthLarge = floor(theme.value("itemWidthLarge").toString().toFloat()*size->scaleRatio());
+        m_itemWidthLarge = floor(theme.value("itemWidthLarge").toString().toFloat()*size->dpScaleFactor());
         emit itemWidthLargeChanged();
         updated = true;
     }
     if(theme.value("itemWidthMedium").toString().toFloat() != 0 &&
            floor(theme.value("itemWidthMedium").toString().toFloat()) != m_itemWidthMedium)
     {
-        m_itemWidthMedium = floor(theme.value("itemWidthMedium").toString().toFloat()*size->scaleRatio());
+        m_itemWidthMedium = floor(theme.value("itemWidthMedium").toString().toFloat()*size->dpScaleFactor());
         emit itemWidthMediumChanged();
         updated = true;
     }
     if(theme.value("itemWidthSmall").toString().toFloat() != 0 &&
            floor(theme.value("itemWidthSmall").toString().toFloat()) != m_itemWidthSmall)
     {
-        m_itemWidthSmall = floor(theme.value("itemWidthSmall").toString().toFloat()*size->scaleRatio());
+        m_itemWidthSmall = floor(theme.value("itemWidthSmall").toString().toFloat()*size->dpScaleFactor());
         emit itemWidthSmallChanged();
         updated = true;
     }
     if(theme.value("itemWidthExtraSmall").toString().toFloat() != 0 &&
            floor(theme.value("itemWidthExtraSmall").toString().toFloat()) != m_itemWidthExtraSmall)
     {
-        m_itemWidthExtraSmall = floor(theme.value("itemWidthExtraSmall").toString().toFloat()*size->scaleRatio());
+        m_itemWidthExtraSmall = floor(theme.value("itemWidthExtraSmall").toString().toFloat()*size->dpScaleFactor());
         emit itemWidthExtraSmallChanged();
         updated = true;
     }
@@ -119,42 +117,42 @@ void Theme::setThemeValues()
     if(theme.value("itemHeightHuge").toString().toFloat() != 0 &&
            floor(theme.value("itemHeightHuge").toString().toFloat()) != m_itemHeightHuge)
     {
-        m_itemHeightHuge = floor(theme.value("itemHeightHuge").toString().toFloat()*size->scaleRatio());
+        m_itemHeightHuge = floor(theme.value("itemHeightHuge").toString().toFloat()*size->dpScaleFactor());
         emit itemHeightHugeChanged();
         updated = true;
     }
     if(theme.value("itemHeightExtraLarge").toString().toFloat() != 0 &&
            floor(theme.value("itemHeightExtraLarge").toString().toFloat()) != m_itemHeightExtraLarge)
     {
-        m_itemHeightExtraLarge = floor(theme.value("itemHeightExtraLarge").toString().toFloat()*size->scaleRatio());
+        m_itemHeightExtraLarge = floor(theme.value("itemHeightExtraLarge").toString().toFloat()*size->dpScaleFactor());
         emit itemHeightExtraLargeChanged();
         updated = true;
     }
     if(theme.value("itemHeightLarge").toString().toFloat() != 0 &&
            floor(theme.value("itemHeightLarge").toString().toFloat()) != m_itemHeightLarge)
     {
-        m_itemHeightLarge = floor(theme.value("itemHeightLarge").toString().toFloat()*size->scaleRatio());
+        m_itemHeightLarge = floor(theme.value("itemHeightLarge").toString().toFloat()*size->dpScaleFactor());
         emit itemHeightLargeChanged();
         updated = true;
     }
     if(theme.value("itemHeightMedium").toString().toFloat() != 0 &&
            floor(theme.value("itemHeightMedium").toString().toFloat()) != m_itemHeightMedium)
     {
-        m_itemHeightMedium = floor(theme.value("itemHeightMedium").toString().toFloat()*size->scaleRatio());
+        m_itemHeightMedium = floor(theme.value("itemHeightMedium").toString().toFloat()*size->dpScaleFactor());
         emit itemHeightMediumChanged();
         updated = true;
     }
     if(theme.value("itemHeightSmall").toString().toFloat() != 0 &&
            floor(theme.value("itemHeightSmall").toString().toFloat()) != m_itemHeightSmall)
     {
-        m_itemHeightSmall = floor(theme.value("itemHeightSmall").toString().toFloat()*size->scaleRatio());
+        m_itemHeightSmall = floor(theme.value("itemHeightSmall").toString().toFloat()*size->dpScaleFactor());
         emit itemHeightSmallChanged();
         updated = true;
     }
     if(theme.value("itemHeightExtraSmall").toString().toFloat() != 0 &&
            floor(theme.value("itemHeightExtraSmall").toString().toFloat()) != m_itemHeightExtraSmall)
     {
-        m_itemHeightExtraSmall = floor(theme.value("itemHeightExtraSmall").toString().toFloat()*size->scaleRatio());
+        m_itemHeightExtraSmall = floor(theme.value("itemHeightExtraSmall").toString().toFloat()*size->dpScaleFactor());
         emit itemHeightExtraSmallChanged();
         updated = true;
     }
@@ -163,35 +161,35 @@ void Theme::setThemeValues()
     if(theme.value("itemSpacingHuge").toString().toFloat() != 0 &&
            floor(theme.value("itemSpacingHuge").toString().toFloat()) != m_itemSpacingHuge)
     {
-        m_itemSpacingHuge = floor(theme.value("itemSpacingHuge").toString().toFloat()*size->scaleRatio());
+        m_itemSpacingHuge = floor(theme.value("itemSpacingHuge").toString().toFloat()*size->dpScaleFactor());
         emit itemSpacingHugeChanged();
         updated = true;
     }
     if(theme.value("itemSpacingLarge").toString().toFloat() != 0 &&
            floor(theme.value("itemSpacingLarge").toString().toFloat()) != m_itemSpacingLarge)
     {
-        m_itemSpacingLarge = floor(theme.value("itemSpacingLarge").toString().toFloat()*size->scaleRatio());
+        m_itemSpacingLarge = floor(theme.value("itemSpacingLarge").toString().toFloat()*size->dpScaleFactor());
         emit itemSpacingLargeChanged();
         updated = true;
     }
     if(theme.value("itemSpacingMedium").toString().toFloat() != 0 &&
            floor(theme.value("itemSpacingMedium").toString().toFloat()) != m_itemSpacingMedium)
     {
-        m_itemSpacingMedium = floor(theme.value("itemSpacingMedium").toString().toFloat()*size->scaleRatio());
+        m_itemSpacingMedium = floor(theme.value("itemSpacingMedium").toString().toFloat()*size->dpScaleFactor());
         emit itemSpacingMediumChanged();
         updated = true;
     }
     if(theme.value("itemSpacingSmall").toString().toFloat() != 0 &&
            floor(theme.value("itemSpacingSmall").toString().toFloat()) != m_itemSpacingSmall)
     {
-        m_itemSpacingSmall = floor(theme.value("itemSpacingSmall").toString().toFloat()*size->scaleRatio());
+        m_itemSpacingSmall = floor(theme.value("itemSpacingSmall").toString().toFloat()*size->dpScaleFactor());
         emit itemSpacingSmallChanged();
         updated = true;
     }
     if(theme.value("itemSpacingExtraSmall").toString().toFloat() != 0 &&
            floor(theme.value("itemSpacingExtraSmall").toString().toFloat()) != m_itemSpacingExtraSmall)
     {
-        m_itemSpacingExtraSmall = floor(theme.value("itemSpacingExtraSmall").toString().toFloat()*size->scaleRatio());
+        m_itemSpacingExtraSmall = floor(theme.value("itemSpacingExtraSmall").toString().toFloat()*size->dpScaleFactor());
         emit itemSpacingExtraSmallChanged();
         updated = true;
     }
@@ -199,35 +197,35 @@ void Theme::setThemeValues()
     if(theme.value("fontSizeExtraLarge").toInt() != 0 &&
            floor(theme.value("fontSizeExtraLarge").toInt()) != m_fontSizeExtraLarge)
     {
-        m_fontSizeExtraLarge = floor(theme.value("fontSizeExtraLarge").toInt()*size->fontRatio());
+        m_fontSizeExtraLarge = floor(theme.value("fontSizeExtraLarge").toInt()*size->dpScaleFactor());
         emit fontSizeExtraLargeChanged();
         updated = true;
     }
     if(theme.value("fontSizeLarge").toInt() != 0 &&
             floor(theme.value("fontSizeLarge").toInt()) != m_fontSizeLarge)
     {
-        m_fontSizeLarge = floor(theme.value("fontSizeLarge").toInt()*size->fontRatio());
+        m_fontSizeLarge = floor(theme.value("fontSizeLarge").toInt()*size->dpScaleFactor());
         emit fontSizeLargeChanged();
         updated = true;
     }
     if(theme.value("fontSizeMedium").toInt() != 0 &&
             floor(theme.value("fontSizeMedium").toInt()) != m_fontSizeMedium)
     {
-        m_fontSizeMedium = floor(theme.value("fontSizeMedium").toInt()*size->fontRatio());
+        m_fontSizeMedium = floor(theme.value("fontSizeMedium").toInt()*size->dpScaleFactor());
         emit fontSizeMediumChanged();
         updated = true;
     }
     if(theme.value("fontSizeSmall").toInt() != 0 &&
             floor(theme.value("fontSizeSmall").toInt()) != m_fontSizeSmall)
     {
-        m_fontSizeSmall = floor(theme.value("fontSizeSmall").toInt()*size->fontRatio());
+        m_fontSizeSmall = floor(theme.value("fontSizeSmall").toInt()*size->dpScaleFactor());
         emit fontSizeSmallChanged();
         updated = true;
     }
     if(theme.value("fontSizeTiny").toInt() != 0 &&
             floor(theme.value("fontSizeTiny").toInt()) != m_fontSizeTiny)
     {
-        m_fontSizeTiny = floor(theme.value("fontSizeTiny").toInt()*size->fontRatio());
+        m_fontSizeTiny = floor(theme.value("fontSizeTiny").toInt()*size->dpScaleFactor());
         emit fontSizeTinyChanged();
         updated = true;
     }
@@ -328,30 +326,30 @@ void Theme::themeValueChanged()
 void Theme::loadDefaultValue()
 {
     //Load defaults
-    m_itemWidthLarge = floor(320*size->scaleRatio());
-    m_itemWidthMedium = floor(240*size->scaleRatio());
-    m_itemWidthSmall = floor(120*size->scaleRatio());
-    m_itemWidthExtraSmall = floor(72*size->scaleRatio());
+    m_itemWidthLarge = floor(320*size->dpScaleFactor());
+    m_itemWidthMedium = floor(240*size->dpScaleFactor());
+    m_itemWidthSmall = floor(120*size->dpScaleFactor());
+    m_itemWidthExtraSmall = floor(72*size->dpScaleFactor());
 
-    m_itemHeightHuge = floor(80*size->scaleRatio());
-    m_itemHeightExtraLarge = floor(75*size->scaleRatio());
-    m_itemHeightLarge = floor(63*size->scaleRatio());
-    m_itemHeightMedium = floor(50*size->scaleRatio());
-    m_itemHeightSmall = floor(40*size->scaleRatio());
-    m_itemHeightExtraSmall = floor(32*size->scaleRatio());
+    m_itemHeightHuge = floor(80*size->dpScaleFactor());
+    m_itemHeightExtraLarge = floor(75*size->dpScaleFactor());
+    m_itemHeightLarge = floor(63*size->dpScaleFactor());
+    m_itemHeightMedium = floor(50*size->dpScaleFactor());
+    m_itemHeightSmall = floor(40*size->dpScaleFactor());
+    m_itemHeightExtraSmall = floor(32*size->dpScaleFactor());
 
-    m_itemSpacingHuge = floor(40*size->scaleRatio());
-    m_itemSpacingLarge = floor(20*size->scaleRatio());
-    m_itemSpacingMedium = floor(15*size->scaleRatio());
-    m_itemSpacingSmall = floor(10*size->scaleRatio());
-    m_itemSpacingExtraSmall = floor(8*size->scaleRatio());
+    m_itemSpacingHuge = floor(40*size->dpScaleFactor());
+    m_itemSpacingLarge = floor(20*size->dpScaleFactor());
+    m_itemSpacingMedium = floor(15*size->dpScaleFactor());
+    m_itemSpacingSmall = floor(10*size->dpScaleFactor());
+    m_itemSpacingExtraSmall = floor(8*size->dpScaleFactor());
 
 
-    m_fontSizeExtraLarge = floor(44*size->fontRatio());
-    m_fontSizeLarge = floor(35*size->fontRatio());
-    m_fontSizeMedium = floor(28*size->fontRatio());
-    m_fontSizeSmall = floor(24*size->fontRatio());
-    m_fontSizeTiny = floor(16*size->fontRatio());
+    m_fontSizeExtraLarge = floor(44*size->dpScaleFactor());
+    m_fontSizeLarge = floor(35*size->dpScaleFactor());
+    m_fontSizeMedium = floor(28*size->dpScaleFactor());
+    m_fontSizeSmall = floor(24*size->dpScaleFactor());
+    m_fontSizeTiny = floor(16*size->dpScaleFactor());
     m_fontWeightLarge = 63*size->dpScaleFactor();
     m_fontWeightMedium = 25*size->dpScaleFactor();
     m_fontFamily = "/usr/share/fonts/google-opensans/OpenSans-Regular.ttf";

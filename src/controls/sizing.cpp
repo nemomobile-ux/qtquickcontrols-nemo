@@ -31,10 +31,9 @@ Sizing::Sizing(QObject *parent)
     : QObject(parent)
     , m_physicalScreenSize(QSize(67,136))
     , m_screenSize(QSize(refWidth, refHeight))
-    , m_scaleRatio(1)
-    , m_fontRatio(1)
     , m_mmScaleFactor(10)
-    , m_dpScaleFactor(1.5)
+    , m_dpScaleFactor(1)
+    , m_screenDPI(0)
     , m_densitie(mdpi)
 {
     int physicalScreenHeight = qEnvironmentVariableIntValue("QT_QPA_EGLFS_PHYSICAL_HEIGHT");
@@ -44,7 +43,6 @@ Sizing::Sizing(QObject *parent)
     QScreen *primaryScreen = QGuiApplication::primaryScreen();
     connect(primaryScreen, &QScreen::physicalDotsPerInchChanged, this, &Sizing::physicalDotsPerInchChanged);
     connect(primaryScreen, &QScreen::physicalSizeChanged, this, &Sizing::physicalSizeChanged);
-    connect(primaryScreen, &QScreen::geometryChanged, this, &Sizing::geometryChanged);
 
     if(QGuiApplication::screens().count() == 0) {
         qWarning() << "Qt not see any screens. Use defaults values";
@@ -58,7 +56,6 @@ Sizing::Sizing(QObject *parent)
             physicalSizeChanged(QSizeF(physicalScreenHeight, physicalScreenWidth));
         }
 
-        geometryChanged(primaryScreen->geometry());
 
         if (screenDPI == 0) {
             screenDPI = primaryScreen->physicalDotsPerInch();
@@ -84,26 +81,6 @@ void Sizing::setMmScaleFactor(float value) {
     }
 }
 
-void Sizing::setScaleRatio(qreal scaleRatio) {
-    if(m_scaleRatio != scaleRatio && scaleRatio != 0) {
-        m_scaleRatio = scaleRatio;
-        emit scaleRatioChanged();
-
-        float fontRatio = floor(m_scaleRatio*10)/10;
-        if(fontRatio != m_fontRatio) {
-            m_fontRatio = floor(m_scaleRatio*10)/10;
-            emit fontRatioChanged();
-        }
-    }
-}
-
-void Sizing::setFontRatio(qreal fontRatio) {
-    if(m_fontRatio != fontRatio && fontRatio !=0 ) {
-        m_fontRatio = fontRatio;
-        emit fontRatioChanged();
-    }
-}
-
 float Sizing::dp(float value) {
     return value*m_dpScaleFactor;
 }
@@ -122,26 +99,26 @@ void Sizing::physicalDotsPerInchChanged(qreal dpi)
     qDebug() << "Screen DPI is: " << dpi;
 
     Densitie densitie;
-    float dpScaleFactor;
+    qreal dpScaleFactor;
 
     if (dpi < 100) {
         densitie = ldpi;
-        dpScaleFactor = 0.5;
+        dpScaleFactor = 1;
     } else if (dpi >= 100 && dpi < 200) {
         densitie = mdpi;
-        dpScaleFactor = 1;
+        dpScaleFactor = 1.5;
     } else if (dpi >= 200 && dpi < 300) {
         densitie = hdpi;
-        dpScaleFactor = 1.5;
+        dpScaleFactor = 2;
     } else if(dpi >= 300 && dpi < 450) {
         densitie = xhdpi;
-        dpScaleFactor = 2;
+        dpScaleFactor = 2.5;
     } else if(dpi >= 450 && dpi < 600) {
         densitie = xxhdpi;
-        dpScaleFactor = 2.5;
+        dpScaleFactor = 3;
     } else {
         densitie = xxxhdpi;
-        dpScaleFactor = 3;
+        dpScaleFactor = 3.5;
     }
 
     m_screenDPI = dpi;
@@ -166,27 +143,6 @@ void Sizing::physicalSizeChanged(const QSizeF &size)
 
         if(mmScaleFactor != m_mmScaleFactor) {
             emit mmScaleFactorChanged();
-        }
-    }
-}
-
-void Sizing::geometryChanged(const QRect &geometry)
-{
-    QSize screenSize = QSize(geometry.width(), geometry.width());
-    if(screenSize != m_screenSize) {
-        m_screenSize = screenSize;
-
-        double scaleRatio = qMin((qreal)m_screenSize.height()/refHeight, (qreal)m_screenSize.width()/refWidth);
-        double fontRatio = floor(scaleRatio*10)/10;
-
-        if(scaleRatio != m_scaleRatio) {
-            m_scaleRatio = scaleRatio;
-            emit scaleRatioChanged();
-        }
-
-        if(fontRatio != m_fontRatio) {
-            m_fontRatio = fontRatio;
-            emit fontRatioChanged();
         }
     }
 }

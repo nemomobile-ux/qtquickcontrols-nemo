@@ -40,8 +40,6 @@ class Sizing : public QObject
 
     Q_PROPERTY(float mmScaleFactor READ mmScaleFactor WRITE setMmScaleFactor NOTIFY mmScaleFactorChanged)
     Q_PROPERTY(float dpScaleFactor READ dpScaleFactor WRITE setDpScaleFactor NOTIFY dpScaleFactorChanged)
-    Q_PROPERTY(qreal scaleRatio READ scaleRatio WRITE setScaleRatio NOTIFY scaleRatioChanged)
-    Q_PROPERTY(qreal fontRatio READ fontRatio WRITE setFontRatio NOTIFY fontRatioChanged)
 
     Q_PROPERTY(Densitie densitie READ densitie NOTIFY densitieChanged)
 
@@ -50,15 +48,11 @@ public:
 
     float mmScaleFactor() {return m_mmScaleFactor;}
     float dpScaleFactor() {return m_dpScaleFactor;}
-    qreal scaleRatio() {return m_scaleRatio;}
-    qreal fontRatio() {return m_fontRatio;}
 
     Densitie densitie() {return m_densitie;};
 
     void setMmScaleFactor(float value);
     void setDpScaleFactor(float value);
-    void setScaleRatio(qreal scaleRatio);
-    void setFontRatio(qreal fontRatio);
 
     Q_INVOKABLE float dp(float value);
     Q_INVOKABLE float mm(float value);
@@ -66,28 +60,21 @@ public:
 signals:
     void mmScaleFactorChanged();
     void dpScaleFactorChanged();
-    void scaleRatioChanged();
-    void fontRatioChanged();
     void densitieChanged();
     void screenDPIChanged();
 
 private slots:
     void physicalDotsPerInchChanged(qreal dpi);
     void physicalSizeChanged(const QSizeF &size);
-    void geometryChanged(const QRect &geometry);
 
 private:
     QSizeF m_physicalScreenSize;
     QSize m_screenSize;
 
-    qreal m_scaleRatio;
-    qreal m_fontRatio;
-
     float m_mmScaleFactor;
-    float m_dpScaleFactor;
+    qreal m_dpScaleFactor;
 
     qreal m_screenDPI;
-
     Densitie m_densitie;
 };
 
