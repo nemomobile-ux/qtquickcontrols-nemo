@@ -84,6 +84,15 @@ ApplicationWindow {
                 width: parent.width
                 spacing: Theme.itemSpacingLarge
 
+                Label{
+                    text: "DP Scale factor: " + size.dpScaleFactor;
+                }
+
+
+                Label{
+                    text: "MM Scale factor: " + size.mmScaleFactor;
+                }
+
                 Rectangle{
                     color: Theme.accentColor
                     width: Theme.itemWidthLarge
