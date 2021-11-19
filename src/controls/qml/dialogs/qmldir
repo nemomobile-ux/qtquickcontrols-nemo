@@ -1,3 +1,4 @@
+CustomDialog 1.0 CustomDialog.qml
 QueryDialog 1.0 QueryDialog.qml
 Dialog 1.0 Dialog.qml
 SelectionDialog 1.0 SelectionDialog.qml

@@ -21,9 +21,9 @@ QML_FILES += \
     qml/Header.qml \
     qml/ProgressBar.qml \
     qml/HeaderToolsLayout.qml \
-    qml/Slider.qml\
+    qml/Slider.qml \
     qml/ListView.qml \
-    qml/ListViewItemWithActions.qml\
+    qml/ListViewItemWithActions.qml \
     qml/GlacierRoller.qml \
     qml/GlacierRollerItem.qml \
     qml/InverseMouseArea.qml \
@@ -35,6 +35,7 @@ QML_FILES += \
     qml/TextField.qml \
     qml/NemoIcon.qml \
     qml/ErrorStackPage.qml \
+    qml/dialogs/CustomDialog.qml \
     qml/dialogs/QueryDialog.qml \
     qml/dialogs/SelectionDialog.qml \
     qml/dialogs/Dialog.qml

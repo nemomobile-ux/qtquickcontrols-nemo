@@ -82,6 +82,7 @@ Page {
             id: simpleRoller
             width: parent.width
 
+            currentIndex: 2
             clip: true
             model: animalsModel
             label: qsTr("Choose your favorite animal")
