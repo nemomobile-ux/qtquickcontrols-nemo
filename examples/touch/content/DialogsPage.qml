@@ -186,7 +186,15 @@ Page {
 
         model: animalsModel
 
-        onSelectedIndexChanged: selectionDialog.close()
+        onAccepted: {
+            result.text = qsTr("Selected animal is %1").arg(animalsModel.get(selectedIndex).name)
+            showButton();
+        }
+        onCanceled: {
+            result.text = qsTr("User canceled")
+            showButton();
+        }
+
     }
 
     QueryDialog {

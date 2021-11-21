@@ -23,6 +23,7 @@ Item {
         label: name
         showNext: false
         iconVisible: false
+        selected: selectedIndex == index
 
         onClicked: {
             shell.selectedIndex = index
@@ -85,6 +86,7 @@ Item {
         delegate: shell.delegate
 
         anchors.top: subLabel.bottom
+        anchors.bottom: cancel.top
 
         ScrollDecorator{
             flickable: selectionListView
