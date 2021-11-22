@@ -76,6 +76,7 @@ Page {
         inlineButton.visible = false
         simpleButton.visible = false
         selectionButton.visible = false
+        customButton.visible = false
     }
 
     function showButton(){
@@ -83,6 +84,7 @@ Page {
         inlineButton.visible = true
         simpleButton.visible = true
         selectionButton.visible = true
+        customButton.visible = true
     }
 
     Button {
@@ -143,6 +145,20 @@ Page {
         }
     }
 
+    Button {
+        id: customButton
+        anchors{
+            top: selectionButton.bottom
+            margins: 20
+            horizontalCenter: parent.horizontalCenter
+        }
+        text: qsTr("Custom dialog")
+        onClicked: {
+            hideButton();
+            customDialog.open();
+        }
+    }
+
     Dialog{
         id: simpleDialog
         acceptText: qsTr("Ok")
@@ -170,7 +186,15 @@ Page {
 
         model: animalsModel
 
-        onSelectedIndexChanged: selectionDialog.close()
+        onAccepted: {
+            result.text = qsTr("Selected animal is %1").arg(animalsModel.get(selectedIndex).name)
+            showButton();
+        }
+        onCanceled: {
+            result.text = qsTr("User canceled")
+            showButton();
+        }
+
     }
 
     QueryDialog {
@@ -195,6 +219,53 @@ Page {
             deleteDialog.close()
         }
     }
+
+    CustomDialog {
+        id: customDialog
+        icon: "image://theme/user"
+        headingText: qsTr("Send message")
+        //inline: false;
+        visible: false;
+        acceptText: qsTr("Ok")
+        cancelText: qsTr("Cancel")
+        acceptEnabled: customText.text.length >= 2
+        content: [
+            Column {
+                width: parent.width
+                spacing: Theme.itemSpacingHuge
+                TextField {
+                    id: customText
+                    placeholderText: qsTr("Search in contacts list");
+                    width: parent.width
+                }
+
+            ButtonRow {
+                id: customButtonRow;
+                anchors.margins: Theme.itemSpacingMedium
+                currentIndex: 1
+                model: ListModel {
+                    ListElement { name: qsTr("SMS") }
+                    ListElement { name: qsTr("XMPP") }
+                    }
+                }
+            }
+
+        ]
+
+        onAccepted: {
+            result.text = qsTr("User accepted: " + customText.text + " " + customButtonRow.currentIndex)
+        }
+        onCanceled: {
+            result.text = qsTr("User canceled")
+        }
+
+        onSelected: {
+            showButton();
+            deleteDialog.close()
+        }
+
+    }
+
 
     Label {
         id: result
