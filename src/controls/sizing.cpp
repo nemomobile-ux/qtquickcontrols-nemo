@@ -36,35 +36,30 @@ Sizing::Sizing(QObject *parent)
     , m_screenDPI(0)
     , m_densitie(mdpi)
 {
-    int physicalScreenHeight = qEnvironmentVariableIntValue("QT_QPA_EGLFS_PHYSICAL_HEIGHT");
-    int physicalScreenWidth = qEnvironmentVariableIntValue("QT_QPA_EGLFS_PHYSICAL_WIDTH");
-    qreal screenDPI = qEnvironmentVariableIntValue("QT_WAYLAND_FORCE_DPI");
+    qreal physicalScreenHeight = qEnvironmentVariableIntValue("QT_QPA_EGLFS_PHYSICAL_HEIGHT");
+    qreal physicalScreenWidth = qEnvironmentVariableIntValue("QT_QPA_EGLFS_PHYSICAL_WIDTH");
 
     QScreen *primaryScreen = QGuiApplication::primaryScreen();
+
+    /*If we dont have everoment of physical size try get it from screen*/
+    if (physicalScreenHeight == 0 || physicalScreenWidth == 0) {
+        physicalScreenHeight = primaryScreen->physicalSize().height();
+        physicalScreenWidth = primaryScreen->physicalSize().width();
+    }
+
     connect(primaryScreen, &QScreen::physicalDotsPerInchChanged, this, &Sizing::physicalDotsPerInchChanged);
     connect(primaryScreen, &QScreen::physicalSizeChanged, this, &Sizing::physicalSizeChanged);
 
     if(QGuiApplication::screens().count() == 0) {
         qWarning() << "Qt not see any screens. Use defaults values";
-    } else {
-        /*If we dont have everoment of physical size try get it from screen*/
-        if (physicalScreenHeight == 0 || physicalScreenWidth == 0) {
-            qWarning("QT_QPA_EGLFS_PHYSICAL_WIDTH or QT_QPA_EGLFS_PHYSICAL_HEIGHT is not set! \n"
-                     "Trying to use QScreenSize");
-            physicalSizeChanged(primaryScreen->physicalSize());
-        } else {
-            physicalSizeChanged(QSizeF(physicalScreenHeight, physicalScreenWidth));
-        }
-
-
-        if (screenDPI == 0) {
-            screenDPI = primaryScreen->physicalDotsPerInch();
-        } else {
-            qInfo() << "Use DPI from QT_WAYLAND_FORCE_DPI enveroment = " << screenDPI;
-        }
-
-        physicalDotsPerInchChanged(screenDPI);
     }
+
+    physicalSizeChanged(QSizeF(physicalScreenHeight, physicalScreenWidth));
+
+    /*Calculate dpi bacuse wayland compositor return aways is 100*/
+    qreal calcDPI = primaryScreen->size().height()*2.54/physicalScreenHeight*10;
+
+    physicalDotsPerInchChanged(calcDPI);
 }
 
 void Sizing::setDpScaleFactor(float value) {
