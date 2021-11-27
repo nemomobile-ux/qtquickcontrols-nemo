@@ -262,6 +262,99 @@ ApplicationWindow {
                     text: "fontSizeTiny"
                     font.pixelSize: Theme.fontSizeTiny
                 }
+
+                Row {
+                    spacing: Theme.itemSpacingMedium
+                    Rectangle {
+                        radius: parent.height*0.5
+                        width: height
+                        height: Theme.itemHeightHuge
+                        color: Theme.accentColor;
+                    }
+                    Label{
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Theme.accentColor: "  + Theme.accentColor
+                        font.pixelSize: Theme.fontSizeMedium
+                    }
+                }
+
+                Row {
+                    spacing: Theme.itemSpacingMedium
+                    Rectangle {
+                        radius: parent.height*0.5
+                        width: height
+                        height: Theme.itemHeightHuge
+                        color: Theme.fillColor;
+                    }
+                    Label{
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Theme.fillColor: " + Theme.fillColor
+                        font.pixelSize: Theme.fontSizeMedium
+                    }
+                }
+
+                Row {
+                    spacing: Theme.itemSpacingMedium
+                    Rectangle {
+                        radius: parent.height*0.5
+                        width: height
+                        height: Theme.itemHeightHuge
+                        color: Theme.fillDarkColor;
+                    }
+                    Label{
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Theme.fillDarkColor: " + Theme.fillDarkColor
+                        font.pixelSize: Theme.fontSizeMedium
+                    }
+                }
+
+                Row {
+                    spacing: Theme.itemSpacingMedium
+                    Rectangle {
+                        radius: parent.height*0.5
+                        width: height
+                        height: Theme.itemHeightHuge
+                        color: Theme.textColor;
+                    }
+                    Label{
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Theme.textColor: " + Theme.textColor
+                        font.pixelSize: Theme.fontSizeMedium
+                    }
+                }
+
+                Row {
+                    spacing: Theme.itemSpacingMedium
+                    Rectangle {
+                        radius: parent.height*0.5
+                        width: height
+                        height: Theme.itemHeightHuge
+                        color: Theme.backgroundColor;
+                        border.width: 1
+                        border.color: Theme.backgroundAccentColor
+                    }
+                    Label{
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Theme.backgroundColor: " + Theme.backgroundColor
+                        font.pixelSize: Theme.fontSizeMedium
+                    }
+                }
+
+                Row {
+                    spacing: Theme.itemSpacingMedium
+                    Rectangle {
+                        radius: parent.height*0.5
+                        width: height
+                        height: Theme.itemHeightHuge
+                        color: Theme.backgroundAccentColor;
+                    }
+                    Label{
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Theme.backgroundAccentColor: " + Theme.backgroundAccentColor
+                        font.pixelSize: Theme.fontSizeMedium
+                    }
+                }
+
             }
         }
     }
