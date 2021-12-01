@@ -205,7 +205,7 @@ Item {
         anchors.right: parent.right
         //README: the rest of the anchors/sizes will be set by AnchorChanges!
 
-        color: Theme.backgroundColor
+        color: "transparent"
 
         //TODO: Check if changing this FilteringMouseArea->MouseArea has any side effects
         MouseArea {
@@ -329,8 +329,8 @@ Item {
 
     Rectangle {
         id: drawerContainer
-
-        color: Theme.backgroundColor
+        
+        color: "transparent"
 
         Binding on width {
             restoreMode: Binding.RestoreBinding
