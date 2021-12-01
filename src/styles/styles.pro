@@ -18,9 +18,6 @@ QML_FILES += \
     images/slider-trumpet-up.png \
     images/slider-trumpet.png
 
-keyboard.files = virtualkeyboard/style.qml
-keyboard.path = $$[QT_INSTALL_QML]/QtQuick/VirtualKeyboard/Styles/Nemo
-
 target.path = $$[QT_INSTALL_QML]/$$PLUGIN_IMPORT_PATH
 
 qmlfiles.files = qml/ButtonStyle.qml \
@@ -58,11 +55,6 @@ images.files = $$files($$_PRO_FILE_PWD_/images/*.svg,false)\
 
 images.path = $$[QT_INSTALL_QML]/$$PLUGIN_IMPORT_PATH/images/
 
-kbdimages.files = $$files($$_PRO_FILE_PWD_/images/virtualkeyboard/*.svg,false)\
-               $$files($$_PRO_FILE_PWD_/images/virtualkeyboard/*.png,false)
-
-kbdimages.path = $$[QT_INSTALL_QML]/QtQuick/VirtualKeyboard/Styles/Nemo/images
-
 HEADERS += \
     qquicknemostyleextensionplugin.h
 
@@ -72,8 +64,6 @@ SOURCES += \
 INSTALLS += target \
             images \
             qmlfiles \
-            themes \
-            keyboard \
-            kbdimages
+            themes
 
 DEFINES += 'THEME_DIR=\'\"$$[QT_INSTALL_QML]/$$PLUGIN_IMPORT_PATH/themes"\''
