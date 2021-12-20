@@ -183,7 +183,7 @@ Item {
     GridView {
         id: daysGrid
         width: parent.width
-        height: width
+        height: parent.height - weekDays.height - header.height - Theme.itemSpacingSmall * 2
         clip: true
 
         anchors {
@@ -192,7 +192,7 @@ Item {
         }
 
         cellWidth: width / 7 - 1
-        cellHeight: width / 6
+        cellHeight: height / 5
 
         model: calendarModel
 

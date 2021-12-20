@@ -44,10 +44,11 @@ Page {
 
     Column {
         spacing: Theme.itemSpacingSmall
+        anchors.fill: parent
 
-        width: parent.width
         DatePicker{
             id: datePicker
+            anchors.fill: parent
             onDateSelect: {
                 currentDate = date
             }
