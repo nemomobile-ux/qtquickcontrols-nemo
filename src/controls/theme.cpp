@@ -338,18 +338,18 @@ void Theme::loadDefaultValue()
     m_itemHeightSmall = floor(40*size->dpScaleFactor());
     m_itemHeightExtraSmall = floor(32*size->dpScaleFactor());
 
-    m_itemSpacingHuge = floor(40*size->dpScaleFactor());
-    m_itemSpacingLarge = floor(20*size->dpScaleFactor());
-    m_itemSpacingMedium = floor(15*size->dpScaleFactor());
-    m_itemSpacingSmall = floor(10*size->dpScaleFactor());
-    m_itemSpacingExtraSmall = floor(8*size->dpScaleFactor());
+    m_itemSpacingHuge = floor(48*size->dpScaleFactor());
+    m_itemSpacingLarge = floor(24*size->dpScaleFactor());
+    m_itemSpacingMedium = floor(18*size->dpScaleFactor());
+    m_itemSpacingSmall = floor(14*size->dpScaleFactor());
+    m_itemSpacingExtraSmall = floor(12*size->dpScaleFactor());
 
 
     m_fontSizeExtraLarge = floor(44*size->dpScaleFactor());
-    m_fontSizeLarge = floor(35*size->dpScaleFactor());
-    m_fontSizeMedium = floor(28*size->dpScaleFactor());
-    m_fontSizeSmall = floor(24*size->dpScaleFactor());
-    m_fontSizeTiny = floor(16*size->dpScaleFactor());
+    m_fontSizeLarge = floor(24*size->dpScaleFactor());
+    m_fontSizeMedium = floor(20*size->dpScaleFactor());
+    m_fontSizeSmall = floor(18*size->dpScaleFactor());
+    m_fontSizeTiny = floor(14*size->dpScaleFactor());
     m_fontWeightLarge = 63*size->dpScaleFactor();
     m_fontWeightMedium = 25*size->dpScaleFactor();
     m_fontFamily = "/usr/share/fonts/google-opensans/OpenSans-Regular.ttf";

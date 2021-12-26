@@ -121,7 +121,7 @@ Item {
 
         NemoIcon{
             id: itemIcon
-            height: iconVisible ? parent.height-Theme.itemSpacingSmall : 0
+            height: iconVisible ? parent.height-Theme.itemSpacingMedium : 0
             width: height
             anchors{
                 left: parent.left
@@ -202,7 +202,7 @@ Item {
 
         NemoIcon {
             id: arrowItem
-            height: parent.height- Theme.itemSpacingSmall
+            height: parent.height- Theme.itemSpacingMedium
             width: height
 
             anchors{
