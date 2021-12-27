@@ -39,7 +39,7 @@ class Sizing : public QObject
     Q_ENUMS(Densities)
 
     Q_PROPERTY(float mmScaleFactor READ mmScaleFactor WRITE setMmScaleFactor NOTIFY mmScaleFactorChanged)
-    Q_PROPERTY(float dpScaleFactor READ dpScaleFactor WRITE setDpScaleFactor NOTIFY dpScaleFactorChanged)
+    Q_PROPERTY(float dpScaleFactor READ dpScaleFactor NOTIFY dpScaleFactorChanged)
 
     Q_PROPERTY(Densitie densitie READ densitie NOTIFY densitieChanged)
 
@@ -52,7 +52,7 @@ public:
     Densitie densitie() {return m_densitie;};
 
     void setMmScaleFactor(float value);
-    void setDpScaleFactor(float value);
+    void setDpScaleFactor();
 
     Q_INVOKABLE float dp(float value);
     Q_INVOKABLE float mm(float value);
@@ -72,10 +72,12 @@ private:
     QSize m_screenSize;
 
     float m_mmScaleFactor;
-    qreal m_dpScaleFactor;
+    float m_dpScaleFactor;
 
     qreal m_screenDPI;
     Densitie m_densitie;
+
+    bool m_forceDpiScaleFactor;
 };
 
 #endif // SIZING_H

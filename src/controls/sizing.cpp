@@ -22,6 +22,7 @@
 #include <QScreen>
 #include <QDebug>
 #include <QGuiApplication>
+#include <MGConfItem>
 #include <math.h>
 
 const qreal refHeight =  1440; //HD
@@ -35,9 +36,17 @@ Sizing::Sizing(QObject *parent)
     , m_dpScaleFactor(1)
     , m_screenDPI(0)
     , m_densitie(mdpi)
+    , m_forceDpiScaleFactor(false)
 {
     qreal physicalScreenHeight = qEnvironmentVariableIntValue("QT_QPA_EGLFS_PHYSICAL_HEIGHT");
     qreal physicalScreenWidth = qEnvironmentVariableIntValue("QT_QPA_EGLFS_PHYSICAL_WIDTH");
+
+    MGConfItem *dpScaleFactorValue = new MGConfItem(QStringLiteral("/nemo/apps/libglacier/dpScaleFactor"));
+    if(dpScaleFactorValue->value("0").toFloat() != 0) {
+        m_forceDpiScaleFactor = true;
+        m_dpScaleFactor = dpScaleFactorValue->value().toFloat();
+    }
+    connect(dpScaleFactorValue, &MGConfItem::valueChanged, this, &Sizing::setDpScaleFactor);
 
     QScreen *primaryScreen = QGuiApplication::primaryScreen();
 
@@ -62,9 +71,13 @@ Sizing::Sizing(QObject *parent)
     physicalDotsPerInchChanged(calcDPI);
 }
 
-void Sizing::setDpScaleFactor(float value) {
+void Sizing::setDpScaleFactor() {
+    MGConfItem *dpScaleFactorValue = new MGConfItem(QStringLiteral("/nemo/apps/libglacier/dpScaleFactor"));
+    float value = dpScaleFactorValue->value("0").toFloat();
+
     if(value != m_dpScaleFactor && value != 0) {
         m_dpScaleFactor = value;
+        m_forceDpiScaleFactor = true;
         emit dpScaleFactorChanged();
     }
 }
@@ -121,7 +134,7 @@ void Sizing::physicalDotsPerInchChanged(qreal dpi)
         emit densitieChanged();
     }
 
-    if(dpScaleFactor != m_dpScaleFactor) {
+    if(dpScaleFactor != m_dpScaleFactor && !m_forceDpiScaleFactor) {
         m_dpScaleFactor = dpScaleFactor;
         emit dpScaleFactorChanged();
     }
