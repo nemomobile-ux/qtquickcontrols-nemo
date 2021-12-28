@@ -196,6 +196,45 @@ Item {
         slidingAnim.to = coord
         slidingAnim.start()
     }
+    
+    property int startCoord: 0
+
+    function endSwipe() {
+        if (appWindow.isUiPortrait) {
+            //this is the y at the top of the screen, relative to the header dock (root)
+            var topY = -root.y
+
+            //We cannot use QML's childAt because it requires both x and y
+            //and we don't have an x to provide (and it wouldn't make sense to have one,
+            //given the current specced behaviour of the header)
+            var item = drawer.getItemAt(topY)
+
+            //item is undefined when there's no item at the y of the top edge of the screen
+            //(this happens for example when you pull down the drawer so that its y is > 0)
+            if (item == undefined) {
+                //if the drawer is closed or half open, we open it totally.
+                //if it was opened already, we close it ("pull down to close" feature)
+                root.slideDrawerTo(startCoord == 0 ? root.closedY : 0)
+            } else {
+                root.slideDrawerTo(((topY - item.y) <= (speedBumpThreshold * item.height)) ? -item.y : -(item.y + item.height))
+            }
+        } else {
+
+            if (startCoord < closedX / 2) {
+                if (root.x < closedX+mouseArea.gestureThreshold) {
+                    root.slideDrawerTo(closedX)
+                } else {
+                    root.slideDrawerTo(0);
+                }
+            } else {
+                if (root.x < -mouseArea.gestureThreshold) {
+                    root.slideDrawerTo(closedX)
+                } else {
+                    root.slideDrawerTo(0);
+                }
+            }
+        }
+    }
 
     //THIS ITEM AND ITS CHILDREN ARE THE TOOLBAR (i.e. NOT what's inside the drawer!)
     //This item only resizes when UI rotates, while toolBarContainer is the one actually rotating
@@ -216,7 +255,6 @@ Item {
             property int gestureThreshold: drawer.width / 3 //this is only used in landscape
             //container coordinate (x OR y, depending on UI orientation) relative to the parent
             //of the header
-            property int startCoord: 0
             //mouse coordinate (x OR y, depending on UI orientation) relative to the parent
             //of the header
             property int startMouseCoord: 0
@@ -282,44 +320,14 @@ Item {
             }
 
             onReleased: {
-                if (appWindow.isUiPortrait) {
-                    if (!swiping) {
-                        //Fully Close/Open the drawer
-                        root.slideDrawerTo((root.y == root.closedY) ? 0 : root.closedY)
-                    } else {
-                        //this is the y at the top of the screen, relative to the header dock (root)
-                        var topY = -root.y
-
-                        //We cannot use QML's childAt because it requires both x and y
-                        //and we don't have an x to provide (and it wouldn't make sense to have one,
-                        //given the current specced behaviour of the header)
-                        var item = drawer.getItemAt(topY)
-
-                        //item is undefined when there's no item at the y of the top edge of the screen
-                        //(this happens for example when you pull down the drawer so that its y is > 0)
-                        if (item == undefined) {
-                            //if the drawer is closed or half open, we open it totally.
-                            //if it was opened already, we close it ("pull down to close" feature)
-                            root.slideDrawerTo(startCoord == 0 ? root.closedY : 0)
-                        } else {
-                            root.slideDrawerTo(((topY - item.y) <= (speedBumpThreshold * item.height)) ? -item.y : -(item.y + item.height))
-                        }
-                    }
+                if (swiping) {
+                    endSwipe();
+                } else if (appWindow.isUiPortrait) {
+                    //Fully Close/Open the drawer
+                    root.slideDrawerTo((root.y == root.closedY) ? 0 : root.closedY)
                 } else {
-                    if (!swiping) {
-                        //Fully Close/Open the drawer
-                        root.slideDrawerTo((root.x == root.closedX) ? 0 : root.closedX)
-                    } else {
-                        deltaCoord = (mouse.x + root.x) - startMouseCoord
-                        if (deltaCoord > gestureThreshold) {
-                            root.slideDrawerTo(startCoord < 0 ? 0 : closedX)
-                        } else if (deltaCoord < -gestureThreshold){
-                            root.slideDrawerTo(closedX)
-                        } else { //i.e (-gestureThreshold <= deltaCoord <= gestureThreshold)
-                            root.slideDrawerTo((startCoord === root.closedX) ? root.closedX : 0)
-                        }
-                    }
-
+                    //Fully Close/Open the drawer
+                    root.slideDrawerTo((root.x == root.closedX) ? 0 : root.closedX)
                 }
                 swiping = false
             }

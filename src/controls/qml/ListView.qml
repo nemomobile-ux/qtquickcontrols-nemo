@@ -2,15 +2,63 @@ import QtQuick 2.6
 import QtQuick.Controls 1.0
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick.Window 2.6
 
 ListView {
     id: listView
 
     signal hideAllActions(int hideIndex)
 
-    //property color delegateColor: Theme.backgroundColor
+    flickableDirection: Flickable.HorizontalAndVerticalFlick
     property color delegateColor: "transparent"
     property color bottomGradientColor: Theme.backgroundColor
+
+    property double prevContentY: contentY
+    property double prevContentX: contentX
+
+    onContentYChanged: {
+        if (Window.window.isUiPortrait) {
+            if (contentY < 0) {
+                Window.window.header.y -= contentY - originY;
+                contentY = originY;
+            } else {
+                if (Window.window.header.y > Window.window.header.closedY) {
+                    Window.window.header.y += (prevContentY - originY) - (contentY - originY);
+                    if (Window.window.header.y < Window.window.header.closedY) 
+                        Window.window.header.y = Window.window.header.closedY
+                    contentY = prevContentY;
+                }
+            }
+        }
+        prevContentY = contentY;
+    }
+
+    onContentXChanged: {
+        if (!Window.window.isUiPortrait) {
+            if (contentX < 0) {
+                Window.window.header.x -= contentX - originX;
+                contentX = originX;
+            } else {
+                if (Window.window.header.x > Window.window.header.closedX) {
+                    Window.window.header.x += (prevContentX - originX) - (contentX - originX);
+                    contentX = prevContentX;
+                }
+            }
+        }
+        prevContentX = contentX;
+    }
+
+    onMovementEnded: {
+        Window.window.header.endSwipe()
+    }
+
+    onMovementStarted: {
+        if (Window.window.isUiPortrait) {
+            Window.window.header.startCoord = Window.window.header.y;
+        } else {
+            Window.window.header.startCoord = Window.window.header.x;
+        }
+    }
 
     section.criteria: ViewSection.FullString
     section.delegate: Component{
