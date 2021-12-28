@@ -41,6 +41,8 @@ NemoPage {
     width: parent.width
     height: parent.height
 
+    readonly property double backGestureThreshold: Theme.itemHeightLarge
+
     property int status: pageStack ? Stack.status : Stack.Inactive
     property variant headerTools
     readonly property StackView pageStack: Stack.view
@@ -92,9 +94,8 @@ NemoPage {
             prevContentY = contentY;
         }
 
-
         onContentXChanged: {
-            if (!Window.window.isUiPortrait) {
+            if (Window.window.isUiLandscape) {
                 if (contentX < 0) {
                     Window.window.header.x -= contentX - originX;
                     contentX = originX;
@@ -104,12 +105,19 @@ NemoPage {
                         contentX = prevContentX;
                     }
                 }
+            } else {
+                anchors.leftMargin += (prevContentX - originX) - (contentX - originX);
+                anchors.rightMargin -= (prevContentX - originX) - (contentX - originX);
+                contentX = originX;
             }
             prevContentX = contentX;
         }
 
         onMovementEnded: {
             Window.window.header.endSwipe()
+
+            anchors.leftMargin = 0;
+            anchors.rightMargin = 0;
         }
 
         onMovementStarted: {
@@ -117,6 +125,12 @@ NemoPage {
                 Window.window.header.startCoord = Window.window.header.y;
             } else {
                 Window.window.header.startCoord = Window.window.header.x;
+            }
+        }
+        
+        onFlickEnded: {
+            if (Window.window.isUiPortrait && anchors.leftMargin > backGestureThreshold) {
+                Window.window.pageStack.pop();
             }
         }
     }

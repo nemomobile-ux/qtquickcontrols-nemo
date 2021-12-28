@@ -8,8 +8,6 @@ ListView {
     id: listView
 
     signal hideAllActions(int hideIndex)
-
-    flickableDirection: Flickable.HorizontalAndVerticalFlick
     property color delegateColor: "transparent"
     property color bottomGradientColor: Theme.backgroundColor
 
