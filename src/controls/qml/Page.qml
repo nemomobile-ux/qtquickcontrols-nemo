@@ -74,12 +74,16 @@ NemoPage {
         id: content
         anchors.fill: parent
 
-        flickableDirection: Flickable.HorizontalAndVerticalFlick
+        flickableDirection: (typeof(Window.window.header) != "undefined") ? Flickable.HorizontalAndVerticalFlick : Flickable.AutoFlickIfNeeded
 
         property double prevContentY: contentY
         property double prevContentX: contentX
 
         onContentYChanged: {
+            if (typeof(Window.window.header) == "undefined") {
+                return;
+            }
+
             if (Window.window.isUiPortrait) {
                 if (contentY < 0) {
                     Window.window.header.y -= contentY - originY;
@@ -95,6 +99,10 @@ NemoPage {
         }
 
         onContentXChanged: {
+            if (typeof(Window.window.header) == "undefined") {
+                return;
+            }
+
             if (Window.window.isUiLandscape) {
                 if (contentX < 0) {
                     Window.window.header.x -= contentX - originX;
@@ -114,6 +122,10 @@ NemoPage {
         }
 
         onMovementEnded: {
+            if (typeof(Window.window.header) == "undefined") {
+                return;
+            }
+
             Window.window.header.endSwipe()
 
             anchors.leftMargin = 0;
@@ -121,6 +133,10 @@ NemoPage {
         }
 
         onMovementStarted: {
+            if (typeof(Window.window.header) == "undefined") {
+                return;
+            }
+
             if (Window.window.isUiPortrait) {
                 Window.window.header.startCoord = Window.window.header.y;
             } else {
@@ -129,6 +145,10 @@ NemoPage {
         }
         
         onFlickEnded: {
+            if (typeof(Window.window.header) == "undefined") {
+                return;
+            }
+
             if (Window.window.isUiPortrait && anchors.leftMargin > backGestureThreshold) {
                 Window.window.pageStack.pop();
             }

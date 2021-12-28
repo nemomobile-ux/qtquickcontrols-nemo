@@ -15,6 +15,10 @@ ListView {
     property double prevContentX: contentX
 
     onContentYChanged: {
+        if (typeof(Window.window.header) == "undefined") {
+            return;
+        }
+
         if (Window.window.isUiPortrait) {
             if (contentY < 0) {
                 Window.window.header.y -= contentY - originY;
@@ -32,6 +36,10 @@ ListView {
     }
 
     onContentXChanged: {
+        if (typeof(Window.window.header) == "undefined") {
+            return;
+        }
+
         if (!Window.window.isUiPortrait) {
             if (contentX < 0) {
                 Window.window.header.x -= contentX - originX;
@@ -47,10 +55,18 @@ ListView {
     }
 
     onMovementEnded: {
+        if (typeof(Window.window.header) == "undefined") {
+            return;
+        }
+
         Window.window.header.endSwipe()
     }
 
     onMovementStarted: {
+        if (typeof(Window.window.header) == "undefined") {
+            return;
+        }
+
         if (Window.window.isUiPortrait) {
             Window.window.header.startCoord = Window.window.header.y;
         } else {
