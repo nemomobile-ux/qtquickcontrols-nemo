@@ -194,6 +194,8 @@ NemoWindow {
     Item {
         id: backgroundItem
         anchors.fill: parent
+        anchors.bottomMargin: (isUiPortrait) ? header.closedY - header.y : 0
+        anchors.rightMargin: (isUiLandscape) ? header.closedX - header.x : 0
 
         Item {
             id: clipping
