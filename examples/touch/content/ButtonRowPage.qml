@@ -72,7 +72,7 @@ Page {
         }
         Connections {
             target: row
-            onCurrentIndexChanged: {
+            function onCurrentIndexChanged() {
                 selector.text = qsTr("Selected") + " " + buttonModel.get(row.currentIndex).name
             }
         }
