@@ -45,6 +45,7 @@ Item {
     property bool showBackButton: true
     property alias dayDelegate: daysGrid.delegate
     property alias weekDaysDelegate: weekendListView.delegate
+    property alias selectedDate: calendarModel.selectedDate
 
     property var monthNames: [qsTr("January"), qsTr("February"), qsTr("March"), qsTr("April"), qsTr("May"), qsTr("June"),qsTr("July"), qsTr("August"), qsTr("September"), qsTr("October"), qsTr("November"), qsTr("December")];
 
