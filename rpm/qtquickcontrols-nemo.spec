@@ -9,7 +9,6 @@ Source0:    %{name}-%{version}.tar.xz
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
-BuildRequires:  fdupes
 
 Requires:   qt5-qtquickcontrols
 Requires:   qt5-qtgraphicaleffects
