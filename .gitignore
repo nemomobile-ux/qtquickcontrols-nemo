@@ -14,3 +14,4 @@ Makefile
 installroot/
 RPMS/
 debug*.list
+build/

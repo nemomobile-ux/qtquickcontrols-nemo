@@ -27,7 +27,7 @@ TextFieldStyle {
     textColor: Theme.textColor
     font.pixelSize: Theme.fontSizeMedium
     font.family: Theme.fontFamily
-    placeholderTextColor: Theme.textColor
+    placeholderTextColor: Theme.fillColor
 
     background: Item {
         anchors{
