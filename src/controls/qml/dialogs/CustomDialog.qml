@@ -41,7 +41,7 @@ Item {
     Rectangle {
         id: shadow
         width: parent.width
-        height: inline ? (parent.height-cancel.height)/3 : parent.height-cancel.height
+        height: inline ? (parent.height-cancel.height)/2 : parent.height-cancel.height
         opacity: shell.bgOpacity
         color: Theme.backgroundColor
         anchors.bottom: cancel.top
@@ -49,12 +49,13 @@ Item {
 
     Column {
         anchors.fill: inline ? shadow : parent
-        anchors.margins: Theme.itemSpacingHuge
+        anchors.margins: Theme.itemSpacingMedium
         spacing: inline ? Theme.itemSpacingSmall : Theme.itemSpacingHuge
 
         Item {
             width: parent.width
             height: Theme.itemSpacingHuge
+            visible: icon.visible
 
             NemoIcon{
                 id: icon
