@@ -420,7 +420,7 @@ NemoWindow {
                         },
                         State {
                             name: 'Landscape'
-                            when: root.width < root.height //root.orientation === Qt.LandscapeOrientation //&& stackInitialized
+                            when: root.orientation === Qt.LandscapeOrientation //&& stackInitialized
                             PropertyChanges {
                                 target: contentArea
                                 restoreEntryValues: false

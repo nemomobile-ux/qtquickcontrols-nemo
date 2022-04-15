@@ -1,4 +1,5 @@
 *.pro.user
+*.pro.user.*
 *.pyc
 .directory
 *.o

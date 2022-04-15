@@ -224,6 +224,7 @@ Page {
         id: customDialog
         icon: "image://theme/user"
         headingText: qsTr("Send message")
+        subLabelText: qsTr("Select prefered channel")
         //inline: false;
         visible: false;
         acceptText: qsTr("Ok")
