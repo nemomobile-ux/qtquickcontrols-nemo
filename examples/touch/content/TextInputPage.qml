@@ -115,7 +115,7 @@ Page {
                 implicitHeight: Theme.itemHeightMedium
                 implicitWidth: Theme.itemWidthLarge
                 BorderImage {
-                    source: "/usr/share/glacier-components/images/textinput.png"
+                    source: "../images/textinput.png"
                     border.left: Theme.itemSpacingExtraSmall
                     border.right: Theme.itemSpacingExtraSmall
                     anchors.bottom: parent.bottom
