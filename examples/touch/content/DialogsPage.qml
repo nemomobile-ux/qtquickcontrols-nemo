@@ -47,7 +47,7 @@ Page {
 
     Image {
         id: bgImage
-        source: "/usr/share/glacier-components/images/example.jpg"
+        source: "../images/example.jpg"
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
     }

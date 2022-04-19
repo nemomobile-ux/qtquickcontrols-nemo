@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>glacier-sizeview.qml</file>
+    </qresource>
+</RCC>

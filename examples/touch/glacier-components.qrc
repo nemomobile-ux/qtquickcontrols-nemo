@@ -1,0 +1,27 @@
+<RCC>
+    <qresource prefix="/">
+        <file>glacier-components.qml</file>
+        <file>content/LiveCoding.qml</file>
+        <file>content/SelectRollerPage.qml</file>
+        <file>content/DialogsPage.qml</file>
+        <file>content/BrokenPage.qml</file>
+        <file>content/ButtonPage.qml</file>
+        <file>content/SpinnerPage.qml</file>
+        <file>content/ProgressBarPage.qml</file>
+        <file>content/StatusNotifyPage.qml</file>
+        <file>content/SliderPage.qml</file>
+        <file>content/LabelPage.qml</file>
+        <file>content/TextInputPage.qml</file>
+        <file>content/TimePickerPage.qml</file>
+        <file>content/NotificationsPage.qml</file>
+        <file>content/ButtonRowPage.qml</file>
+        <file>content/DatePickerPage.qml</file>
+        <file>content/CheckboxPage.qml</file>
+        <file>content/TabBarPage.qml</file>
+        <file>content/IconPage.qml</file>
+        <file>content/ListViewPage.qml</file>
+        <file>content/RingIndicatorPage.qml</file>
+        <file>images/example.jpg</file>
+        <file>images/textinput.png</file>
+    </qresource>
+</RCC>

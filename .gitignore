@@ -1,5 +1,3 @@
-*.pro.user
-*.pro.user.*
 *.pyc
 .directory
 *.o
@@ -15,4 +13,5 @@ Makefile
 installroot/
 RPMS/
 debug*.list
+CMakeLists.txt.user*
 build/
