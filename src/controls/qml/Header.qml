@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2021 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2018-2022 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -17,6 +17,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
+import QtQml 2.14
 import QtQuick 2.6
 import QtQuick.Window 2.0
 import QtQuick.Controls 1.0
@@ -24,7 +25,6 @@ import QtQuick.Controls.Nemo 1.0
 import QtQuick.Controls.Styles.Nemo 1.0
 
 import QtGraphicalEffects 1.0
-import QtQml 2.14
 
 Item {
     id: root
@@ -325,6 +325,57 @@ Item {
             }
         }
 
+
+        Rectangle{
+            id: toolsIndicator
+            width: parent.width
+            height: Theme.itemHeightExtraSmall/8
+            color: Theme.accentColor
+
+            property bool started: false
+
+            anchors.top: parent.top
+            visible: drawerContainer.height > 0 && -root.y == drawerContainer.height && !started
+
+
+            SequentialAnimation {
+                id: indicateToolsAnimation
+                running: false
+                loops: 3
+
+                PropertyAnimation {
+                    to: Theme.backgroundColor
+                    target: toolsIndicator
+                    property: "color"
+                    duration: 750
+                }
+
+                PropertyAnimation {
+                    to: Theme.accentColor
+                    target: toolsIndicator
+                    property: "color"
+                    duration: 750
+                }
+
+                 onStopped: {
+                    toolsIndicator.started = true
+                }
+
+
+            }
+
+            Component.onCompleted: {
+                if(visible) {
+                    indicateToolsAnimation.start()
+                }
+            }
+
+            onVisibleChanged: {
+                if(visible) {
+                    indicateToolsAnimation.start()
+                }
+            }
+        }
     }
 
     Rectangle {
