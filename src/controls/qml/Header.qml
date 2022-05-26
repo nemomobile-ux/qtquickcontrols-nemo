@@ -326,54 +326,12 @@ Item {
             }
         }
 
-
-        Rectangle{
+        HeaderToolsIndicator{
             id: toolsIndicator
             width: parent.width
             height: Theme.itemHeightExtraSmall/8
-            color: Theme.accentColor
-
-            property bool started: false
-
             anchors.top: parent.top
             visible: drawerContainer.height > 0 && -root.y == drawerContainer.height
-
-
-            SequentialAnimation {
-                id: indicateToolsAnimation
-                running: false
-                loops: 3
-
-                PropertyAnimation {
-                    to: Theme.backgroundColor
-                    target: toolsIndicator
-                    property: "color"
-                    duration: 750
-                }
-
-                PropertyAnimation {
-                    to: Theme.accentColor
-                    target: toolsIndicator
-                    property: "color"
-                    duration: 750
-                }
-
-                 onStopped: {
-                    toolsIndicator.started = true
-                }
-            }
-
-            Component.onCompleted: {
-                if(visible && !started) {
-                    indicateToolsAnimation.start()
-                }
-            }
-
-            onVisibleChanged: {
-                if(visible && !started) {
-                    indicateToolsAnimation.start()
-                }
-            }
         }
     }
 

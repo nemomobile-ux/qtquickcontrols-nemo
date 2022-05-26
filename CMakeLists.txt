@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6.0)
 
 project(qtquickcontrols-nemo
-	VERSION 5.6.6
+        VERSION 5.7.0
 	DESCRIPTION "QtQuick.Controls.Nemo")
 
 set(CMAKE_AUTOMOC ON)
