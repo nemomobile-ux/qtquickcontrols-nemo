@@ -46,8 +46,8 @@ ButtonStyle {
         RadialGradient {
             x: control.pressX - width/2
             y: control.pressY - height/2
-            width: Theme.itemWidthSmall
-            height: width
+            width: visible ? Theme.itemWidthSmall : 0
+            height: visible ? Theme.itemWidthSmall : 0
             visible: control.pressed
 
             gradient: Gradient {
@@ -61,6 +61,14 @@ ButtonStyle {
                     color: control.primary ? Theme.accentColor
                                            : "transparent"
                 }
+            }
+
+            Behavior on width {
+                NumberAnimation { duration: 200 }
+            }
+
+            Behavior on height {
+                NumberAnimation { duration: 200 }
             }
         }
     }
