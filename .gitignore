@@ -3,6 +3,11 @@
 *.o
 *.so
 *.qmlc
+*_qml.cpp
+*_qmlcache.qrc*
+*_install.cmake
+*.moc
+qmlcache_loader.cpp
 moc_*
 qrc_*
 .qmake.stash
@@ -12,6 +17,9 @@ examples/touch/glacier-components
 Makefile
 installroot/
 RPMS/
+CMakeFiles/
+CMakeCache.*
 debug*.list
-CMakeLists.txt.user*
+*.txt.user*
 build/
+*_autogen*
