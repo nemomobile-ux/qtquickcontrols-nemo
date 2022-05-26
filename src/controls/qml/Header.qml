@@ -336,7 +336,7 @@ Item {
             property bool started: false
 
             anchors.top: parent.top
-            visible: drawerContainer.height > 0 && -root.y == drawerContainer.height && !started
+            visible: drawerContainer.height > 0 && -root.y == drawerContainer.height
 
 
             SequentialAnimation {
@@ -361,18 +361,16 @@ Item {
                  onStopped: {
                     toolsIndicator.started = true
                 }
-
-
             }
 
             Component.onCompleted: {
-                if(visible) {
+                if(visible && !started) {
                     indicateToolsAnimation.start()
                 }
             }
 
             onVisibleChanged: {
-                if(visible) {
+                if(visible && !started) {
                     indicateToolsAnimation.start()
                 }
             }
