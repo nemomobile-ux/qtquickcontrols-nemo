@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2013 Andrea Bernabei <and.bernabei@gmail.com>
- * Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021-2022 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -20,7 +20,6 @@
 
 #include "nemowindow.h"
 #include <QDebug>
-#include <QScreen>
 #include "hacks.h"
 
 NemoWindow::NemoWindow(QWindow *parent) :
@@ -30,14 +29,6 @@ NemoWindow::NemoWindow(QWindow *parent) :
     m_allowedOrientations = m_defaultAllowedOrientations;
     m_filter = new EditFilter();
     this->installEventFilter(m_filter);
-
-    calculateOrientation(this->screen()->orientation());
-
-    QScreen *screen = this->screen();
-
-    connect(screen, &QScreen::orientationChanged,
-            this, &NemoWindow::calculateOrientation);
-
 }
 
 Qt::ScreenOrientations NemoWindow::allowedOrientations() const
@@ -48,11 +39,6 @@ Qt::ScreenOrientations NemoWindow::allowedOrientations() const
 const Qt::ScreenOrientations NemoWindow::defaultAllowedOrientations() const
 {
     return m_defaultAllowedOrientations;
-}
-
-Qt::ScreenOrientations NemoWindow::orientation() const
-{
-    return m_orientation;
 }
 
 void NemoWindow::setAllowedOrientations(Qt::ScreenOrientations allowed)
@@ -66,29 +52,4 @@ void NemoWindow::setAllowedOrientations(Qt::ScreenOrientations allowed)
             qDebug() << "NemoWindow: invalid allowedOrientation!";
         }
     }
-}
-
-void NemoWindow::calculateOrientation(Qt::ScreenOrientation orientation)
-{
-    Qt::ScreenOrientation orient;
-
-    if(orientation == Qt::InvertedLandscapeOrientation || orientation == Qt::InvertedPortraitOrientation) {
-        if(width() < height()) {
-            orient = Qt::InvertedLandscapeOrientation;
-        } else {
-            orient = Qt::InvertedPortraitOrientation;
-        }
-    } else {
-        if(width() < height()) {
-            orient = Qt::LandscapeOrientation;
-        } else {
-            orient = Qt::PortraitOrientation;
-        }
-    }
-
-    if(orient != m_orientation) {
-        m_orientation = orient;
-        emit orientationChanged();
-    }
-
 }
