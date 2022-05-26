@@ -1,6 +1,6 @@
 /****************************************************************************************
 **
-** Copyright (C) 2017-2021 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2017-2022 Chupligin Sergey <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -29,7 +29,7 @@
 **
 ****************************************************************************************/
 
-import QtQuick 2.6
+import QtQuick 2.15
 import QtQuick.Controls.Nemo 1.0
 
 import QtGraphicalEffects 1.0
@@ -67,6 +67,41 @@ Item {
         function onHideAllActions(hideIndex) {
             if (hideIndex != index) {
                 listArea.x = 0
+            }
+        }
+    }
+
+    // The effect which shows the pressed state
+    Rectangle{
+        id: background
+        anchors.fill: parent
+        color: "transparent"
+        clip: true
+
+        RadialGradient {
+            x: mouse.mouseX - width/2
+            y: mouse.mouseY - height/2
+            width: visible ? Theme.itemWidthSmall : 0
+            height: visible ? Theme.itemWidthSmall : 0
+            visible: mouse.pressed
+
+            gradient: Gradient {
+                GradientStop {
+                    position: 0.29
+                    color: Theme.accentColor
+                }
+                GradientStop {
+                    position: 0.5;
+                    color: "transparent"
+                }
+            }
+
+            Behavior on width {
+                NumberAnimation { duration: 200 }
+            }
+
+            Behavior on height {
+                NumberAnimation { duration: 200 }
             }
         }
     }
@@ -223,12 +258,9 @@ Item {
             anchors.fill: parent
             onClicked: {
                 //if actions is hide
-                if(listArea.x === 0)
-                {
+                if(listArea.x === 0) {
                     root.clicked()
-                }
-                else
-                {
+                } else {
                     listArea.x = 0
                 }
             }
