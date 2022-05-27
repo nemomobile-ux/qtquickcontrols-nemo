@@ -42,7 +42,9 @@ Theme::Theme(QObject *parent) : QObject(parent)
 
     connect(size, &Sizing::dpScaleFactorChanged, this, &Theme::setThemeValues);
 
-    loadTheme(m_theme);
+    if(!m_theme.isEmpty()) {
+        loadTheme(m_theme);
+    }
 }
 
 bool Theme::loadTheme(QString fileName)
@@ -51,6 +53,11 @@ bool Theme::loadTheme(QString fileName)
 
     if(!themeFile.exists()) {
         qDebug() << "Theme file " << fileName << " not found";
+        return false;
+    }
+
+    if(themeFile.size() == 0) {
+        qDebug() << "Theme file " << fileName << " is empty";
         return false;
     }
 
