@@ -245,6 +245,8 @@ NemoWindow {
                                                                                       : (root._transpose ? Qt.inputMethod.keyboardRectangle.height
                                                                                                          : Qt.inputMethod.keyboardRectangle.width))
 
+                    /*
+                      TODO: fix on landscape and inverted landscape
                     onImSizeChanged: {
                         if (imSize <= 0 && previousImSize > 0) {
                             imShowAnimation.stop()
@@ -258,7 +260,7 @@ NemoWindow {
                         }
 
                         previousImSize = imSize
-                    }
+                    }*/
                     clip: true
                     Component.onCompleted: {
                         stackInitialized = true
@@ -433,7 +435,7 @@ NemoWindow {
                         },
                         State {
                             name: 'Portrait'
-                            when: contentArea.filteredOrientation === Qt.PortraitOrientation// && stackInitialized
+                            when: contentArea.filteredOrientation === Qt.PortraitOrientation && stackView.stackInitialized
                             PropertyChanges {
                                 target: contentArea
                                 restoreEntryValues: false
@@ -458,13 +460,13 @@ NemoWindow {
                         },
                         State {
                             name: 'Landscape'
-                            when: contentArea.filteredOrientation === Qt.LandscapeOrientation //&& stackInitialized
+                            when: contentArea.filteredOrientation === Qt.LandscapeOrientation && stackView.stackInitialized
                             PropertyChanges {
                                 target: contentArea
                                 restoreEntryValues: false
                                 width: _verticalDimension
                                 height: _horizontalDimension
-                                rotation: 90
+                                rotation: 270
                                 uiOrientation: Qt.LandscapeOrientation
                             }
                             PropertyChanges {
@@ -483,7 +485,7 @@ NemoWindow {
                         },
                         State {
                             name: 'PortraitInverted'
-                            when: contentArea.filteredOrientation === Qt.InvertedPortraitOrientation //&& stackInitialized
+                            when: contentArea.filteredOrientation === Qt.InvertedPortraitOrientation && stackView.stackInitialized
                             PropertyChanges {
                                 target: contentArea
                                 restoreEntryValues: false
@@ -508,13 +510,13 @@ NemoWindow {
                         },
                         State {
                             name: 'LandscapeInverted'
-                            when: contentArea.filteredOrientation === Qt.InvertedLandscapeOrientation //&& stackInitialized
+                            when: contentArea.filteredOrientation === Qt.InvertedLandscapeOrientation && stackView.stackInitialized
                             PropertyChanges {
                                 target: contentArea
                                 restoreEntryValues: false
                                 width: _verticalDimension
                                 height: _horizontalDimension
-                                rotation: 270
+                                rotation: 90
                                 uiOrientation: Qt.InvertedLandscapeOrientation
                             }
                             PropertyChanges {
