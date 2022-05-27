@@ -79,7 +79,7 @@ Item {
         clip: true
 
         RadialGradient {
-            x: mouse.mouseX - width/2
+            x: mouse.mouseX - width/2 + listArea.x
             y: mouse.mouseY - height/2
             width: visible ? Theme.itemWidthSmall : 0
             height: visible ? Theme.itemWidthSmall : 0
