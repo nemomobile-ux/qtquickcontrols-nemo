@@ -1,7 +1,6 @@
 pkg_check_modules(MLITE mlite5 REQUIRED IMPORTED_TARGET)
 
 set(SRC
-    hacks.cpp
     ringindicator.cpp
     qquickfilteringmousearea.cpp
     sizing.cpp
@@ -25,7 +24,6 @@ set(HEADERS
     qquicknemocontrolsextensionplugin.h
     themedaemon/mlocalthemedaemonclient.h
     themedaemon/mabstractthemedaemonclient.h
-    hacks.h
     qquickfilteringmousearea.h
     nemofocussingleton.h
     nemowindow.h

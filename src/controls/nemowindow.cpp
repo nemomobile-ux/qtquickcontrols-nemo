@@ -19,8 +19,8 @@
  */
 
 #include "nemowindow.h"
+#include "nemopage.h"
 #include <QDebug>
-#include "hacks.h"
 
 NemoWindow::NemoWindow(QWindow *parent) :
     QQuickWindow(parent),
@@ -45,7 +45,7 @@ void NemoWindow::setAllowedOrientations(Qt::ScreenOrientations allowed)
 {
     //This way no invalid values can get assigned to allowedOrientations
     if (m_allowedOrientations != allowed) {
-        if (Hacks::isOrientationMaskValid(allowed)) {
+        if (NemoPage::isOrientationMaskValid(allowed)) {
             m_allowedOrientations = allowed;
             emit allowedOrientationsChanged();
         } else {

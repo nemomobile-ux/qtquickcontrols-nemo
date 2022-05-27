@@ -13,9 +13,11 @@ public:
     
     Qt::ScreenOrientations allowedOrientations() const;
     void setAllowedOrientations(Qt::ScreenOrientations allowed);
+    static bool isOrientationMaskValid(Qt::ScreenOrientations orientations);
 
 signals:
     void allowedOrientationsChanged();
+    void rotationChanged();
 
 public slots:
 

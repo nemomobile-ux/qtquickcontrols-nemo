@@ -2,7 +2,7 @@
  * Copyright (C) 2013 Tomasz Olszak <olszak.tomasz@gmail.com>
  * Copyright (C) 2013 Andrea Bernabei <and.bernabei@gmail.com>
  * Copyright (C) 2017 Eetu Kahelin
- * Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021-2022 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -22,7 +22,6 @@
 
 #include "qquicknemocontrolsextensionplugin.h"
 #include <QtQml>
-#include "hacks.h"
 #include "nemowindow.h"
 #include "nemopage.h"
 #include "qquickfilteringmousearea.h"
@@ -37,11 +36,6 @@ QQuickNemoControlsExtensionPlugin::QQuickNemoControlsExtensionPlugin(QObject *pa
 {
 }
 
-static QObject *nemo_hacks_singletontype_provider(QQmlEngine *engine, QJSEngine */*scriptEngine*/)
-{
-    QObject *ret = new Hacks(engine);
-    return ret;
-}
 QObject *getNemoFocus(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
     Q_UNUSED(engine)
@@ -55,7 +49,6 @@ void QQuickNemoControlsExtensionPlugin::registerTypes(const char *uri)
     Q_ASSERT(uri == QLatin1String("QtQuick.Controls.Nemo"));
     qmlRegisterModule(uri, 1, 0);
     qmlRegisterSingletonType<QObject>(uri, 1, 0, "NemoFocus", getNemoFocus);
-    qmlRegisterSingletonType<QObject>(uri, 1, 0, "NemoHacks", nemo_hacks_singletontype_provider);
     qmlRegisterType<NemoWindow>(uri, 1, 0, "NemoWindow");
     qmlRegisterType<NemoPage>(uri, 1, 0, "NemoPage");
     qmlRegisterType<RingIndicator>(uri, 1, 0, "RingIndicator");
