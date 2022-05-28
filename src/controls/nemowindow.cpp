@@ -25,10 +25,23 @@
 NemoWindow::NemoWindow(QWindow *parent) :
     QQuickWindow(parent),
     m_defaultAllowedOrientations(Qt::PortraitOrientation | Qt::LandscapeOrientation)
+    , m_sensorOrientation(Qt::PrimaryOrientation)
 {
     m_allowedOrientations = m_defaultAllowedOrientations;
     m_filter = new EditFilter();
+    m_orientationSensor = new QOrientationSensor(this);
+
     this->installEventFilter(m_filter);
+
+    connect(m_orientationSensor, &QOrientationSensor::readingChanged, this, &NemoWindow::setScreenOrientationFromSensor);
+
+    if (!m_orientationSensor->connectToBackend()) {
+        qWarning() << "Could not connect to the orientation sensor backend";
+    } else {
+        if (!m_orientationSensor->start()) {
+            qWarning() << "Could not start the orientation sensor";
+        }
+    }
 }
 
 Qt::ScreenOrientations NemoWindow::allowedOrientations() const
@@ -49,7 +62,41 @@ void NemoWindow::setAllowedOrientations(Qt::ScreenOrientations allowed)
             m_allowedOrientations = allowed;
             emit allowedOrientationsChanged();
         } else {
-            qDebug() << "NemoWindow: invalid allowedOrientation!";
+            qWarning() << "NemoWindow: invalid allowedOrientation!";
         }
+    }
+}
+
+void NemoWindow::setScreenOrientationFromSensor()
+{
+    QOrientationReading* reading = m_orientationSensor->reading();
+
+    Qt::ScreenOrientations sensorOrientation = m_sensorOrientation;
+    switch (reading->orientation()) {
+    case QOrientationReading::TopUp:
+        sensorOrientation = Qt::PortraitOrientation;
+        break;
+    case QOrientationReading::TopDown:
+        sensorOrientation = Qt::InvertedPortraitOrientation;
+        break;
+    case QOrientationReading::LeftUp:
+        sensorOrientation = Qt::InvertedLandscapeOrientation;
+        break;
+    case QOrientationReading::RightUp:
+        sensorOrientation = Qt::LandscapeOrientation;
+        break;
+    case QOrientationReading::FaceUp:
+    case QOrientationReading::FaceDown:
+        /* Keep screen orientation at previous state */
+        break;
+    case QOrientationReading::Undefined:
+    default:
+        sensorOrientation = Qt::PrimaryOrientation;
+        break;
+    }
+
+    if (sensorOrientation != m_sensorOrientation) {
+        m_sensorOrientation = sensorOrientation;
+        emit sensorOrientationChanged();
     }
 }

@@ -22,6 +22,7 @@
 #define NEMOWINDOW_H
 
 #include <QQuickWindow>
+#include <QOrientationSensor>
 #include <QtCore/qnamespace.h>
 #include "editfilter.h"
 
@@ -30,11 +31,14 @@ class NemoWindow : public QQuickWindow
     Q_OBJECT
     Q_PROPERTY(Qt::ScreenOrientations allowedOrientations READ allowedOrientations WRITE setAllowedOrientations NOTIFY allowedOrientationsChanged)
     Q_PROPERTY(Qt::ScreenOrientations defaultAllowedOrientations READ allowedOrientations)
+    Q_PROPERTY(Qt::ScreenOrientations sensorOrientation READ sensorOrientation NOTIFY sensorOrientationChanged)
 
 public:
     explicit NemoWindow(QWindow *parent = 0);
     
     Qt::ScreenOrientations allowedOrientations() const;
+    Qt::ScreenOrientations sensorOrientation() const { return m_sensorOrientation; }
+
     const Qt::ScreenOrientations defaultAllowedOrientations() const;
 
     void setAllowedOrientations(Qt::ScreenOrientations allowed);
@@ -42,14 +46,20 @@ public:
 signals:
     void allowedOrientationsChanged();
     void desktopModeChanged();
+    void sensorOrientationChanged();
+
+private slots:
+    void setScreenOrientationFromSensor();
 
 private:
     //This is the global allowed orientations settings:
     //it's the settings used when the current Page doesn't specify any allowedOrientations, otherwise
     //allowedOrientations of that Page is used
     Qt::ScreenOrientations m_allowedOrientations;
-
     Qt::ScreenOrientations m_defaultAllowedOrientations;
+    Qt::ScreenOrientations m_sensorOrientation;
+
+    QOrientationSensor* m_orientationSensor;
 
     EditFilter *m_filter;
 };

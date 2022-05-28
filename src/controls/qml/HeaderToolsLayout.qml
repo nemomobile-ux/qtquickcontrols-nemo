@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2021 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2018-2022 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -52,9 +52,13 @@ Item {
         antialiasing: true
         height: width
         radius: Theme.itemSpacingExtraSmall / 2
-        color: backmouse.pressed ? "#222" : "transparent"
+        color: backmouse.pressed ? Theme.fillDarkColor : "transparent"
 
-        rotation: isUiPortrait ? 0 : 90
+        rotation: !isUiPortrait || isSensorLandscape ? 90 : 0
+
+        Behavior on rotation {
+            NumberAnimation { duration: 100 }
+        }
 
         visible: showBackButton
 
@@ -117,7 +121,7 @@ Item {
             height: toolMeasure
             function assignRotationBindings() {
                 for (var i=0; i<children.length; ++i) {
-                    children[i].rotation = Qt.binding(function() { return isUiPortrait ? 0 : 90 })
+                    children[i].rotation = Qt.binding(function() { return  !isUiPortrait || isSensorLandscape ? 90 : 0 })
                 }
             }
 
@@ -142,6 +146,10 @@ Item {
         sourceSize.height: height
         visible: drawerLevels && drawerLevels.length > 1
         source: "image://theme/ellipsis-v"
-        rotation: isUiPortrait ? 0 : 90
+        rotation: !isUiPortrait || isSensorLandscape ? 90 : 0
+
+        Behavior on rotation {
+            NumberAnimation { duration: 100 }
+        }
     }
 }

@@ -64,7 +64,6 @@ NemoPage {
     readonly property bool orientationTransitionRunning: pageStack ? pageStack.orientationTransitionRunning : false
 
     readonly property bool isPortrait: (orientation === Qt.PortraitOrientation || orientation === Qt.InvertedPortraitOrientation)
-    readonly property bool isLandscape: (orientation === Qt.LandscapeOrientation || orientation === Qt.InvertedLandscapeOrientation)
 
     allowedOrientations: Qt.PortraitOrientation | Qt.LandscapeOrientation | Qt.InvertedPortraitOrientation | Qt.InvertedLandscapeOrientation
 

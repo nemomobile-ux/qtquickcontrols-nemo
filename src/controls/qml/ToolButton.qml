@@ -78,4 +78,8 @@ Button {
     }
 
     style: ToolButtonStyle{}
+
+    Behavior on rotation {
+        NumberAnimation { duration: 100 }
+    }
 }

@@ -37,6 +37,7 @@ target_link_libraries(nemocontrolsplugin
     Qt5::Core
     Qt5::Qml 
     Qt5::Quick
+    Qt5::Sensors
     PkgConfig::MLITE)
 
 install(DIRECTORY qml DESTINATION ${QT_INSTALL_QML}/QtQuick/Controls/Nemo/)

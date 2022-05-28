@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
-** Copyright (C) 2017-2021 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2017-2022 Chupligin Sergey <neochapay@gmail.com>
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the Qt Quick Controls module of the Qt Toolkit.
@@ -51,18 +51,7 @@ ApplicationWindow {
 
     id: appWindow
 
-    contentOrientation: Screen.orientation
     allowedOrientations:  Qt.PortraitOrientation | Qt.LandscapeOrientation | Qt.InvertedLandscapeOrientation | Qt.InvertedPortraitOrientation
-
-    // Implements back key navigation
-    Keys.onReleased: {
-        if (event.key === Qt.Key_Back) {
-            if (pageStack.depth > 1) {
-                pageStack.pop();
-                event.accepted = true;
-            } else { Qt.quit(); }
-        }
-    }
 
     ListModel {
         id: pageModel
