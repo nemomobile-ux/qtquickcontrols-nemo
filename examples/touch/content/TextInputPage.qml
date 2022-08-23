@@ -75,7 +75,25 @@ Page {
 
         TextField {
             anchors.margins: Theme.itemSpacingLarge
-            text: qsTr("Text input")
+            placeholderText: qsTr("Text input")
+        }
+
+        TextField {
+            anchors.margins: Theme.itemSpacingLarge
+            placeholderText: qsTr("Digits input")
+            inputMethodHints: Qt.ImhDigitsOnly
+        }
+
+        TextField {
+            anchors.margins: Theme.itemSpacingLarge
+            placeholderText: qsTr("Email input")
+            inputMethodHints: Qt.ImhEmailCharactersOnly
+        }
+
+        TextField {
+            anchors.margins: Theme.itemSpacingLarge
+            placeholderText: qsTr("URL input")
+            inputMethodHints: Qt.ImhUrlCharactersOnly
         }
 
         TextField {
@@ -92,7 +110,7 @@ Page {
 
         TextField {
             anchors.margins: Theme.itemSpacingLarge
-            text: qsTr("Text input")
+            placeholderText: qsTr("Text input")
             style: touchStyle
         }
 
