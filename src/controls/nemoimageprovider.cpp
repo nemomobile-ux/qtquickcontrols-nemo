@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2013 Aleksi Suomalainen <suomalainen.aleksi@gmail.com>
+ * Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -27,11 +28,12 @@ NemoImageProvider::NemoImageProvider() :
 QImage NemoImageProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize)
 {
     Q_UNUSED(size);
-    Q_UNUSED(requestedSize);
-    return m_client->readImage(id);
+    QPixmap image = m_client->requestPixmap(id, requestedSize);
+    return image.toImage();
 }
+
 QPixmap NemoImageProvider::requestPixmap(const QString &id, QSize *size, const QSize &requestedSize)
 {
     Q_UNUSED(size);
-    return m_client->requestPixmap(id,requestedSize);
+    return m_client->requestPixmap(id, requestedSize);
 }
