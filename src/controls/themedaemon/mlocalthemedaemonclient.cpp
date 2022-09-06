@@ -2,6 +2,7 @@
  **
  ** Copyright (C) 2013 Jolla Ltd.
  ** Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
+ ** Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  **
  ** This file is part of the Qt Components project.
  **
@@ -65,9 +66,9 @@ MLocalThemeDaemonClient::MLocalThemeDaemonClient(const QString &testPath, QObjec
 
     if (themeRoot.isEmpty()) {
 #if defined(THEME_DIR)
-    themeRoot = THEME_DIR;
+        themeRoot = THEME_DIR;
 #else
-    themeRoot = "/usr/share/themes";
+        themeRoot = "/usr/share/themes";
 #endif
     }
 
@@ -80,49 +81,28 @@ MLocalThemeDaemonClient::MLocalThemeDaemonClient(const QString &testPath, QObjec
         qDebug() << Q_FUNC_INFO << "Theme: " << themeItem.value(THEME_NAME).toString();
         themeName = themeItem.value(THEME_NAME).toString();
 #else
-        qDebug() << Q_FUNC_INFO << "Theme: " << THEME_NAME << " (hardcoded)";
         themeName = QLatin1String(THEME_NAME);
 #endif
 
-        // find out the inheritance chain for the new theme
-        QString nextTheme = themeName;
-        QSet<QString> inheritanceChain;
+        // Determine whether this is an m theme:
+        const QString themeIndexFileName = themeRoot + QDir::separator() + themeName + QDir::separator() + "index.theme";
 
-        while (true) {
-            // Determine whether this is an m theme:
-            const QString themeIndexFileName = themeRoot + QDir::separator() + nextTheme + QDir::separator() + "index.theme";
+        // it needs to be a valid ini file
+        const QSettings themeIndexFile(themeIndexFileName, QSettings::IniFormat);
 
-            // it needs to be a valid ini file
-            const QSettings themeIndexFile(themeIndexFileName, QSettings::IniFormat);
-            qDebug() << Q_FUNC_INFO << themeIndexFileName;
-            if (themeIndexFile.status() != QSettings::NoError) {
-                qWarning() << Q_FUNC_INFO << "Theme" << themeName << "does not exist! Falling back to " << THEME_NAME;
-                break;
-            }
-
-            // we need to have X-MeeGoTouch-Metatheme group in index.theme
-            if (!themeIndexFile.childGroups().contains(QString("X-MeeGoTouch-Metatheme"))) {
-                qWarning() << Q_FUNC_INFO << "Theme" << themeName << " is invalid";
-                break;
-            }
-
-            inheritanceChain.insert(nextTheme);
-            // the paths should be stored in reverse order than in the inheritance chain
-            themeRoots.prepend(themeRoot + QDir::separator() + nextTheme + QDir::separator() + QLatin1String("meegotouch"));
-            themeRoots.prepend(themeRoot + QDir::separator() + nextTheme + QDir::separator() + QLatin1String("fontawesome"));
-
-            QString parentTheme = themeIndexFile.value("X-MeeGoTouch-Metatheme/X-Inherits", "").toString();
-
-            if (parentTheme.isEmpty()) {
-                break;
-            }
-            nextTheme = parentTheme;
-
-            // check that there are no cyclic dependencies
-            if (inheritanceChain.contains(parentTheme)) {
-                qFatal("%s: cyclic dependency in theme: %s", Q_FUNC_INFO, themeName.toUtf8().constData());
-            }
+        if (themeIndexFile.status() != QSettings::NoError) {
+            qWarning() << Q_FUNC_INFO << "Theme" << themeName << "does not exist! Falling back to " << THEME_NAME;
         }
+
+        // we need to have X-MeeGoTouch-Metatheme group in index.theme
+        if (!themeIndexFile.childGroups().contains(QString("X-MeeGoTouch-Metatheme"))) {
+            qWarning() << Q_FUNC_INFO << "Theme" << themeName << " is invalid";
+        }
+
+        // the paths should be stored in reverse order than in the inheritance chain
+        themeRoots.prepend(themeRoot + QDir::separator() + themeName + QDir::separator() + QLatin1String("meegotouch"));
+        themeRoots.prepend(themeRoot + QDir::separator() + themeName + QDir::separator() + QLatin1String("fontawesome"));
+
     } else {
         qDebug() << Q_FUNC_INFO << "Theme: test mode: " << themeRoot;
         themeRoots += themeRoot;
@@ -136,8 +116,6 @@ MLocalThemeDaemonClient::MLocalThemeDaemonClient(const QString &testPath, QObjec
     }
 
     m_imageDirNodes.append(ImageDirNode("icons" , QStringList() << ".svg" << ".png" << ".jpg"));
-
-    qDebug() << "LocalThemeDaemonClient: Looking for assets in" << themeRoots;
 }
 
 MLocalThemeDaemonClient::~MLocalThemeDaemonClient()
@@ -146,7 +124,6 @@ MLocalThemeDaemonClient::~MLocalThemeDaemonClient()
 
 QPixmap MLocalThemeDaemonClient::requestPixmap(const QString &id, const QSize &requestedSize)
 {
-    qDebug() << Q_FUNC_INFO;
     QPixmap pixmap;
 
     QStringList parts = id.split('?');
@@ -218,7 +195,7 @@ QImage MLocalThemeDaemonClient::readImage(const QString &id) const
                 }
             }
         }
-    }    
+    }
     return QImage();
 }
 
