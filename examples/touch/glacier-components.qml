@@ -51,7 +51,6 @@ ApplicationWindow {
 
     id: appWindow
 
-    contentOrientation: Screen.orientation
     allowedOrientations:  Qt.PortraitOrientation | Qt.LandscapeOrientation | Qt.InvertedLandscapeOrientation | Qt.InvertedPortraitOrientation
 
     // Implements back key navigation

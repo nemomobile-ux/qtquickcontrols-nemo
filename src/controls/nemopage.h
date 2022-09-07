@@ -17,13 +17,9 @@ public:
 
 signals:
     void allowedOrientationsChanged();
-    void rotationChanged();
-
-public slots:
 
 private:
     Qt::ScreenOrientations m_allowedOrientations;
-    
 };
 
 #endif // NEMOPAGE_H

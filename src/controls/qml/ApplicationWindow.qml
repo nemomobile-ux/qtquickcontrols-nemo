@@ -38,12 +38,7 @@ NemoWindow {
     property alias pageStack: stackView
     property alias initialPage: stackView.initialItem
     property bool applicationActive: Qt.application.active
-
-
     property alias orientation: contentArea.uiOrientation
-    readonly property int isUiPortrait: orientation == Qt.PortraitOrientation || orientation == Qt.InvertedPortraitOrientation
-    //is this safe? can there be some situation in which it's neither portrait nor landscape?
-    readonly property int isUiLandscape: !isUiPortrait
 
     readonly property var _bgColor: Theme.backgroundColor
     color: _bgColor
@@ -51,7 +46,11 @@ NemoWindow {
     //Handles orientation of keyboard, MInputMethodQuick.appOrientation.
     contentOrientation: orientation
     onOrientationChanged: {
-        contentOrientation=orientation
+        if (root.isOrientationAllowed(root.orientation)) {
+            contentArea.filteredOrientation = root.orientation
+        }
+
+        contentOrientation = orientation
     }
 
     //README: allowedOrientations' default value is set in NemoWindow's c++ implementation
@@ -59,12 +58,6 @@ NemoWindow {
 
     onAllowedOrientationsChanged: {
         orientationConstraintsChanged()
-    }
-
-    Screen.onOrientationChanged: {
-        if (root.isOrientationAllowed(Screen.orientation)) {
-            contentArea.filteredOrientation = Screen.orientation
-        }
     }
 
     //Safety version of pageStack.push - if we can't load component - show error page page with
@@ -122,8 +115,8 @@ NemoWindow {
             //  the phone is in portrait, and a page allowing portrait mode is pushed on the stack.
             //  When the page is pushed, we don't get any orientationChanged signal from the Screen element
             //  because the phone was already held in portrait mode, se we have to enforce it here.
-            if (isOrientationAllowed(Screen.orientation)) {
-                contentArea.filteredOrientation = Screen.orientation
+            if (isOrientationAllowed(root.orientation)) {
+                contentArea.filteredOrientation = root.orientation
             }
             //- If neither the current screen orientation nor the one which the UI is already presented in (filteredOrientation)
             //  are allowed, then fallback to an allowed orientation.
@@ -201,7 +194,7 @@ NemoWindow {
             id: clipping
 
             z: 1
-            width: parent.width - (isUiLandscape ? stackView.panelSize : 0)
+            width: parent.width - (!isUiPortrait ? stackView.panelSize : 0)
             height: parent.height - (isUiPortrait ? stackView.panelSize : 0)
             clip: stackView.panelSize > 0
 
@@ -274,8 +267,8 @@ NemoWindow {
                     property bool stackInitialized: false
                     onStackInitializedChanged: if (stackInitialized) {
                                                    //set Screen.orientation as default, if allowed
-                                                   if (root.isOrientationAllowed(Screen.orientation)) {
-                                                       contentArea.filteredOrientation = Screen.orientation
+                                                   if (root.isOrientationAllowed(root.orientation)) {
+                                                       contentArea.filteredOrientation = root.orientation
                                                    } else {
                                                        //let the window handle it, it will fall back to an allowed orientation
                                                        root.fallbackToAnAllowedOrientation()

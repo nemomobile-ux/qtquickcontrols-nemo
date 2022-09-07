@@ -82,7 +82,7 @@ Item {
                 target: root
                 width: parent.width
                 //the height of the drawer in portrait is limited by the size of the shorter edge of the screen
-                height: (toolBarRect.height + Math.min(drawer.height, appWindow.__transpose ? Screen.height : Screen.width))
+                height: (toolBarRect.height + Math.min(drawer.height, appWindow.__transpose ? root.height : root.width))
             }
             //remember: the PropertyChanges handle bindings by default, unless "explicit: true" is set
             PropertyChanges {
@@ -112,7 +112,7 @@ Item {
             PropertyChanges {
                 target: root
                 //the width of the drawer in landscape is limited by the size of the shorter edge of the screen
-                width: (toolBarRect.width + Math.min(drawer.width, appWindow.__transpose ? Screen.height : Screen.width))
+                width: (toolBarRect.width + Math.min(drawer.width, appWindow.__transpose ? root.height : root.width))
                 height: parent.height
             }
             PropertyChanges {

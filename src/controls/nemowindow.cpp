@@ -21,6 +21,8 @@
 #include "nemowindow.h"
 #include "nemopage.h"
 #include <QDebug>
+#include <QGuiApplication>
+#include <QScreen>
 
 NemoWindow::NemoWindow(QWindow *parent) :
     QQuickWindow(parent),
@@ -29,6 +31,12 @@ NemoWindow::NemoWindow(QWindow *parent) :
     m_allowedOrientations = m_defaultAllowedOrientations;
     m_filter = new EditFilter();
     this->installEventFilter(m_filter);
+
+    m_primaryScreen = QGuiApplication::primaryScreen();
+    m_screenOrientation = m_primaryScreen->primaryOrientation();
+    m_isUiPortrait = (m_screenOrientation == Qt::PortraitOrientation || m_screenOrientation == Qt::InvertedPortraitOrientation);
+
+    connect(m_primaryScreen, &QScreen::orientationChanged, this, &NemoWindow::orientationChanged);
 }
 
 Qt::ScreenOrientations NemoWindow::allowedOrientations() const
@@ -50,6 +58,30 @@ void NemoWindow::setAllowedOrientations(Qt::ScreenOrientations allowed)
             emit allowedOrientationsChanged();
         } else {
             qDebug() << "NemoWindow: invalid allowedOrientation!";
+        }
+    }
+}
+
+Qt::ScreenOrientation NemoWindow::screenOrientation() const
+{
+    return m_screenOrientation;
+}
+
+bool NemoWindow::isUiPortrait()
+{
+    return m_isUiPortrait;
+}
+
+void NemoWindow::orientationChanged(Qt::ScreenOrientation orientation)
+{
+    if(orientation != m_screenOrientation) {
+        m_screenOrientation = orientation;
+        emit screenOrientationChanged();
+
+        bool isUiPortrait = (m_screenOrientation == Qt::PortraitOrientation || m_screenOrientation == Qt::InvertedPortraitOrientation);
+        if(isUiPortrait != m_isUiPortrait) {
+            m_isUiPortrait = isUiPortrait;
+            emit isUiPortraitChanged();
         }
     }
 }

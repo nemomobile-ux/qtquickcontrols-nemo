@@ -7,7 +7,7 @@ import Nemo.Configuration 1.0
 Rectangle {
     id: backgroundWallpaper
     anchors.fill: parent
-    visible: width != Screen.width || height != Screen.height || wallpaperSource.value == ""
+    visible: width != root.width || height != root.height || wallpaperSource.value == ""
     color: Theme.backgroundColor
 
 
