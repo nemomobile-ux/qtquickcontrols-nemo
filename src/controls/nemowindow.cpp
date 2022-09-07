@@ -23,6 +23,7 @@
 #include <QDebug>
 #include <QGuiApplication>
 #include <QScreen>
+#include <MGConfItem>
 
 NemoWindow::NemoWindow(QWindow *parent) :
     QQuickWindow(parent),
@@ -33,10 +34,18 @@ NemoWindow::NemoWindow(QWindow *parent) :
     this->installEventFilter(m_filter);
 
     m_primaryScreen = QGuiApplication::primaryScreen();
-    m_screenOrientation = m_primaryScreen->primaryOrientation();
-    m_isUiPortrait = (m_screenOrientation == Qt::PortraitOrientation || m_screenOrientation == Qt::InvertedPortraitOrientation);
 
-    connect(m_primaryScreen, &QScreen::orientationChanged, this, &NemoWindow::orientationChanged);
+    m_currentDesktopMode = MGConfItem(QStringLiteral("/nemo/apps/libglacier/desktopmode")).value(0).toBool();
+    if(m_currentDesktopMode) {
+        qDebug() << "In desktop mode";
+        m_screenOrientation = Qt::PortraitOrientation;
+        m_primaryOrientation = Qt::PortraitOrientation;
+    } else {
+        m_primaryOrientation = m_screenOrientation = m_primaryScreen->primaryOrientation();
+        connect(m_primaryScreen, &QScreen::orientationChanged, this, &NemoWindow::orientationChanged);
+        connect(m_primaryScreen, &QScreen::primaryOrientationChanged, this, &NemoWindow::m_primaryOrientationChanged);
+    }
+    m_isUiPortrait = (m_screenOrientation == Qt::PortraitOrientation || m_screenOrientation == Qt::InvertedPortraitOrientation);
 }
 
 Qt::ScreenOrientations NemoWindow::allowedOrientations() const
@@ -67,6 +76,11 @@ Qt::ScreenOrientation NemoWindow::screenOrientation() const
     return m_screenOrientation;
 }
 
+Qt::ScreenOrientation NemoWindow::primaryOrientation() const
+{
+    return m_primaryOrientation;
+}
+
 bool NemoWindow::isUiPortrait()
 {
     return m_isUiPortrait;
@@ -83,5 +97,13 @@ void NemoWindow::orientationChanged(Qt::ScreenOrientation orientation)
             m_isUiPortrait = isUiPortrait;
             emit isUiPortraitChanged();
         }
+    }
+}
+
+void NemoWindow::m_primaryOrientationChanged(Qt::ScreenOrientation orientation)
+{
+    if(orientation != m_primaryOrientation) {
+        m_primaryOrientation = orientation;
+        emit primaryOrientationChanged();
     }
 }

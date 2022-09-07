@@ -141,11 +141,6 @@ NemoWindow {
         }
     }
 
-    // TODO: We're assuming default fb orientation of the hw is portrait
-    // Soon a compositor fix will be published that will make that consistent on all hw
-    // i.e. Screen.width will be width of portrait orientation on all hardware!
-    // (at the moment, Screen.width is the width of the screen in landscape mode in N9/N950, while on
-    // other hardware it could be width of the screen in portrait mode)
     property bool __transpose: (rotationToTransposeToPortrait() % 180) != 0
 
     // XXX: This is to account for HW screen rotation
@@ -153,7 +148,7 @@ NemoWindow {
     // do that for us
     function rotationToTransposeToPortrait()
     {
-        switch (Screen.primaryOrientation) {
+        switch (root.primaryOrientation) {
         case Qt.PortraitOrientation:
             return 0
         case Qt.LandscapeOrientation:

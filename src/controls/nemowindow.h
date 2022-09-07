@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2013 Andrea Bernabei <and.bernabei@gmail.com>
- * Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021-2022 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -32,6 +32,7 @@ class NemoWindow : public QQuickWindow
     Q_PROPERTY(Qt::ScreenOrientations defaultAllowedOrientations READ allowedOrientations)
 
     Q_PROPERTY(Qt::ScreenOrientation screenOrientation READ screenOrientation NOTIFY screenOrientationChanged)
+    Q_PROPERTY(Qt::ScreenOrientation primaryOrientation READ primaryOrientation NOTIFY primaryOrientationChanged)
     Q_PROPERTY(bool isUiPortrait READ isUiPortrait NOTIFY isUiPortraitChanged)
 
 public:
@@ -43,16 +44,19 @@ public:
     void setAllowedOrientations(Qt::ScreenOrientations allowed);
 
     Qt::ScreenOrientation screenOrientation() const;
+    Qt::ScreenOrientation primaryOrientation() const;
     bool isUiPortrait();
 
 signals:
     void allowedOrientationsChanged();
     void desktopModeChanged();
     void screenOrientationChanged();
+    void primaryOrientationChanged();
     void isUiPortraitChanged();
 
 private slots:
     void orientationChanged(Qt::ScreenOrientation orientation);
+    void m_primaryOrientationChanged(Qt::ScreenOrientation orientation);
 
 private:
     //This is the global allowed orientations settings:
@@ -62,8 +66,10 @@ private:
     Qt::ScreenOrientations m_defaultAllowedOrientations;
 
     Qt::ScreenOrientation m_screenOrientation;
+    Qt::ScreenOrientation m_primaryOrientation;
     QScreen* m_primaryScreen;
     bool m_isUiPortrait;
+    bool m_currentDesktopMode;
 
     EditFilter *m_filter;
 };
