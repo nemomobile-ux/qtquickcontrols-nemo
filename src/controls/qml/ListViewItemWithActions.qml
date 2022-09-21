@@ -44,6 +44,18 @@ Item {
     property string description: ""
     property string subdescription: ""
     property string icon: ""
+    property Component iconDelegate: NemoIcon{
+            id: itemIcon
+            width: parent.width
+            height: parent.height
+
+            colorized: iconColorized
+            sourceSize.width: width
+            sourceSize.height: height
+            source: (icon != "") ? icon : iconVisible ? "images/listview-icon-template-s.svg" : ""
+            fillMode: Image.PreserveAspectFit
+        }
+
 
     property bool showNext: true
     property bool iconVisible: true
@@ -154,8 +166,8 @@ Item {
             visible: mouse.pressed
         }
 
-        NemoIcon{
-            id: itemIcon
+        Loader{
+            id: iconLoader
             height: iconVisible ? parent.height-Theme.itemSpacingMedium : 0
             width: height
             anchors{
@@ -163,24 +175,21 @@ Item {
                 leftMargin: Theme.itemSpacingLarge
                 verticalCenter:parent.verticalCenter
             }
-            colorized: iconColorized
-            sourceSize.width: width
-            sourceSize.height: height
             visible: iconVisible
-            source: (icon != "") ? icon : iconVisible ? "images/listview-icon-template-s.svg" : ""
-            fillMode: Image.PreserveAspectFit
+            sourceComponent: iconDelegate
+
         }
 
         Rectangle{
             id: dataArea
-            width: parent.width-itemIcon.width-Theme.itemHeightLarge - (showNext ? arrowItem.width : 0)
+            width: parent.width-iconLoader.width-Theme.itemHeightLarge - (showNext ? arrowItem.width : 0)
             height: labelItem.height+(description != "" ? descriptionItem.height : 0)+(subdescription != "" ? subDescriptionItem.height : 0)
             clip: true
 
             anchors{
-                left: iconVisible ? itemIcon.right : parent.left
+                left: iconVisible ? iconLoader.right : parent.left
                 leftMargin: Theme.itemSpacingLarge
-                verticalCenter: iconVisible ? itemIcon.verticalCenter : parent.verticalCenter
+                verticalCenter: iconVisible ? iconLoader.verticalCenter : parent.verticalCenter
             }
             color: "transparent"
 
