@@ -35,10 +35,9 @@
 #include <QAbstractListModel>
 #include <QDate>
 
-class CalendarModel : public QAbstractListModel
-{
+class CalendarModel : public QAbstractListModel {
     Q_OBJECT
-    struct DateItem{
+    struct DateItem {
         bool isOtherMonthDay;
         bool isCurrentDay;
         bool isSelectedDay;
@@ -50,15 +49,15 @@ class CalendarModel : public QAbstractListModel
     Q_PROPERTY(QDate selectedDate READ selectedDate WRITE setSelectedDate NOTIFY selectedDateChanged)
 
 public:
-    explicit CalendarModel(QObject *parent = 0);
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    QVariant data(const QModelIndex &index, int role) const;
-    QHash<int, QByteArray> roleNames() const {return m_hash;}
+    explicit CalendarModel(QObject* parent = 0);
+    int rowCount(const QModelIndex& parent = QModelIndex()) const;
+    QVariant data(const QModelIndex& index, int role) const;
+    QHash<int, QByteArray> roleNames() const { return m_hash; }
 
     void setSelectedDate(QDate date);
 
-    const QDate currentDate(){return m_currentDate;}
-    QDate selectedDate(){return m_selectedDate;}
+    const QDate currentDate() { return m_currentDate; }
+    QDate selectedDate() { return m_selectedDate; }
 
 public slots:
     QVariant get(const int idx) const;
@@ -67,15 +66,15 @@ signals:
     void selectedDateChanged();
 
 private:
-    QHash<int,QByteArray> m_hash;
+    QHash<int, QByteArray> m_hash;
     QList<DateItem> m_dateList;
 
     void fill();
     DateItem createDateItem(QDate dateOfDay,
-                            bool isOtherMonthDay = false,
-                            bool isCurrentDay = false,
-                            bool isSelectedDay = false,
-                            bool hasEventDay = false);
+        bool isOtherMonthDay = false,
+        bool isCurrentDay = false,
+        bool isSelectedDay = false,
+        bool hasEventDay = false);
 
     QDate m_currentDate;
     QDate m_selectedDate;

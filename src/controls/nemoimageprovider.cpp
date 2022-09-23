@@ -19,20 +19,20 @@
  */
 #include "nemoimageprovider.h"
 
-NemoImageProvider::NemoImageProvider() :
-    QQuickImageProvider(QQuickImageProvider::Image),
-    m_client(new MLocalThemeDaemonClient())
+NemoImageProvider::NemoImageProvider()
+    : QQuickImageProvider(QQuickImageProvider::Image)
+    , m_client(new MLocalThemeDaemonClient())
 {
 }
 
-QImage NemoImageProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize)
+QImage NemoImageProvider::requestImage(const QString& id, QSize* size, const QSize& requestedSize)
 {
     Q_UNUSED(size);
     QPixmap image = m_client->requestPixmap(id, requestedSize);
     return image.toImage();
 }
 
-QPixmap NemoImageProvider::requestPixmap(const QString &id, QSize *size, const QSize &requestedSize)
+QPixmap NemoImageProvider::requestPixmap(const QString& id, QSize* size, const QSize& requestedSize)
 {
     Q_UNUSED(size);
     return m_client->requestPixmap(id, requestedSize);

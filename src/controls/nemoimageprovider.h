@@ -18,16 +18,16 @@
  * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  */
-#include <QQuickImageProvider>
-#include <QDebug>
 #include "themedaemon/mlocalthemedaemonclient.h"
+#include <QDebug>
+#include <QQuickImageProvider>
 
-class NemoImageProvider : public QQuickImageProvider
-{
+class NemoImageProvider : public QQuickImageProvider {
 public:
     explicit NemoImageProvider();
-    QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize);
-    QPixmap requestPixmap(const QString &id, QSize *size, const QSize &requestedSize);
+    QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize);
+    QPixmap requestPixmap(const QString& id, QSize* size, const QSize& requestedSize);
+
 private:
     MLocalThemeDaemonClient* m_client;
 };

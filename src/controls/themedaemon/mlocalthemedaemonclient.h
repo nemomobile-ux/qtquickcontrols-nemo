@@ -42,11 +42,11 @@
 
 #include <themedaemon/mabstractthemedaemonclient.h>
 
+#include <QColor>
 #include <QHash>
+#include <QPainter>
 #include <QPixmap>
 #include <QString>
-#include <QPainter>
-#include <QColor>
 
 #ifdef HAVE_MLITE
 #include <mgconfitem.h>
@@ -59,8 +59,7 @@ class QDir;
  * The requested pixmaps are cached so that multiple requests of the
  * same pixmap can be handled fast.
  */
-class MLocalThemeDaemonClient : public MAbstractThemeDaemonClient
-{
+class MLocalThemeDaemonClient : public MAbstractThemeDaemonClient {
     Q_OBJECT
 
 public:
@@ -70,41 +69,37 @@ public:
      *               by the define THEME_DIR is used.
      * \param parent Parent object.
      */
-    MLocalThemeDaemonClient(const QString &testPath = QString(), QObject *parent = 0);
+    MLocalThemeDaemonClient(const QString& testPath = QString(), QObject* parent = 0);
     virtual ~MLocalThemeDaemonClient();
 
     /**
      * \see MAbstractThemeDaemonClient::requestPixmap()
      */
-    virtual QPixmap requestPixmap(const QString &id, const QSize &requestedSize);
+    virtual QPixmap requestPixmap(const QString& id, const QSize& requestedSize);
 
     /**
      * Reads the image \a id from the available directories specified
      * by m_imageDirNodes.
      */
-    QImage readImage(const QString &id) const;
+    QImage readImage(const QString& id) const;
 
 private:
-
-
     void buildHash(const QDir& rootDir, const QStringList& nameFilter);
 
     /**
      * Cache entry that identifies a pixmap by a string-ID and size.
      */
-    struct PixmapIdentifier
-    {
+    struct PixmapIdentifier {
         PixmapIdentifier();
-        PixmapIdentifier(const QString &imageId, const QSize &size);
+        PixmapIdentifier(const QString& imageId, const QSize& size);
         QString imageId;
         QSize size;
-        bool operator==(const PixmapIdentifier &other) const;
-        bool operator!=(const PixmapIdentifier &other) const;
+        bool operator==(const PixmapIdentifier& other) const;
+        bool operator!=(const PixmapIdentifier& other) const;
     };
 
-    struct ImageDirNode
-    {
-        ImageDirNode(const QString &directory, const QStringList &suffixList);
+    struct ImageDirNode {
+        ImageDirNode(const QString& directory, const QStringList& suffixList);
         QString directory;
         QStringList suffixList;
     };
@@ -118,9 +113,8 @@ private:
     MGConfItem themeItem;
 #endif
 
-    friend uint qHash(const MLocalThemeDaemonClient::PixmapIdentifier &id);
+    friend uint qHash(const MLocalThemeDaemonClient::PixmapIdentifier& id);
     friend class tst_MLocalThemeDaemonClient; // Unit tests
 };
 
 #endif
-

@@ -21,22 +21,22 @@
  */
 
 #include "qquicknemocontrolsextensionplugin.h"
-#include <QtQml>
-#include "nemowindow.h"
-#include "nemopage.h"
-#include "qquickfilteringmousearea.h"
+#include "nemofocussingleton.h"
 #include "nemoimageprovider.h"
+#include "nemopage.h"
+#include "nemowindow.h"
+#include "qquickfilteringmousearea.h"
 #include "ringindicator.h"
 #include "sizing.h"
 #include "theme.h"
-#include "nemofocussingleton.h"
+#include <QtQml>
 
-QQuickNemoControlsExtensionPlugin::QQuickNemoControlsExtensionPlugin(QObject *parent) :
-    QQmlExtensionPlugin(parent)
+QQuickNemoControlsExtensionPlugin::QQuickNemoControlsExtensionPlugin(QObject* parent)
+    : QQmlExtensionPlugin(parent)
 {
 }
 
-QObject *getNemoFocus(QQmlEngine *engine, QJSEngine *scriptEngine)
+QObject* getNemoFocus(QQmlEngine* engine, QJSEngine* scriptEngine)
 {
     Q_UNUSED(engine)
     Q_UNUSED(scriptEngine)
@@ -44,7 +44,7 @@ QObject *getNemoFocus(QQmlEngine *engine, QJSEngine *scriptEngine)
     return NemoFocusSingleton::instance();
 }
 
-void QQuickNemoControlsExtensionPlugin::registerTypes(const char *uri)
+void QQuickNemoControlsExtensionPlugin::registerTypes(const char* uri)
 {
     Q_ASSERT(uri == QLatin1String("QtQuick.Controls.Nemo"));
     qmlRegisterModule(uri, 1, 0);
@@ -56,15 +56,14 @@ void QQuickNemoControlsExtensionPlugin::registerTypes(const char *uri)
     qmlRegisterType<QQuickFilteringMouseArea>(uri, 1, 0, "FilteringMouseArea");
 }
 
-void QQuickNemoControlsExtensionPlugin::initializeEngine(QQmlEngine *engine, const char *uri)
+void QQuickNemoControlsExtensionPlugin::initializeEngine(QQmlEngine* engine, const char* uri)
 {
-    Theme *theme = new Theme();
+    Theme* theme = new Theme();
 
-    QQmlExtensionPlugin::initializeEngine(engine,uri);
+    QQmlExtensionPlugin::initializeEngine(engine, uri);
     QQmlContext* context = engine->rootContext();
-    context->setContextProperty("size",theme->size);
-    context->setContextProperty("Theme",theme);
+    context->setContextProperty("size", theme->size);
+    context->setContextProperty("Theme", theme);
 
     engine->addImageProvider(QLatin1String("theme"), new NemoImageProvider);
 }
-

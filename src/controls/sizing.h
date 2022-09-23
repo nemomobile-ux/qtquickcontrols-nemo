@@ -24,11 +24,10 @@
 #include <QSize>
 #include <QSizeF>
 
-class Sizing : public QObject
-{
+class Sizing : public QObject {
     Q_OBJECT
 
-    enum Densitie{
+    enum Densitie {
         ldpi,
         mdpi,
         hdpi,
@@ -44,12 +43,12 @@ class Sizing : public QObject
     Q_PROPERTY(Densitie densitie READ densitie NOTIFY densitieChanged)
 
 public:
-    explicit Sizing(QObject *parent = 0);
+    explicit Sizing(QObject* parent = 0);
 
-    float mmScaleFactor() {return m_mmScaleFactor;}
-    float dpScaleFactor() {return m_dpScaleFactor;}
+    float mmScaleFactor() { return m_mmScaleFactor; }
+    float dpScaleFactor() { return m_dpScaleFactor; }
 
-    Densitie densitie() {return m_densitie;};
+    Densitie densitie() { return m_densitie; };
 
     void setMmScaleFactor(float value);
     void setDpScaleFactor();
@@ -65,7 +64,7 @@ signals:
 
 private slots:
     void physicalDotsPerInchChanged(qreal dpi);
-    void physicalSizeChanged(const QSizeF &size);
+    void physicalSizeChanged(const QSizeF& size);
 
 private:
     QSizeF m_physicalScreenSize;

@@ -19,20 +19,20 @@
 #ifndef EDITFILTER_H
 #define EDITFILTER_H
 
-#include <QObject>
+#include "nemofocussingleton.h"
 #include <QEvent>
+#include <QObject>
 #include <QString>
 #include <QVariant>
-#include "nemofocussingleton.h"
 
 #include <QVariant>
 
-class EditFilter : public QObject
-{
+class EditFilter : public QObject {
     Q_OBJECT
 public:
-     explicit EditFilter(QObject *parent = 0);
+    explicit EditFilter(QObject* parent = 0);
+
 protected:
-    bool eventFilter(QObject *obj, QEvent *event);
+    bool eventFilter(QObject* obj, QEvent* event);
 };
 #endif // EDITFILTER_H

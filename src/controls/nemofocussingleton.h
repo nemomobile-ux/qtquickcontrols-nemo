@@ -22,20 +22,19 @@
 
 #include <QObject>
 
-class NemoFocusSingleton: public QObject
-{
+class NemoFocusSingleton : public QObject {
     Q_OBJECT
-     Q_DISABLE_COPY(NemoFocusSingleton)
+    Q_DISABLE_COPY(NemoFocusSingleton)
 
 public:
-    Q_INVOKABLE void nemoregister(QObject *edit) ;
-    QObject *edit() const;
+    Q_INVOKABLE void nemoregister(QObject* edit);
+    QObject* edit() const;
 
     static NemoFocusSingleton* instance();
 
 private:
-    QObject *m_edit = nullptr;
-    NemoFocusSingleton(QObject* parent = nullptr) {Q_UNUSED(parent)}
+    QObject* m_edit = nullptr;
+    NemoFocusSingleton(QObject* parent = nullptr) { Q_UNUSED(parent) }
 };
 
 #endif // NEMOFOCUSSINGLETON_H
