@@ -46,12 +46,11 @@
 /**
  * \brief Interface for a client to request pixmaps from the themedaemon server.
  */
-class MAbstractThemeDaemonClient : public QObject
-{
+class MAbstractThemeDaemonClient : public QObject {
     Q_OBJECT
 
 public:
-    MAbstractThemeDaemonClient(QObject *parent = 0);
+    MAbstractThemeDaemonClient(QObject* parent = 0);
     virtual ~MAbstractThemeDaemonClient();
 
     /**
@@ -60,8 +59,7 @@ public:
      *                      the returned pixmap will have the original size. Otherwise
      *                      the pixmap gets scaled to the requested size.
      */
-    virtual QPixmap requestPixmap(const QString &id, const QSize &requestedSize) = 0;
+    virtual QPixmap requestPixmap(const QString& id, const QSize& requestedSize) = 0;
 };
 
 #endif
-

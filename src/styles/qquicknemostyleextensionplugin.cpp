@@ -22,18 +22,18 @@
 #include "qquicknemostyleextensionplugin.h"
 #include <QtQml>
 
-QQuickNemoStyleExtensionPlugin::QQuickNemoStyleExtensionPlugin(QObject *parent) :
-    QQmlExtensionPlugin(parent)
+QQuickNemoStyleExtensionPlugin::QQuickNemoStyleExtensionPlugin(QObject* parent)
+    : QQmlExtensionPlugin(parent)
 {
 }
 
-void QQuickNemoStyleExtensionPlugin::registerTypes(const char *uri)
+void QQuickNemoStyleExtensionPlugin::registerTypes(const char* uri)
 {
     Q_ASSERT(uri == QLatin1String("QtQuick.Controls.Styles.Nemo"));
     qmlRegisterModule(uri, 1, 0);
 }
 
-void QQuickNemoStyleExtensionPlugin::initializeEngine(QQmlEngine *engine, const char *uri)
+void QQuickNemoStyleExtensionPlugin::initializeEngine(QQmlEngine* engine, const char* uri)
 {
-    QQmlExtensionPlugin::initializeEngine(engine,uri);
+    QQmlExtensionPlugin::initializeEngine(engine, uri);
 }

@@ -19,19 +19,20 @@
 
 #include "nemofocussingleton.h"
 
-void NemoFocusSingleton::nemoregister(QObject *edit)
+void NemoFocusSingleton::nemoregister(QObject* edit)
 {
     m_edit = edit;
 }
-NemoFocusSingleton *NemoFocusSingleton::instance() {
-    static NemoFocusSingleton * _instance = 0;
-    if ( _instance == 0 ) {
+NemoFocusSingleton* NemoFocusSingleton::instance()
+{
+    static NemoFocusSingleton* _instance = 0;
+    if (_instance == 0) {
         _instance = new NemoFocusSingleton();
     }
     return _instance;
 }
 
-QObject *NemoFocusSingleton::edit() const
+QObject* NemoFocusSingleton::edit() const
 {
     return m_edit;
 }

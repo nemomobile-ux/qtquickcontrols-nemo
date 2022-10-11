@@ -19,17 +19,17 @@
 
 #include "editfilter.h"
 class QVariant;
-EditFilter::EditFilter(QObject *parent) : QObject(parent)
+EditFilter::EditFilter(QObject* parent)
+    : QObject(parent)
 {
-
 }
 
-bool EditFilter::eventFilter(QObject *obj, QEvent *event)
+bool EditFilter::eventFilter(QObject* obj, QEvent* event)
 {
     if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::TouchBegin) {
-        NemoFocusSingleton *nemoFocus = NemoFocusSingleton::instance();
-        if(nemoFocus->edit() != NULL) {
-            nemoFocus->edit()->setProperty("focus",QVariant(false));
+        NemoFocusSingleton* nemoFocus = NemoFocusSingleton::instance();
+        if (nemoFocus->edit() != NULL) {
+            nemoFocus->edit()->setProperty("focus", QVariant(false));
             return false;
         }
     }

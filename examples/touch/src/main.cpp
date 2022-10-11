@@ -38,29 +38,29 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include <QtGui/QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QtQuick/QQuickView>
 #include <QScreen>
+#include <QtGui/QGuiApplication>
+#include <QtQuick/QQuickView>
 
 #include <glacierapp.h>
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     setenv("QT_QUICK_CONTROLS_STYLE", "Nemo", 1);
 
-    QGuiApplication *app = GlacierApp::app(argc, argv);
+    QGuiApplication* app = GlacierApp::app(argc, argv);
     app->setOrganizationName("NemoMobile");
 
     QScreen* sc = app->primaryScreen();
-    if(sc){
+    if (sc) {
         sc->setOrientationUpdateMask(Qt::LandscapeOrientation
-                             | Qt::PortraitOrientation
-                             | Qt::InvertedLandscapeOrientation
-                             | Qt::InvertedPortraitOrientation);
+            | Qt::PortraitOrientation
+            | Qt::InvertedLandscapeOrientation
+            | Qt::InvertedPortraitOrientation);
     }
 
-    QQuickWindow *window = GlacierApp::showWindow();
+    QQuickWindow* window = GlacierApp::showWindow();
     window->setTitle(QObject::tr("Glacier components"));
 
     return app->exec();

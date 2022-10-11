@@ -31,15 +31,15 @@
 
 #include "calendarmodel.h"
 
-CalendarModel::CalendarModel(QObject *parent) :
-    QAbstractListModel(parent)
+CalendarModel::CalendarModel(QObject* parent)
+    : QAbstractListModel(parent)
 {
 
-    m_hash.insert(Qt::UserRole ,QByteArray("isOtherMonthDay"));
-    m_hash.insert(Qt::UserRole+1 ,QByteArray("isCurrentDay"));
-    m_hash.insert(Qt::UserRole+2 ,QByteArray("isSelectedDay"));
-    m_hash.insert(Qt::UserRole+3 ,QByteArray("hasEventDay"));
-    m_hash.insert(Qt::UserRole+4 ,QByteArray("dateOfDay"));
+    m_hash.insert(Qt::UserRole, QByteArray("isOtherMonthDay"));
+    m_hash.insert(Qt::UserRole + 1, QByteArray("isCurrentDay"));
+    m_hash.insert(Qt::UserRole + 2, QByteArray("isSelectedDay"));
+    m_hash.insert(Qt::UserRole + 3, QByteArray("hasEventDay"));
+    m_hash.insert(Qt::UserRole + 4, QByteArray("dateOfDay"));
 
     m_currentDate = QDate::currentDate();
     m_selectedDate = m_currentDate;
@@ -47,37 +47,34 @@ CalendarModel::CalendarModel(QObject *parent) :
     fill();
 }
 
-int CalendarModel::rowCount(const QModelIndex &parent) const
+int CalendarModel::rowCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent);
     return m_dateList.count();
 }
 
-QVariant CalendarModel::data(const QModelIndex &index, int role) const
+QVariant CalendarModel::data(const QModelIndex& index, int role) const
 {
     Q_UNUSED(role);
-    if(!index.isValid())
-    {
+    if (!index.isValid()) {
         return QVariant();
     }
 
-    if(index.row() >= m_dateList.size())
-    {
+    if (index.row() >= m_dateList.size()) {
         return QVariant();
     }
 
     DateItem item = m_dateList.at(index.row());
-    switch (role)
-    {
+    switch (role) {
     case Qt::UserRole:
         return item.isOtherMonthDay;
-    case Qt::UserRole+1:
+    case Qt::UserRole + 1:
         return item.isCurrentDay;
-    case Qt::UserRole+2:
+    case Qt::UserRole + 2:
         return item.isSelectedDay;
-    case Qt::UserRole+3:
+    case Qt::UserRole + 3:
         return item.hasEventDay;
-    case Qt::UserRole+4:
+    case Qt::UserRole + 4:
         return item.dateOfDay;
     default:
         return QVariant();
@@ -86,27 +83,25 @@ QVariant CalendarModel::data(const QModelIndex &index, int role) const
 
 QVariant CalendarModel::get(const int idx) const
 {
-    if(idx >= m_dateList.size())
-    {
+    if (idx >= m_dateList.size()) {
         return QVariant();
     }
 
     QMap<QString, QVariant> itemData;
     DateItem item = m_dateList.at(idx);
 
-    itemData.insert("isOtherMonthDay",item.isOtherMonthDay);
-    itemData.insert("isCurrentDay",item.isCurrentDay);
-    itemData.insert("isSelectedDay",item.isSelectedDay);
-    itemData.insert("hasEventDay",item.hasEventDay);
-    itemData.insert("dateOfDay",item.dateOfDay);
+    itemData.insert("isOtherMonthDay", item.isOtherMonthDay);
+    itemData.insert("isCurrentDay", item.isCurrentDay);
+    itemData.insert("isSelectedDay", item.isSelectedDay);
+    itemData.insert("hasEventDay", item.hasEventDay);
+    itemData.insert("dateOfDay", item.dateOfDay);
 
     return QVariant(itemData);
 }
 
 void CalendarModel::setSelectedDate(QDate date)
 {
-    if(m_selectedDate != date)
-    {
+    if (m_selectedDate != date) {
         m_selectedDate = date;
         emit selectedDateChanged();
 
@@ -118,42 +113,37 @@ void CalendarModel::fill()
 {
     m_dateList.clear();
 
-    QDate firstDayOfSelectedMonth = QDate(m_selectedDate.year(),m_selectedDate.month(),1);
+    QDate firstDayOfSelectedMonth = QDate(m_selectedDate.year(), m_selectedDate.month(), 1);
     int startWeekDay = firstDayOfSelectedMonth.dayOfWeek();
 
     /*If first dayof moth not Monday add form preview month*/
-    if(startWeekDay != 1)
-    {
-        int needToAdd = 1-startWeekDay;
-        for(int n=needToAdd; n<0; n++)
-        {
-            m_dateList.append(createDateItem(firstDayOfSelectedMonth.addDays(n),true));
+    if (startWeekDay != 1) {
+        int needToAdd = 1 - startWeekDay;
+        for (int n = needToAdd; n < 0; n++) {
+            m_dateList.append(createDateItem(firstDayOfSelectedMonth.addDays(n), true));
         }
     }
 
-    for(int n=0; n < firstDayOfSelectedMonth.daysInMonth();n++)
-    {
+    for (int n = 0; n < firstDayOfSelectedMonth.daysInMonth(); n++) {
         QDate date = firstDayOfSelectedMonth.addDays(n);
-        m_dateList.append(createDateItem(date,false,date == m_currentDate));
+        m_dateList.append(createDateItem(date, false, date == m_currentDate));
     }
     /*if last day of moth not Sunday add from next mont*/
-    QDate lastDayOfSelectedMonth = QDate(m_selectedDate.year(),m_selectedDate.month(),firstDayOfSelectedMonth.daysInMonth());
+    QDate lastDayOfSelectedMonth = QDate(m_selectedDate.year(), m_selectedDate.month(), firstDayOfSelectedMonth.daysInMonth());
     int endWeekDay = lastDayOfSelectedMonth.dayOfWeek();
-    if(endWeekDay != 7)
-    {
-        int needToAdd = 7-endWeekDay;
-        for(int n=1;n<=needToAdd;n++)
-        {
-            m_dateList.append(createDateItem(lastDayOfSelectedMonth.addDays(n),true));
+    if (endWeekDay != 7) {
+        int needToAdd = 7 - endWeekDay;
+        for (int n = 1; n <= needToAdd; n++) {
+            m_dateList.append(createDateItem(lastDayOfSelectedMonth.addDays(n), true));
         }
     }
-    dataChanged(createIndex(0, 0), createIndex(rowCount()-1, 0));
+    dataChanged(createIndex(0, 0), createIndex(rowCount() - 1, 0));
 }
 
 CalendarModel::DateItem CalendarModel::createDateItem(QDate dateOfDay, bool isOtherMonthDay, bool isCurrentDay, bool isSelectedDay, bool hasEventDay)
 {
     DateItem dateItem;
-    dateItem.dateOfDay =  dateOfDay;
+    dateItem.dateOfDay = dateOfDay;
     dateItem.hasEventDay = hasEventDay;
     dateItem.isCurrentDay = isCurrentDay;
     dateItem.isOtherMonthDay = isOtherMonthDay;

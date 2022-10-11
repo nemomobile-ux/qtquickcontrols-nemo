@@ -26,14 +26,13 @@
 class QQmlEngine;
 class QJSEngine;
 class NemoThemeGlobal;
-class QQuickNemoStyleExtensionPlugin : public QQmlExtensionPlugin
-{
+class QQuickNemoStyleExtensionPlugin : public QQmlExtensionPlugin {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface")
 public:
-    explicit QQuickNemoStyleExtensionPlugin(QObject *parent = 0);
-    void registerTypes(const char *uri);
-    void initializeEngine(QQmlEngine *engine, const char *uri);
+    explicit QQuickNemoStyleExtensionPlugin(QObject* parent = 0);
+    void registerTypes(const char* uri);
+    void initializeEngine(QQmlEngine* engine, const char* uri);
 };
 
 #endif // QQUICKNEMOSTYLEEXTENSIONPLUGIN_H

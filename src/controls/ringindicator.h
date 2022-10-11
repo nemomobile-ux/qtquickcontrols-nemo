@@ -36,8 +36,7 @@
 #include <QPainter>
 #include <QQuickPaintedItem>
 
-class RingIndicator : public QQuickPaintedItem
-{
+class RingIndicator : public QQuickPaintedItem {
     Q_OBJECT
     Q_PROPERTY(float startAngle READ startAngle WRITE setStartAngle NOTIFY startAngleChanged)
     Q_PROPERTY(float stopAngle READ stopAngle WRITE setStopAngle NOTIFY stopAngleChanged)
@@ -46,14 +45,14 @@ class RingIndicator : public QQuickPaintedItem
     Q_PROPERTY(QString color READ color WRITE setColor NOTIFY colorChanged)
 
 public:
-    RingIndicator(QQuickItem *parent = nullptr);
-    void paint(QPainter *painter) override;
+    RingIndicator(QQuickItem* parent = nullptr);
+    void paint(QPainter* painter) override;
 
-    float startAngle() {return m_startAngle;}
-    float stopAngle() {return m_stopAngle;}
-    float lineWidth() {return m_lineWidth;}
-    bool rounded() {return m_rounded;}
-    QString color() {return m_color.name();}
+    float startAngle() { return m_startAngle; }
+    float stopAngle() { return m_stopAngle; }
+    float lineWidth() { return m_lineWidth; }
+    bool rounded() { return m_rounded; }
+    QString color() { return m_color.name(); }
 
     void setStartAngle(float startAngle);
     void setStopAngle(float stopAngle);

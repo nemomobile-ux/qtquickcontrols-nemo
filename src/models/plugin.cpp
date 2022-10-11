@@ -19,25 +19,24 @@
 
 #include "calendarmodel.h"
 
-#include <QtQml>
-#include <QtGlobal>
 #include <QQmlEngine>
 #include <QQmlExtensionPlugin>
+#include <QtGlobal>
+#include <QtQml>
 
-class Q_DECL_EXPORT NemoSettingsPlugin : public QQmlExtensionPlugin
-{
+class Q_DECL_EXPORT NemoSettingsPlugin : public QQmlExtensionPlugin {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "Nemo.Models")
 
 public:
     virtual ~NemoSettingsPlugin() { }
 
-    void initializeEngine(QQmlEngine *, const char *uri)
+    void initializeEngine(QQmlEngine*, const char* uri)
     {
         Q_ASSERT(uri == QLatin1String("Nemo.UX.Models") || uri == QLatin1String("org.nemomobile.uxmodels"));
     }
 
-    void registerTypes(const char *uri)
+    void registerTypes(const char* uri)
     {
         Q_ASSERT(uri == QLatin1String("Nemo.UX.Models") || uri == QLatin1String("org.nemomobile.uxmodels"));
         qmlRegisterType<CalendarModel>(uri, 1, 0, "CalendarModel");

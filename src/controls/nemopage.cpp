@@ -21,12 +21,12 @@
 #include "nemopage.h"
 #include <QDebug>
 
-NemoPage::NemoPage(QQuickItem *parent)
+NemoPage::NemoPage(QQuickItem* parent)
     : QQuickItem(parent)
     , m_allowedOrientations(Qt::PrimaryOrientation) //- The value 0 means Page's allowedOrientations will be ignored
-  //- The value 0 can't be set from QML on purpose (see Hacks::isOrientationMaskValid impl.),
-  //  so that we can use the value 0 to know that the app developer has not touched this value
-  //  (in fact, as just said, once it's changed from QML, the app dev can't set it back to 0 from QML)
+//- The value 0 can't be set from QML on purpose (see Hacks::isOrientationMaskValid impl.),
+//  so that we can use the value 0 to know that the app developer has not touched this value
+//  (in fact, as just said, once it's changed from QML, the app dev can't set it back to 0 from QML)
 {
 }
 
@@ -37,7 +37,7 @@ Qt::ScreenOrientations NemoPage::allowedOrientations() const
 
 void NemoPage::setAllowedOrientations(Qt::ScreenOrientations allowed)
 {
-    //This way no invalid values can get assigned to allowedOrientations
+    // This way no invalid values can get assigned to allowedOrientations
     if (m_allowedOrientations != allowed) {
         if (isOrientationMaskValid(allowed)) {
             m_allowedOrientations = allowed;
@@ -50,12 +50,11 @@ void NemoPage::setAllowedOrientations(Qt::ScreenOrientations allowed)
 
 bool NemoPage::isOrientationMaskValid(Qt::ScreenOrientations orientations)
 {
-    //README: This is needed because otherwise you could assign it
-    //things like (Qt.PortraitOrientation | 444) from QML,
-    //and it would still appear as a valid Qt::ScreenOrientations in c++
+    // README: This is needed because otherwise you could assign it
+    // things like (Qt.PortraitOrientation | 444) from QML,
+    // and it would still appear as a valid Qt::ScreenOrientations in c++
     Qt::ScreenOrientations max = (Qt::PortraitOrientation | Qt::LandscapeOrientation
-            | Qt::InvertedPortraitOrientation | Qt::InvertedLandscapeOrientation);
+        | Qt::InvertedPortraitOrientation | Qt::InvertedLandscapeOrientation);
 
     return (orientations <= max && orientations > 0);
 }
-

@@ -31,7 +31,7 @@
 
 #include "ringindicator.h"
 
-RingIndicator::RingIndicator(QQuickItem *parent)
+RingIndicator::RingIndicator(QQuickItem* parent)
     : QQuickPaintedItem(parent)
     , m_startAngle(0)
     , m_stopAngle(90)
@@ -41,33 +41,31 @@ RingIndicator::RingIndicator(QQuickItem *parent)
 {
 }
 
-void RingIndicator::paint(QPainter *painter)
+void RingIndicator::paint(QPainter* painter)
 {
     QSizeF itemSize = size();
     Qt::PenCapStyle startStyle = Qt::FlatCap;
-    if(m_rounded) {
+    if (m_rounded) {
         startStyle = Qt::RoundCap;
     }
 
-
-    QPen pen(m_color, m_lineWidth, Qt::SolidLine, startStyle , Qt::BevelJoin);
-    QRect painedRect(0+m_lineWidth/2,
-                     0+m_lineWidth/2,
-                     itemSize.width()-m_lineWidth,
-                     itemSize.height()-m_lineWidth);
+    QPen pen(m_color, m_lineWidth, Qt::SolidLine, startStyle, Qt::BevelJoin);
+    QRect painedRect(0 + m_lineWidth / 2,
+        0 + m_lineWidth / 2,
+        itemSize.width() - m_lineWidth,
+        itemSize.height() - m_lineWidth);
 
     painter->setPen(pen);
     painter->setRenderHint(QPainter::Antialiasing);
 
-    painter->drawArc(painedRect,(90-m_startAngle)*16,(m_startAngle-m_stopAngle)*16);
+    painter->drawArc(painedRect, (90 - m_startAngle) * 16, (m_startAngle - m_stopAngle) * 16);
 }
-
 
 void RingIndicator::setStartAngle(float startAngle)
 {
     startAngle = normalizeAngile(startAngle);
 
-    if(startAngle != m_startAngle) {
+    if (startAngle != m_startAngle) {
         m_startAngle = startAngle;
         emit startAngleChanged();
         update();
@@ -78,7 +76,7 @@ void RingIndicator::setStopAngle(float stopAngle)
 {
     stopAngle = normalizeAngile(stopAngle);
 
-    if(stopAngle != m_stopAngle) {
+    if (stopAngle != m_stopAngle) {
         m_stopAngle = stopAngle;
         emit stopAngleChanged();
         update();
@@ -87,7 +85,7 @@ void RingIndicator::setStopAngle(float stopAngle)
 
 void RingIndicator::setLineWidth(float lineHeight)
 {
-    if(lineHeight >= 0 && lineHeight != m_lineWidth) {
+    if (lineHeight >= 0 && lineHeight != m_lineWidth) {
         m_lineWidth = lineHeight;
         emit lineWidthChanged();
         update();
@@ -96,18 +94,17 @@ void RingIndicator::setLineWidth(float lineHeight)
 
 void RingIndicator::setRounded(bool round)
 {
-    if(round != m_rounded) {
+    if (round != m_rounded) {
         m_rounded = round;
         emit roundedChanged();
         update();
     }
 }
 
-
 void RingIndicator::setColor(QString color)
 {
     QColor newColor(color);
-    if(newColor != m_color) {
+    if (newColor != m_color) {
         m_color = newColor;
         emit colorChanged();
         update();
@@ -116,14 +113,14 @@ void RingIndicator::setColor(QString color)
 
 float RingIndicator::normalizeAngile(float ang)
 {
-    if(ang > 360) {
-        int circles = (int)(ang/360);
-        ang = ang-360*circles;
+    if (ang > 360) {
+        int circles = (int)(ang / 360);
+        ang = ang - 360 * circles;
     }
 
-    if(ang < 0) {
-        int circles = (int)(ang/360);
-        ang = ang+360*circles;
+    if (ang < 0) {
+        int circles = (int)(ang / 360);
+        ang = ang + 360 * circles;
     }
 
     return abs(ang);

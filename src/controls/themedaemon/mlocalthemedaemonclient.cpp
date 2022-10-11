@@ -46,13 +46,13 @@
 #include <QDirIterator>
 #include <QSettings>
 
-MLocalThemeDaemonClient::MLocalThemeDaemonClient(const QString &testPath, QObject *parent) :
-    MAbstractThemeDaemonClient(parent),
-    m_pixmapCache(),
-    m_imageDirNodes()
-  #ifdef HAVE_MLITE
-  , themeItem("/meegotouch/theme/name")
-  #endif
+MLocalThemeDaemonClient::MLocalThemeDaemonClient(const QString& testPath, QObject* parent)
+    : MAbstractThemeDaemonClient(parent)
+    , m_pixmapCache()
+    , m_imageDirNodes()
+#ifdef HAVE_MLITE
+    , themeItem("/meegotouch/theme/name")
+#endif
 {
     QStringList themeRoots;
     QString themeRoot = testPath;
@@ -74,9 +74,9 @@ MLocalThemeDaemonClient::MLocalThemeDaemonClient(const QString &testPath, QObjec
 
     if (!testMode) {
         QString themeName;
-# if !defined(THEME_NAME)
-#  define THEME_NAME "glacier"
-# endif
+#if !defined(THEME_NAME)
+#define THEME_NAME "glacier"
+#endif
 #ifdef HAVE_MLITE
         qDebug() << Q_FUNC_INFO << "Theme: " << themeItem.value(THEME_NAME).toString();
         themeName = themeItem.value(THEME_NAME).toString();
@@ -112,17 +112,21 @@ MLocalThemeDaemonClient::MLocalThemeDaemonClient(const QString &testPath, QObjec
         if (themeRoots.at(i).endsWith(QDir::separator()))
             themeRoots[i].truncate(themeRoots.at(i).length() - 1);
 
-        buildHash(themeRoots.at(i) + QDir::separator() + "icons", QStringList() << "*.svg" << "*.png" << "*.jpg");
+        buildHash(themeRoots.at(i) + QDir::separator() + "icons", QStringList() << "*.svg"
+                                                                                << "*.png"
+                                                                                << "*.jpg");
     }
 
-    m_imageDirNodes.append(ImageDirNode("icons" , QStringList() << ".svg" << ".png" << ".jpg"));
+    m_imageDirNodes.append(ImageDirNode("icons", QStringList() << ".svg"
+                                                               << ".png"
+                                                               << ".jpg"));
 }
 
 MLocalThemeDaemonClient::~MLocalThemeDaemonClient()
 {
 }
 
-QPixmap MLocalThemeDaemonClient::requestPixmap(const QString &id, const QSize &requestedSize)
+QPixmap MLocalThemeDaemonClient::requestPixmap(const QString& id, const QSize& requestedSize)
 {
     QPixmap pixmap;
 
@@ -146,8 +150,7 @@ QPixmap MLocalThemeDaemonClient::requestPixmap(const QString &id, const QSize &r
             pixmap = QPixmap::fromImage(image);
         }
         if (parts.length() > 1)
-            if (parts.length() > 1 && QColor::isValidColor(parts.at(1)))
-            {
+            if (parts.length() > 1 && QColor::isValidColor(parts.at(1))) {
                 QPainter painter(&pixmap);
                 painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
                 painter.fillRect(pixmap.rect(), parts.at(1));
@@ -164,11 +167,11 @@ QPixmap MLocalThemeDaemonClient::requestPixmap(const QString &id, const QSize &r
     return pixmap;
 }
 
-QImage MLocalThemeDaemonClient::readImage(const QString &id) const
+QImage MLocalThemeDaemonClient::readImage(const QString& id) const
 {
     if (!id.isEmpty()) {
-        foreach (const ImageDirNode &imageDirNode, m_imageDirNodes) {
-            foreach (const QString &suffix, imageDirNode.suffixList) {
+        foreach (const ImageDirNode& imageDirNode, m_imageDirNodes) {
+            foreach (const QString& suffix, imageDirNode.suffixList) {
 
                 QString imageFilePathString = m_filenameHash.value(id + suffix);
                 if (!imageFilePathString.isNull()) {
@@ -183,13 +186,13 @@ QImage MLocalThemeDaemonClient::readImage(const QString &id) const
         }
         qDebug() << "Unknown theme image:" << id;
         QDir hicolorIconsDir("/usr/share/icons/hicolor/scalable/");
-        if(hicolorIconsDir.exists()) {
+        if (hicolorIconsDir.exists()) {
             qDebug() << "trying load into hicolor scalable dir";
             QDirIterator it("/usr/share/icons/hicolor/scalable/", QStringList() << "*.svg", QDir::Files, QDirIterator::Subdirectories);
 
             while (it.hasNext()) {
                 QString file = it.next();
-                if(file.contains(id+".svg")) {
+                if (file.contains(id + ".svg")) {
                     QImage image(file);
                     return image;
                 }
@@ -206,49 +209,51 @@ void MLocalThemeDaemonClient::buildHash(const QDir& rootDir, const QStringList& 
     QDir rDir = rootDir;
     rDir.setNameFilters(nameFilter);
     QStringList files = rDir.entryList(QDir::Files);
-    foreach (const QString &filename, files) {
+    foreach (const QString& filename, files) {
         m_filenameHash.insert(filename, rootDir.absolutePath());
     }
 
     QStringList dirList = rootDir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
-    foreach(const QString &nextDirString, dirList){
+    foreach (const QString& nextDirString, dirList) {
         QDir nextDir(rootDir.absolutePath() + QDir::separator() + nextDirString);
         buildHash(nextDir, nameFilter);
     }
 }
 
-MLocalThemeDaemonClient::PixmapIdentifier::PixmapIdentifier() :
-    imageId(), size()
+MLocalThemeDaemonClient::PixmapIdentifier::PixmapIdentifier()
+    : imageId()
+    , size()
 {
 }
 
-MLocalThemeDaemonClient::PixmapIdentifier::PixmapIdentifier(const QString &imageId, const QSize &size) :
-    imageId(imageId), size(size)
+MLocalThemeDaemonClient::PixmapIdentifier::PixmapIdentifier(const QString& imageId, const QSize& size)
+    : imageId(imageId)
+    , size(size)
 {
 }
 
-bool MLocalThemeDaemonClient::PixmapIdentifier::operator==(const PixmapIdentifier &other) const
+bool MLocalThemeDaemonClient::PixmapIdentifier::operator==(const PixmapIdentifier& other) const
 {
     return imageId == other.imageId && size == other.size;
 }
 
-bool MLocalThemeDaemonClient::PixmapIdentifier::operator!=(const PixmapIdentifier &other) const
+bool MLocalThemeDaemonClient::PixmapIdentifier::operator!=(const PixmapIdentifier& other) const
 {
     return imageId != other.imageId || size != other.size;
 }
 
-MLocalThemeDaemonClient::ImageDirNode::ImageDirNode(const QString &directory, const QStringList &suffixList) :
-    directory(directory),
-    suffixList(suffixList)
+MLocalThemeDaemonClient::ImageDirNode::ImageDirNode(const QString& directory, const QStringList& suffixList)
+    : directory(directory)
+    , suffixList(suffixList)
 {
 }
 
-uint qHash(const MLocalThemeDaemonClient::PixmapIdentifier &id)
+uint qHash(const MLocalThemeDaemonClient::PixmapIdentifier& id)
 {
     using ::qHash;
 
-    const uint idHash     = qHash(id.imageId);
-    const uint widthHash  = qHash(id.size.width());
+    const uint idHash = qHash(id.imageId);
+    const uint widthHash = qHash(id.size.width());
     const uint heightHash = qHash(id.size.height());
 
     // Twiddle the bits a little, taking a cue from Qt's own qHash() overloads

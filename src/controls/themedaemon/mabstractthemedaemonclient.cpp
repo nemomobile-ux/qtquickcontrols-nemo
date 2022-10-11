@@ -39,8 +39,8 @@
 
 #include "mabstractthemedaemonclient.h"
 
-MAbstractThemeDaemonClient::MAbstractThemeDaemonClient(QObject *parent) :
-    QObject(parent)
+MAbstractThemeDaemonClient::MAbstractThemeDaemonClient(QObject* parent)
+    : QObject(parent)
 {
 }
 
