@@ -10,7 +10,7 @@ add_executable(glacier-components ${SRC} ${RESOURCES})
 
 add_qt_library(QT_DEPLIBS "${QT_LIB_LIST}")
 target_link_libraries(glacier-components
-        QT_DEPLIBS
+        ${QT_DEPLIBS}
 	Glacier::App
 )
 
