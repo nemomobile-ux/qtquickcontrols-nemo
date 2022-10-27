@@ -4,14 +4,13 @@ set(SRC
 	main.cpp
 )
 
-qtquick_compiler_add_resources(RESOURCES glacier-sizeview.qrc)
+qt_add_resources(RESOURCES glacier-sizeview.qrc)
 
 add_executable(glacier-sizeview ${SRC} ${RESOURCES})
 
+add_qt_library(QT_DEPLIBS "${QT_LIB_LIST}")
 target_link_libraries(glacier-sizeview
-	Qt5::Gui
-	Qt5::Qml
-	Qt5::Quick
+        QT_DEPLIBS
 	Glacier::App
 )
 
