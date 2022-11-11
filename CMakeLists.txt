@@ -44,7 +44,15 @@ endfunction()
 
 FindQtInstallQml()
 
-add_subdirectory(examples)
-add_subdirectory(src)
+option(BUILD_CONTROLS "Build the controls" ON)
+option(BUILD_EXAMPLES "Build the example projects" OFF)
+
+if(BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()
+
+if(BUILD_CONTROLS)
+    add_subdirectory(src)
+endif()
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
