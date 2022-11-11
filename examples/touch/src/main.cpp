@@ -52,6 +52,7 @@ int main(int argc, char* argv[])
     QGuiApplication* app = GlacierApp::app(argc, argv);
     app->setOrganizationName("NemoMobile");
 
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     QScreen* sc = app->primaryScreen();
     if (sc) {
         sc->setOrientationUpdateMask(Qt::LandscapeOrientation
@@ -59,6 +60,7 @@ int main(int argc, char* argv[])
             | Qt::InvertedLandscapeOrientation
             | Qt::InvertedPortraitOrientation);
     }
+#endif
 
     QQuickWindow* window = GlacierApp::showWindow();
     window->setTitle(QObject::tr("Glacier components"));
