@@ -1,4 +1,4 @@
-pkg_check_modules(MLITE mlite5 REQUIRED IMPORTED_TARGET)
+pkg_check_modules(MLITE mlite${QT_MAJOR_VERSION} REQUIRED IMPORTED_TARGET)
 
 set(SRC
     ringindicator.cpp
@@ -7,7 +7,7 @@ set(SRC
     nemopage.cpp
     qrc_internal_resources.cpp
     nemoimageprovider.cpp
-    qquicknemocontrolsextensionplugin.cpp
+    plugin.cpp
     themedaemon/mlocalthemedaemonclient.cpp
     themedaemon/mabstractthemedaemonclient.cpp
     editfilter.cpp
@@ -21,7 +21,7 @@ set(HEADERS
     theme.h
     ringindicator.h
     nemoimageprovider.h
-    qquicknemocontrolsextensionplugin.h
+    plugin.h
     themedaemon/mlocalthemedaemonclient.h
     themedaemon/mabstractthemedaemonclient.h
     qquickfilteringmousearea.h
@@ -31,23 +31,54 @@ set(HEADERS
     nemopage.h
 )
 
-add_library(nemocontrolsplugin SHARED ${SRC} ${MLITE})
+qt_add_qml_module(nemocontrols
+    URI "Nemo.Controls"
+    VERSION 2.0
+    NO_GENERATE_PLUGIN_SOURCE
+    QML_FILES
+        qml/ActionButton.qml
+        qml/ApplicationWindow.qml
+        qml/Button.qml
+        qml/ButtonRow.qml
+        qml/Checkbox.qml
+        qml/DatePicker.qml
+        qml/dialogs
+        qml/ErrorStackPage.qml
+        qml/GlacierRollerItem.qml
+        qml/GlacierRoller.qml
+        qml/Header.qml
+        qml/HeaderToolsIndicator.qml
+        qml/HeaderToolsLayout.qml
+        qml/IconButton.qml
+        qml/InverseMouseArea.qml
+        qml/Label.qml
+        qml/ListViewItemWithActions.qml
+        qml/ListView.qml
+        qml/NemoIcon.qml
+        qml/Page.qml
+        qml/ProgressBar.qml
+        qml/ScrollDecorator.qml
+        qml/Slider.qml
+        qml/Spinner.qml
+        qml/TextField.qml
+        qml/TimePicker.qml
+        qml/ToolButton.qml
+        qml/Wallpaper.qml
+    SOURCES
+        ${SRC}
+        ${HEADERS})
 
-target_link_libraries(nemocontrolsplugin
-    Qt5::Core
-    Qt5::Qml 
-    Qt5::Quick
+target_link_libraries(nemocontrols PRIVATE
+    Qt${QT_MAJOR_VERSION}::Core
+    Qt${QT_MAJOR_VERSION}::Qml
+    Qt${QT_MAJOR_VERSION}::Quick
     PkgConfig::MLITE)
 
-install(DIRECTORY qml DESTINATION ${QT_INSTALL_QML}/QtQuick/Controls/Nemo/)
-install(TARGETS nemocontrolsplugin DESTINATION ${QT_INSTALL_QML}/QtQuick/Controls/Nemo/)
+install(TARGETS nemocontrolsplugin
+    LIBRARY DESTINATION ${QT_INSTALL_QML}/Nemo/Controls/)
 
-install(DIRECTORY qml/
-        DESTINATION ${QT_INSTALL_QML}/QtQuick/Controls/Nemo/
-        PATTERN "dialogs" EXCLUDE)
-        
-install(DIRECTORY qml/dialogs/
-        DESTINATION ${QT_INSTALL_QML}/Nemo/Dialogs)
+install(TARGETS nemocontrols
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/)
 
-install(DIRECTORY images
-        DESTINATION ${QT_INSTALL_QML}/QtQuick/Controls/Nemo)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qmldir
+    DESTINATION ${QT_INSTALL_QML}/Nemo/Controls/)

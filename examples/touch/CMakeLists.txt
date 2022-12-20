@@ -1,17 +1,18 @@
 find_package(Glacier 0.8 COMPONENTS App REQUIRED)
 
-set(SRC
-	src/main.cpp
-)
-
-qtquick_compiler_add_resources(RESOURCES glacier-components.qrc)
+set(SRC	src/main.cpp)
+if(QT_MAJOR_VERSION EQUAL 5)
+qt5_add_resources(RESOURCES glacier-components.qrc)
+else()
+qt6_add_resources(RESOURCES glacier-components.qrc)
+endif()
 
 add_executable(glacier-components ${SRC} ${RESOURCES})
 
 target_link_libraries(glacier-components
-	Qt5::Gui
-	Qt5::Qml
-	Qt5::Quick
+        Qt${QT_MAJOR_VERSION}::Gui
+        Qt${QT_MAJOR_VERSION}::Qml
+        Qt${QT_MAJOR_VERSION}::Quick
 	Glacier::App
 )
 

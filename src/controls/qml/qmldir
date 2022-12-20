@@ -1,4 +1,4 @@
-module QtQuick.Controls.Nemo
+module Nemo.Controls
 
 plugin nemocontrolsplugin
 

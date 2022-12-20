@@ -20,13 +20,11 @@
  * Boston, MA 02110-1301, USA.
  */
 
-import QtQuick.Window 2.2
-import QtQuick 2.6
-import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.0
-import QtQuick.Controls.Private 1.0
-import QtQuick.Controls.Nemo 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick.Window
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Nemo.Controls 2.0
 
 NemoWindow {
     id: root
@@ -294,9 +292,9 @@ NemoWindow {
                         function onAllowedOrientationsChanged() { root.orientationConstraintsChanged() }
                     }
 
-                    delegate: StackViewDelegate {
+                    delegate: QtObject {
                         pushTransition: Component {
-                            StackViewTransition {
+                            ParallelAnimation {
                                 ScriptAction {
                                     script: {
                                         imShowAnimation.stop()
@@ -322,7 +320,7 @@ NemoWindow {
                             }
                         }
                         popTransition: Component {
-                            StackViewTransition {
+                            ParallelAnimation {
                                 ScriptAction {
                                     script: {
                                         imShowAnimation.stop()

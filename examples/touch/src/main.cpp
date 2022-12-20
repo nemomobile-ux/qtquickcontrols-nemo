@@ -54,10 +54,12 @@ int main(int argc, char* argv[])
 
     QScreen* sc = app->primaryScreen();
     if (sc) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         sc->setOrientationUpdateMask(Qt::LandscapeOrientation
             | Qt::PortraitOrientation
             | Qt::InvertedLandscapeOrientation
             | Qt::InvertedPortraitOrientation);
+#endif
     }
 
     QQuickWindow* window = GlacierApp::showWindow();

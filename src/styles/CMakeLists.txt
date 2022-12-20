@@ -9,9 +9,9 @@ set(HEADERS
 add_library(nemostyleplugin SHARED ${SRC})
 
 target_link_libraries(nemostyleplugin
-    Qt5::Core
-    Qt5::Qml 
-    Qt5::Quick
+    Qt${QT_MAJOR_VERSION}::Core
+    Qt${QT_MAJOR_VERSION}::Qml
+    Qt${QT_MAJOR_VERSION}::Quick
 )
 
 install(TARGETS nemostyleplugin DESTINATION ${QT_INSTALL_QML}/QtQuick/Controls/Styles/Nemo/)

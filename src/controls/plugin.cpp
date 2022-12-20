@@ -20,7 +20,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "qquicknemocontrolsextensionplugin.h"
+#include "plugin.h"
 #include "nemofocussingleton.h"
 #include "nemoimageprovider.h"
 #include "nemopage.h"
@@ -46,9 +46,8 @@ QObject* getNemoFocus(QQmlEngine* engine, QJSEngine* scriptEngine)
 
 void QQuickNemoControlsExtensionPlugin::registerTypes(const char* uri)
 {
-    Q_ASSERT(uri == QLatin1String("QtQuick.Controls.Nemo"));
+    Q_ASSERT(uri == QLatin1String("Nemo.Controls"));
     qmlRegisterModule(uri, 1, 0);
-    //@uri QtQuick.Controls.Nemo
     qmlRegisterSingletonType<QObject>(uri, 1, 0, "NemoFocus", getNemoFocus);
     qmlRegisterType<NemoWindow>(uri, 1, 0, "NemoWindow");
     qmlRegisterType<NemoPage>(uri, 1, 0, "NemoPage");
