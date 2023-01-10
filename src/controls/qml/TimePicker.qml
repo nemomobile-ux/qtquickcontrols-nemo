@@ -39,6 +39,10 @@ Item{
 
     property date currentTime: new Date()
 
+    property alias minutesLineWidth: minutes.lineWidth
+    property alias hoursLineWidth: hours12.lineWidth
+    property real gaugesSpacing: Theme.itemSpacingSmall
+
     property bool readOnly: true
 
     Item{
@@ -50,29 +54,28 @@ Item{
             id: hours12
             anchors.centerIn: parent
 
-            width: parent.width - Theme.itemHeightExtraSmall
-            height: parent.height - Theme.itemHeightExtraSmall
+            width: parent.width - (2 * minutes.lineWidth + timePicker.gaugesSpacing)
+            height: parent.height - (2 * minutes.lineWidth + timePicker.gaugesSpacing)
 
             startAngle: 0
             stopAngle: 360
 
-            lineWidth: Theme.itemHeightExtraSmall/2
+            lineWidth: Theme.itemHeightSmall
             color: Theme.accentColor
-            opacity: 0.5
-            visible: currentTime.getHours() >= 12
+            opacity: (currentTime.getHours() >= 12) ? 0.6 : 0.1
         }
 
         RingIndicator{
             id: hours
             anchors.centerIn: parent
 
-            width: parent.width - Theme.itemHeightExtraSmall
-            height: parent.height - Theme.itemHeightExtraSmall
+            width: hours12.width
+            height: hours12.height
 
             startAngle: 0
             stopAngle: 360/12*currentTime.getHours()
 
-            lineWidth: Theme.itemHeightExtraSmall/2
+            lineWidth: hours12.lineWidth
             color: Theme.accentColor
 
             Label{
@@ -100,7 +103,7 @@ Item{
             startAngle: 0
             stopAngle: 360/60*currentTime.getMinutes()
 
-            lineWidth: Theme.itemHeightExtraSmall/5
+            lineWidth: Theme.itemHeightExtraSmall/2
             color: Theme.accentColor
 
             Label{
@@ -121,47 +124,40 @@ Item{
 
     MouseArea{
         anchors.fill: parent
-        onPressed: {
-            if(readOnly)
-            {
-                return;
+        enabled: !timePicker.readOnly
+        hoverEnabled: true
+        onPositionChanged: {
+            if (!pressed) {
+                return
             }
 
-            var minute_rad_max = clockWidget.width/2
-            var minute_rad_min = clockWidget.width/2-Theme.itemHeightExtraSmall/5;
+            var minute_radius_max = clockWidget.width/2;
+            var minute_radius_min = minute_radius_max - ( minutes.lineWidth + timePicker.gaugesSpacing/2) ;
+//            var hour_radius_max = minute_radius_min - 1;
+            var hour_radius_min = minute_radius_min - (hours.lineWidth + timePicker.gaugesSpacing);
 
-            var hour_rad_max = (clockWidget.width-Theme.itemHeightExtraSmall)/2
-            var hour_rad_min = (clockWidget.width-Theme.itemHeightExtraSmall)/2-Theme.itemHeightExtraSmall/2
+            var click_radius = Math.sqrt(Math.pow((mouseX-clockWidget.width/2),2)+Math.pow((mouseY-clockWidget.width/2),2))
 
-            var clickRad = Math.sqrt(Math.pow((mouseX-clockWidget.width/2),2)+Math.pow((mouseY-clockWidget.width/2),2))
 
-            if(clickRad <= minute_rad_max && clickRad >= hour_rad_min)
-            {
+            if (click_radius <= minute_radius_max && click_radius >= hour_radius_min) {
+
                 var ang = getAngle(mouseX,mouseY)
                 var d = new Date(currentTime);
-                if(clickRad>=minute_rad_min)
-                {
+                if (click_radius >= minute_radius_min) {
+
                     currentTime =  new Date(d.setMinutes(Math.round(60*ang/360)))
-                }
-                else if(clickRad <= hour_rad_max && clickRad >= hour_rad_min)
-                {
-                    if(currentTime.getHours() >= 12)
-                    {
+
+                } else {
+
+                    if (currentTime.getHours() >= 12) {
                         currentTime =  new Date(d.setHours(Math.round(12*ang/360)+12))
-                    }
-                    else
-                    {
+                    } else {
                         currentTime =  new Date(d.setHours(Math.round(12*ang/360)))
                     }
                 }
+
             }
         }
-    }
-
-    function getMinuteAngle()
-    {
-        var minute = timePicker.minutes
-        return 2*Math.PI/60*minute-0.5*Math.PI
     }
 
     function getAngle(x,y)
