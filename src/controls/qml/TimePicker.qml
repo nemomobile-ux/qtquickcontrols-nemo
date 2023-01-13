@@ -131,13 +131,17 @@ Item{
                 return
             }
 
+            mousePositionToTime();
+        }
+        onClicked: mousePositionToTime();
+
+        function mousePositionToTime() {
             var minute_radius_max = clockWidget.width/2;
             var minute_radius_min = minute_radius_max - ( minutes.lineWidth + timePicker.gaugesSpacing/2) ;
 //            var hour_radius_max = minute_radius_min - 1;
             var hour_radius_min = minute_radius_min - (hours.lineWidth + timePicker.gaugesSpacing);
 
             var click_radius = Math.sqrt(Math.pow((mouseX-clockWidget.width/2),2)+Math.pow((mouseY-clockWidget.width/2),2))
-
 
             if (click_radius <= minute_radius_max && click_radius >= hour_radius_min) {
 
@@ -155,7 +159,6 @@ Item{
                         currentTime =  new Date(d.setHours(Math.round(12*ang/360)))
                     }
                 }
-
             }
         }
     }
