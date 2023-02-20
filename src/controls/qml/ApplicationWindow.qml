@@ -233,8 +233,8 @@ NemoWindow {
                                                                                       : (root._transpose ? Qt.inputMethod.keyboardRectangle.height
                                                                                                          : Qt.inputMethod.keyboardRectangle.width))
 
-                    /*
-                      TODO: fix on landscape and inverted landscape
+
+                    //  TODO: fix on landscape and inverted landscape
                     onImSizeChanged: {
                         if (imSize <= 0 && previousImSize > 0) {
                             imShowAnimation.stop()
@@ -248,7 +248,7 @@ NemoWindow {
                         }
 
                         previousImSize = imSize
-                    }*/
+                    }
                     clip: true
                     Component.onCompleted: {
                         stackInitialized = true
