@@ -54,12 +54,16 @@ ApplicationWindow {
     allowedOrientations:  Qt.PortraitOrientation | Qt.LandscapeOrientation | Qt.InvertedLandscapeOrientation | Qt.InvertedPortraitOrientation
 
     // Implements back key navigation
-    Keys.onReleased: {
-        if (event.key === Qt.Key_Back) {
-            if (pageStack.depth > 1) {
-                pageStack.pop();
-                event.accepted = true;
-            } else { Qt.quit(); }
+    Item{
+        id: keysHandler
+        focus: true
+        Keys.onReleased: {
+            if (event.key === Qt.Key_Back || event.key === Qt.Key_Escape) {
+                if (pageStack.depth > 1) {
+                    pageStack.pop();
+                    event.accepted = true;
+                } else { Qt.quit(); }
+            }
         }
     }
 
