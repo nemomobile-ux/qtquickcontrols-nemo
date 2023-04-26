@@ -377,38 +377,6 @@ NemoWindow {
                     id: toolBar
                     stackView: root.pageStack
                     appWindow: root
-
-                    //used to animate the dimmer when pages are pushed/popped (see Header's QML code)
-                    property alias __dimmer: headerDimmerContainer
-                }
-
-                Item {
-                    //This item handles the rotation of the dimmer.
-                    //All this because QML doesn't have a horizontal gradient (unless you import GraphicalEffects)
-                    //and having a container which doesn't rotate but just resizes makes it easier to rotate its inner
-                    //child
-                    id: headerDimmerContainer
-
-                    //README: Don't use AnchorChanges for this item!
-                    //Reason: state changes disable bindings while the transition from one state to another is running.
-                    //This causes the dimmer not to follow the drawer when the drawer is closed right before the orientation change
-                    anchors.top: isUiPortrait ? toolBar.bottom : parent.top
-                    anchors.left: isUiPortrait ? parent.left : toolBar.right
-                    anchors.right: isUiPortrait ? parent.right : undefined
-                    anchors.bottom: isUiPortrait ? undefined : parent.bottom
-                    //we only set the size in one orientation, the anchors will take care of the other
-                    width: if (!isUiPortrait) Theme.itemHeightExtraSmall/2
-                    height: if (isUiPortrait) Theme.itemHeightExtraSmall/2
-                    //MAKE SURE THAT THE HEIGHT SPECIFIED BY THE THEME IS AN EVEN NUMBER, TO AVOID ROUNDING ERRORS IN THE LAYOUT
-
-                    Rectangle {
-                        id: headerDimmer
-                        anchors.centerIn: parent
-                        gradient: Gradient {
-                            GradientStop { position: 0; color: Theme.backgroundColor }
-                            GradientStop { position: 1; color: "transparent" }
-                        }
-                    }
                 }
 
                 Item {
@@ -431,12 +399,6 @@ NemoWindow {
                                 height: _verticalDimension
                                 rotation: 0
                                 uiOrientation: Qt.PortraitOrientation
-                            }
-                            PropertyChanges {
-                                target: headerDimmer
-                                height: Theme.itemHeightExtraSmall/2
-                                width: parent.width
-                                rotation: 0
                             }
                             AnchorChanges {
                                 target: clipping
@@ -482,12 +444,6 @@ NemoWindow {
                                 rotation: 180
                                 uiOrientation: Qt.InvertedPortraitOrientation
                             }
-                            PropertyChanges {
-                                target: headerDimmer
-                                height: Theme.itemHeightExtraSmall/2
-                                width: parent.width
-                                rotation: 0
-                            }
                             AnchorChanges {
                                 target: clipping
                                 anchors.top: undefined
@@ -506,12 +462,6 @@ NemoWindow {
                                 height: _horizontalDimension
                                 rotation: 90
                                 uiOrientation: Qt.InvertedLandscapeOrientation
-                            }
-                            PropertyChanges {
-                                target: headerDimmer
-                                height: Theme.itemHeightExtraSmall/2
-                                width: parent.height
-                                rotation: -90
                             }
                             AnchorChanges {
                                 target: clipping

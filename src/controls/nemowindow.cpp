@@ -45,7 +45,9 @@ NemoWindow::NemoWindow(QWindow* parent)
         connect(m_primaryScreen, &QScreen::orientationChanged, this, &NemoWindow::orientationChanged);
         connect(m_primaryScreen, &QScreen::primaryOrientationChanged, this, &NemoWindow::m_primaryOrientationChanged);
     }
-    m_isUiPortrait = (m_screenOrientation == Qt::PortraitOrientation || m_screenOrientation == Qt::InvertedPortraitOrientation);
+    connect(this, &QQuickWindow::widthChanged, this, &NemoWindow::onSizeChanged);
+    connect(this, &QQuickWindow::heightChanged, this, &NemoWindow::onSizeChanged);
+    m_isUiPortrait = (height() > width());
 }
 
 Qt::ScreenOrientations NemoWindow::allowedOrientations() const
@@ -91,12 +93,6 @@ void NemoWindow::orientationChanged(Qt::ScreenOrientation orientation)
     if (orientation != m_screenOrientation) {
         m_screenOrientation = orientation;
         emit screenOrientationChanged();
-
-        bool isUiPortrait = (m_screenOrientation == Qt::PortraitOrientation || m_screenOrientation == Qt::InvertedPortraitOrientation);
-        if (isUiPortrait != m_isUiPortrait) {
-            m_isUiPortrait = isUiPortrait;
-            emit isUiPortraitChanged();
-        }
     }
 }
 
@@ -105,5 +101,15 @@ void NemoWindow::m_primaryOrientationChanged(Qt::ScreenOrientation orientation)
     if (orientation != m_primaryOrientation) {
         m_primaryOrientation = orientation;
         emit primaryOrientationChanged();
+    }
+}
+
+void NemoWindow::onSizeChanged(int arg)
+{
+    Q_UNUSED(arg)
+    bool isUiPortrait = (height() > width());
+    if (isUiPortrait != m_isUiPortrait) {
+        m_isUiPortrait = isUiPortrait;
+        emit isUiPortraitChanged();
     }
 }

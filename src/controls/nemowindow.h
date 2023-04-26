@@ -57,6 +57,8 @@ private slots:
     void orientationChanged(Qt::ScreenOrientation orientation);
     void m_primaryOrientationChanged(Qt::ScreenOrientation orientation);
 
+    void onSizeChanged(int arg);
+
 private:
     // This is the global allowed orientations settings:
     // it's the settings used when the current Page doesn't specify any allowedOrientations, otherwise
