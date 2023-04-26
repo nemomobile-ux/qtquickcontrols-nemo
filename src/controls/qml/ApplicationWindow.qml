@@ -37,11 +37,10 @@ NemoWindow {
 
     property alias pageStack: stackView
     property alias initialPage: stackView.initialItem
-    property bool applicationActive: Qt.application.active
     property alias orientation: contentArea.uiOrientation
 
-    readonly property var _bgColor: Theme.backgroundColor
-    color: _bgColor
+    property bool isUiPortrait: root.width < root.height
+
 
     //Handles orientation of keyboard, MInputMethodQuick.appOrientation.
     contentOrientation: orientation
@@ -228,7 +227,7 @@ NemoWindow {
 
                     property real panelSize: 0
                     property real previousImSize: 0
-                    property real imSize: !root.applicationActive ? 0 : (isUiPortrait ? (root._transpose ? Qt.inputMethod.keyboardRectangle.width
+                    property real imSize: !Qt.application.active ? 0 : (isUiPortrait ? (root._transpose ? Qt.inputMethod.keyboardRectangle.width
                                                                                                          : Qt.inputMethod.keyboardRectangle.height)
                                                                                       : (root._transpose ? Qt.inputMethod.keyboardRectangle.height
                                                                                                          : Qt.inputMethod.keyboardRectangle.width))
