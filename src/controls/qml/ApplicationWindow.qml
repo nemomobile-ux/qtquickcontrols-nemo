@@ -140,25 +140,6 @@ NemoWindow {
         }
     }
 
-    property bool __transpose: (rotationToTransposeToPortrait() % 180) != 0
-
-    // XXX: This is to account for HW screen rotation
-    // Sooner or later we will get rid of this as the compositor will
-    // do that for us
-    function rotationToTransposeToPortrait()
-    {
-        switch (root.primaryOrientation) {
-        case Qt.PortraitOrientation:
-            return 0
-        case Qt.LandscapeOrientation:
-            return -90
-        case Qt.InvertedPortraitOrientation:
-            return -180
-        case Qt.InvertedLandscapeOrientation:
-            return -270
-        }
-    }
-
     function isOrientationAllowed(orientationToBeChecked)
     {
         var allowedOrientations = root.allowedOrientations
@@ -182,7 +163,6 @@ NemoWindow {
     Item {
         id: backgroundItem
         anchors.fill: parent
-        rotation: rotationToTransposeToPortrait()
 
         Item {
             id: clipping
