@@ -32,20 +32,6 @@ NemoWindow::NemoWindow(QWindow* parent)
     m_allowedOrientations = m_defaultAllowedOrientations;
     m_filter = new EditFilter();
     this->installEventFilter(m_filter);
-
-    m_primaryScreen = QGuiApplication::primaryScreen();
-
-    m_currentDesktopMode = MGConfItem(QStringLiteral("/nemo/apps/libglacier/desktopmode")).value(0).toBool();
-    if (m_currentDesktopMode) {
-        qDebug() << "In desktop mode";
-        m_screenOrientation = Qt::PortraitOrientation;
-        m_primaryOrientation = Qt::PortraitOrientation;
-    } else {
-        m_primaryOrientation = m_screenOrientation = m_primaryScreen->primaryOrientation();
-        connect(m_primaryScreen, &QScreen::orientationChanged, this, &NemoWindow::orientationChanged);
-        connect(m_primaryScreen, &QScreen::primaryOrientationChanged, this, &NemoWindow::m_primaryOrientationChanged);
-    }
-    m_isUiPortrait = (m_screenOrientation == Qt::PortraitOrientation || m_screenOrientation == Qt::InvertedPortraitOrientation);
 }
 
 Qt::ScreenOrientations NemoWindow::allowedOrientations() const
@@ -68,42 +54,5 @@ void NemoWindow::setAllowedOrientations(Qt::ScreenOrientations allowed)
         } else {
             qDebug() << "NemoWindow: invalid allowedOrientation!";
         }
-    }
-}
-
-Qt::ScreenOrientation NemoWindow::screenOrientation() const
-{
-    return m_screenOrientation;
-}
-
-Qt::ScreenOrientation NemoWindow::primaryOrientation() const
-{
-    return m_primaryOrientation;
-}
-
-bool NemoWindow::isUiPortrait()
-{
-    return m_isUiPortrait;
-}
-
-void NemoWindow::orientationChanged(Qt::ScreenOrientation orientation)
-{
-    if (orientation != m_screenOrientation) {
-        m_screenOrientation = orientation;
-        emit screenOrientationChanged();
-
-        bool isUiPortrait = (m_screenOrientation == Qt::PortraitOrientation || m_screenOrientation == Qt::InvertedPortraitOrientation);
-        if (isUiPortrait != m_isUiPortrait) {
-            m_isUiPortrait = isUiPortrait;
-            emit isUiPortraitChanged();
-        }
-    }
-}
-
-void NemoWindow::m_primaryOrientationChanged(Qt::ScreenOrientation orientation)
-{
-    if (orientation != m_primaryOrientation) {
-        m_primaryOrientation = orientation;
-        emit primaryOrientationChanged();
     }
 }

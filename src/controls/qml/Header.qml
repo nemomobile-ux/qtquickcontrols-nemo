@@ -62,7 +62,10 @@ Item {
         State {
             id: portraitState
             when: appWindow && appWindow.isUiPortrait
-            AnchorChanges { target: toolBarRect; anchors.left: root.left}
+            AnchorChanges {
+                target: toolBarRect;
+                anchors.left: root.left
+            }
             AnchorChanges {
                 target: drawerContainer;
                 anchors.top: undefined
@@ -82,7 +85,7 @@ Item {
                 target: root
                 width: parent.width
                 //the height of the drawer in portrait is limited by the size of the shorter edge of the screen
-                height: (toolBarRect.height + Math.min(drawer.height, appWindow.__transpose ? root.height : root.width))
+                height: toolBarRect.height + drawer.height
             }
             //remember: the PropertyChanges handle bindings by default, unless "explicit: true" is set
             PropertyChanges {
@@ -94,7 +97,10 @@ Item {
         State {
             id: landscapeState
             when: appWindow && !appWindow.isUiPortrait
-            AnchorChanges { target: toolBarRect; anchors.left: undefined }
+            AnchorChanges {
+                target: toolBarRect;
+                anchors.left: undefined
+            }
             AnchorChanges {
                 target: drawerContainer;
                 anchors.top: root.top
@@ -111,8 +117,7 @@ Item {
             }
             PropertyChanges {
                 target: root
-                //the width of the drawer in landscape is limited by the size of the shorter edge of the screen
-                width: (toolBarRect.width + Math.min(drawer.width, appWindow.__transpose ? root.height : root.width))
+                width: toolBarRect.width + drawer.width
                 height: parent.height
             }
             PropertyChanges {
@@ -203,13 +208,10 @@ Item {
 
     //THIS ITEM AND ITS CHILDREN ARE THE TOOLBAR (i.e. NOT what's inside the drawer!)
     //This item only resizes when UI rotates, while toolBarContainer is the one actually rotating
-    Rectangle {
+    Item {
         id: toolBarRect
         anchors.bottom: parent.bottom
         anchors.right: parent.right
-        //README: the rest of the anchors/sizes will be set by AnchorChanges!
-
-        color: "transparent"
 
         //TODO: Check if changing this FilteringMouseArea->MouseArea has any side effects
         MouseArea {
@@ -338,10 +340,8 @@ Item {
         }
     }
 
-    Rectangle {
+    Item {
         id: drawerContainer
-        
-        color: "transparent"
 
         Binding on width {
             restoreMode: Binding.RestoreBinding
