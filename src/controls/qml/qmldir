@@ -1,65 +1,29 @@
-module QtQuick.Controls.Nemo
-
+module Nemo.Controls
 plugin nemocontrolsplugin
 
-# NEMO PLUGIN CONTROLS:
-# These are the controls which Nemo plugin either adds or provides as a 
-# replacement to the standard set of QQC
-# Example:
-# GlacierSlider 1.0 GlacierSlider.qml
-
-Button 1.0 Button.qml
-ApplicationWindow 1.0 ApplicationWindow.qml
-Page 1.0 Page.qml
-Spinner 1.0 Spinner.qml
-Label 1.0 Label.qml
-CheckBox 1.0 Checkbox.qml
-ButtonRow 1.0 ButtonRow.qml
-QueryDialog 1.0 QueryDialog.qml
-Header 1.0 Header.qml
-HeaderToolsLayout 1.0 HeaderToolsLayout.qml
-HeaderToolsIndicator 1.0 HeaderToolsIndicator.qml
-Slider 1.0 Slider.qml
-ListView 1.0 ListView.qml
-ListViewItemWithActions 1.0 ListViewItemWithActions.qml
-GlacierRoller 1.0 GlacierRoller.qml
-GlacierRollerItem 1.0 GlacierRollerItem.qml
-InverseMouseArea 1.0 InverseMouseArea.qml
-IconButton 1.0 IconButton.qml
-DatePicker 1.0 DatePicker.qml
-TimePicker 1.0 TimePicker.qml
-ToolButton 1.0 ToolButton.qml
-ScrollDecorator 1.0 ScrollDecorator.qml
-TextField 1.0 TextField.qml
-ProgressBar 1.0 ProgressBar.qml
-ActionButton 1.0 ActionButton.qml
-NemoIcon 1.0 NemoIcon.qml
-Wallpaper 1.0 Wallpaper.qml
-
-# MIRRORED CONTROLS: 
-# These are the controls that we take directly from official QQC.
-# This is to avoid having to "import QtQuick.Controls" when using controls
-# which are not provided by the Nemo plugin, but by official QQC.
-# This way, "import QtQuick.Controls.Nemo" is the only needed import to be able
-# to use both Nemo components and upstream components (which will be chosen in the
-# case Nemo plugin doesn't provide an overridden component)
-# NOTE: "../" here is assumed to be the relative path to the official QQC!!
-
-ComboBox 1.0 ../ComboBox.qml
-GroupBox 1.0 ../GroupBox.qml
-MenuBar 1.0 ../MenuBar.qml
-Menu 1.0 ../Menu.qml
-StackView 1.0 ../StackView.qml
-RadioButton 1.0 ../RadioButton.qml
-ScrollView 1.0 ../ScrollView.qml
-SpinBox 1.0 ../SpinBox.qml
-SplitView 1.0 ../SplitView.qml
-StackViewDelegate 1.0 ../StackViewDelegate.qml
-StackViewTransition 1.0 ../StackViewTransition.qml
-StatusBar 1.0 ../StatusBar.qml
-Tab 1.0 ../Tab.qml
-TabView 1.0 ../TabView.qml
-TableView 1.0 ../TableView.qml
-TableViewColumn 1.0 ../TableViewColumn.qml
-TextArea 1.0 ../TextArea.qml
-ToolBar 1.0 ../ToolBar.qml
+Button 2.0 Button.qml
+ApplicationWindow 2.0 ApplicationWindow.qml
+Page 2.0 Page.qml
+Spinner 2.0 Spinner.qml
+Label 2.0 Label.qml
+CheckBox 2.0 Checkbox.qml
+ButtonRow 2.0 ButtonRow.qml
+Header 2.0 Header.qml
+HeaderToolsLayout 2.0 HeaderToolsLayout.qml
+HeaderToolsIndicator 2.0 HeaderToolsIndicator.qml
+Slider 2.0 Slider.qml
+ListView 2.0 ListView.qml
+ListViewItemWithActions 2.0 ListViewItemWithActions.qml
+GlacierRoller 2.0 GlacierRoller.qml
+GlacierRollerItem 2.0 GlacierRollerItem.qml
+InverseMouseArea 2.0 InverseMouseArea.qml
+IconButton 2.0 IconButton.qml
+DatePicker 2.0 DatePicker.qml
+TimePicker 2.0 TimePicker.qml
+ToolButton 2.0 ToolButton.qml
+ScrollDecorator 2.0 ScrollDecorator.qml
+TextField 2.0 TextField.qml
+ProgressBar 2.0 ProgressBar.qml
+ActionButton 2.0 ActionButton.qml
+NemoIcon 2.0 NemoIcon.qml
+Wallpaper 2.0 Wallpaper.qml

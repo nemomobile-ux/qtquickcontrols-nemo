@@ -18,33 +18,62 @@
  */
 
 import QtQuick 2.6
-import QtQuick.Controls 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick.Controls
+
+import QtQuick.Shapes 1.5
+
+import Nemo
 
 Button {
-    id: butt
-
-    property int pressX: 0
-    property int pressY: 0
+    id: control
 
     // A primary button is the main button of a view, and it is styled accordingly.
     property bool primary: false
 
-    // XXX HACK: Workaround for QQC Button not exposing x/y of pressed state
-    // We need those for Glacier's Button pressed effect
-    Connections {
-        target: butt.__behavior
-        function onPressed(mouse) {
-            pressX = mouse.x
-            pressY = mouse.y
+    background: Rectangle {
+        implicitWidth: Theme.itemWidthMedium
+        implicitHeight: Theme.itemHeightMedium
+        clip: true
+        color: control.primary ? Theme.accentColor
+                               : Theme.fillColor
+        Image {
+            id: disabledImg
+            anchors.fill: parent
+            visible: !control.enabled
+            source: "images/disabled-overlay.png"
+            fillMode: Image.Tile
         }
-        function onPositionChanged(mouse) {
-            pressX = mouse.x
-            pressY = mouse.y
+
+        // The effect which shows the pressed state
+        RadialGradient {
+            focalX: control.pressX - width/2
+            focalY: control.pressY - height/2
+
+            GradientStop {
+                position: 0.29
+                color: control.primary ? Theme.backgroundAccentColor
+                                       : Theme.accentColor
+            }
+            GradientStop {
+                position: 0.5;
+                color: control.primary ? Theme.accentColor
+                                       : "transparent"
+            }
         }
     }
 
-    style: ButtonStyle{}
+    // The label of the button.
+    contentItem: Text {
+        renderType: Text.NativeRendering
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        text: control.text
+        color: Theme.textColor
+        font.family: Theme.fontFamily
+        font.pixelSize: Theme.fontSizeMedium
+        font.weight: control.primary ? Theme.fontWeightLarge : Theme.fontWeightMedium
+        opacity: control.enabled ? 1.0 : 0.3
+    }
 }
 
 

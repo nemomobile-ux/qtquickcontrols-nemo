@@ -1,8 +1,9 @@
 import QtQuick.Window 2.2
 import QtQuick 2.6
-import QtQuick.Controls 1.0
+import QtQuick.Controls
 
-import Nemo.Configuration 1.0
+//@todo
+//import Nemo.Configuration 1.0
 
 Rectangle {
     id: backgroundWallpaper
@@ -11,9 +12,9 @@ Rectangle {
     color: Theme.backgroundColor
 
 
-    ConfigurationValue {
+    /*ConfigurationValue {
         id: wallpaperSource
         key: "/home/glacier/homeScreen/wallpaperImage"
         defaultValue: ""
-    }
+    }*/
 }

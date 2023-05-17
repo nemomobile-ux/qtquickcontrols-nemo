@@ -29,7 +29,7 @@
 **
 ****************************************************************************************/
 import QtQuick 2.6
-import QtQuick.Controls.Styles.Nemo 1.0
+import Nemo
 
 Text {
     renderType: Text.NativeRendering

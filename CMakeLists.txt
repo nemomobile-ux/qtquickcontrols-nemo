@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.6.0)
 
 project(qtquickcontrols-nemo
-        VERSION 5.7.0
-	DESCRIPTION "QtQuick.Controls.Nemo")
+        VERSION 6.0.0
+        DESCRIPTION "Nemo.Controls")
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -15,14 +16,21 @@ include(GNUInstallDirs)
 set(INSTALL_QML_IMPORT_DIR "${CMAKE_INSTALL_FULL_LIBDIR}/qt/qml"
 	CACHE PATH "Custom QML import installation directory")
 
-set(QT_MIN_VERSION "5.11.0")
-find_package(Qt5 ${QT_MIN_VERSION} COMPONENTS Gui Qml Quick REQUIRED)
-find_package(Qt5QuickCompiler)
+set(QT_MIN_VERSION "6.2.0")
+set(CMAKE_INSTALL_PREFIX /usr)
+
+if(POLICY CMP0071)
+    cmake_policy(SET CMP0071 NEW)
+endif()
+
+find_package(Qt6 COMPONENTS Core Gui Qml Quick ShaderTools REQUIRED)
 find_package(PkgConfig REQUIRED)
+pkg_check_modules(MLITE mlite6 IMPORTED_TARGET)
+pkg_check_modules(GLACIER glacierapp6 IMPORTED_TARGET)
 
 ### Sets QT_INSTALL_QML to the directory where QML Plugins should be installed
 function(FindQtInstallQml)
-    find_program(QMAKE NAMES qmake-qt5 qmake)
+    find_program(QMAKE NAMES qmake6 qmake)
     if(NOT QMAKE)
         message(FATAL_ERROR "qmake not found")
     endif()

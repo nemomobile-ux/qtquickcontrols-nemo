@@ -20,21 +20,13 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "qquicknemocontrolsextensionplugin.h"
+#include "plugin.h"
 #include "nemofocussingleton.h"
-#include "nemoimageprovider.h"
 #include "nemopage.h"
 #include "nemowindow.h"
 #include "qquickfilteringmousearea.h"
 #include "ringindicator.h"
-#include "sizing.h"
-#include "theme.h"
 #include <QtQml>
-
-QQuickNemoControlsExtensionPlugin::QQuickNemoControlsExtensionPlugin(QObject* parent)
-    : QQmlExtensionPlugin(parent)
-{
-}
 
 QObject* getNemoFocus(QQmlEngine* engine, QJSEngine* scriptEngine)
 {
@@ -46,24 +38,12 @@ QObject* getNemoFocus(QQmlEngine* engine, QJSEngine* scriptEngine)
 
 void QQuickNemoControlsExtensionPlugin::registerTypes(const char* uri)
 {
-    Q_ASSERT(uri == QLatin1String("QtQuick.Controls.Nemo"));
-    qmlRegisterModule(uri, 1, 0);
-    //@uri QtQuick.Controls.Nemo
-    qmlRegisterSingletonType<QObject>(uri, 1, 0, "NemoFocus", getNemoFocus);
-    qmlRegisterType<NemoWindow>(uri, 1, 0, "NemoWindow");
-    qmlRegisterType<NemoPage>(uri, 1, 0, "NemoPage");
-    qmlRegisterType<RingIndicator>(uri, 1, 0, "RingIndicator");
-    qmlRegisterType<QQuickFilteringMouseArea>(uri, 1, 0, "FilteringMouseArea");
-}
-
-void QQuickNemoControlsExtensionPlugin::initializeEngine(QQmlEngine* engine, const char* uri)
-{
-    Theme* theme = new Theme();
-
-    QQmlExtensionPlugin::initializeEngine(engine, uri);
-    QQmlContext* context = engine->rootContext();
-    context->setContextProperty("size", theme->size);
-    context->setContextProperty("Theme", theme);
-
-    engine->addImageProvider(QLatin1String("theme"), new NemoImageProvider);
+    Q_ASSERT(uri == QLatin1String("Nemo.Controls"));
+    qmlRegisterModule(uri, 2, 0);
+    //@uri Nemo.Controls
+    qmlRegisterSingletonType<QObject>(uri, 2, 0, "NemoFocus", getNemoFocus);
+    qmlRegisterType<NemoWindow>(uri, 2, 0, "NemoWindow");
+    qmlRegisterType<NemoPage>(uri, 2, 0, "NemoPage");
+    qmlRegisterType<RingIndicator>(uri, 2, 0, "RingIndicator");
+    qmlRegisterType<QQuickFilteringMouseArea>(uri, 2, 0, "FilteringMouseArea");
 }

@@ -22,11 +22,11 @@
 
 import QtQuick.Window 2.2
 import QtQuick 2.6
-import QtQuick.Controls 1.0
+import QtQuick.Controls
 import QtQuick.Layouts 1.0
-import QtQuick.Controls.Private 1.0
-import QtQuick.Controls.Nemo 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
+
+import Nemo
+import Nemo.Controls
 
 NemoWindow {
     id: root
@@ -96,6 +96,7 @@ NemoWindow {
         }
 
         function onCurrentItemChanged(currentItem) {
+            pageStack.currentItem.parent  = root
             var qmltype = pageStack.currentItem.toString()
             if (qmltype.slice(0, 10) === "QQuickText") {
                 _errorTimer.errorString = pageStack.currentItem.text
@@ -208,9 +209,9 @@ NemoWindow {
                     property real panelSize: 0
                     property real previousImSize: 0
                     property real imSize: !Qt.application.active ? 0 : (isUiPortrait ? (root._transpose ? Qt.inputMethod.keyboardRectangle.width
-                                                                                                         : Qt.inputMethod.keyboardRectangle.height)
-                                                                                      : (root._transpose ? Qt.inputMethod.keyboardRectangle.height
-                                                                                                         : Qt.inputMethod.keyboardRectangle.width))
+                                                                                                        : Qt.inputMethod.keyboardRectangle.height)
+                                                                                     : (root._transpose ? Qt.inputMethod.keyboardRectangle.height
+                                                                                                        : Qt.inputMethod.keyboardRectangle.width))
 
 
                     //  TODO: fix on landscape and inverted landscape
@@ -273,60 +274,24 @@ NemoWindow {
                         function onAllowedOrientationsChanged() { root.orientationConstraintsChanged() }
                     }
 
-                    delegate: StackViewDelegate {
-                        pushTransition: Component {
-                            StackViewTransition {
-                                ScriptAction {
-                                    script: {
-                                        imShowAnimation.stop()
-                                        imHideAnimation.start()
-                                    }
-                                }
-                                PropertyAnimation {
-                                    target: enterItem
-                                    property: "x"
-                                    from: target.width
-                                    to: 0
-                                    duration: 500
-                                    easing.type: Easing.OutQuad
-                                }
-                                PropertyAnimation {
-                                    target: exitItem
-                                    property: "x"
-                                    from: 0
-                                    to: -target.width
-                                    duration: 500
-                                    easing.type: Easing.OutQuad
-                                }
-                            }
+                    pushEnter: Transition {
+                        PropertyAnimation {
+                            target: enterItem
+                            property: "x"
+                            from: target.width
+                            to: 0
+                            duration: 500
+                            easing.type: Easing.OutQuad
                         }
-                        popTransition: Component {
-                            StackViewTransition {
-                                ScriptAction {
-                                    script: {
-                                        imShowAnimation.stop()
-                                        imHideAnimation.start()
-                                    }
-                                }
-                                PropertyAnimation {
-                                    target: enterItem
-                                    property: "x"
-                                    from: -target.width
-                                    to: 0
-                                    duration: 500
-                                    easing.type: Easing.OutQuad
-                                }
-                                PropertyAnimation {
-                                    target: exitItem
-                                    property: "x"
-                                    from: 0
-                                    to: target.width
-                                    duration: 500
-                                    easing.type: Easing.OutQuad
-                                }
-                            }
+                    }
+                    popEnter: Transition {
+                        PropertyAnimation {
+                            property: "x"
+                            from: -target.width
+                            to: 0
+                            duration: 500
+                            easing.type: Easing.OutQuad
                         }
-
                     }
                     SequentialAnimation {
                         id: imHideAnimation

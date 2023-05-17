@@ -30,13 +30,15 @@
 ****************************************************************************************/
 
 import QtQuick 2.6
-import QtQuick.Controls 1.0
-import QtQuick.Controls.Nemo 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick.Controls
+
+import Nemo
+import Nemo.Controls
 
 Button {
+    id: control
     property color highlightColor: Theme.accentColor
-    property bool highlighted: pressed
+//    property bool highlighted: pressed
     property bool _showPress: highlighted || pressTimer.running
     property string source
 
@@ -60,12 +62,16 @@ Button {
     }
     width: Theme.itemHeightLarge
     height: width
-    style: IconButtonStyle { }
 
     Timer {
         id: pressTimer
         interval: 20
     }
 
+    background: Image {
+        fillMode: Image.PreserveAspectFit
+        opacity: control.enabled ? 1.0 : 0.5
+        source:control._showPress ? control.highlightSource : control.source
+    }
 }
 

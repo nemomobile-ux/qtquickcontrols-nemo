@@ -1,4 +1,5 @@
 /*
+ * Copyright (C) 2013 Tomasz Olszak <olszak.tomasz@gmail.com>
  * Copyright (C) 2013 Andrea Bernabei <and.bernabei@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
@@ -17,9 +18,17 @@
  * Boston, MA 02110-1301, USA.
  */
 
-import QtQuick 2.6
-import QtQuick.Controls.Styles 1.0
+#ifndef QQUICKNEMOCONTROLSEXTENSIONPLUGIN_H
+#define QQUICKNEMOCONTROLSEXTENSIONPLUGIN_H
 
-TableViewStyle {
+#include <QQmlExtensionPlugin>
 
-}
+class QQuickNemoControlsExtensionPlugin : public QQmlExtensionPlugin {
+public:
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID QQmlEngineExtensionInterface_iid FILE "nemo.controls.json")
+public:
+    void registerTypes(const char* uri);
+};
+
+#endif // QQUICKNEMOCONTROLSEXTENSIONPLUGIN_H
