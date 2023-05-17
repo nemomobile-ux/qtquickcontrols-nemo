@@ -4,13 +4,14 @@ set(SRC
 	src/main.cpp
 )
 
-qt_add_resources(RESOURCES glacier-components.qrc)
+qtquick_compiler_add_resources(RESOURCES glacier-components.qrc)
 
 add_executable(glacier-components ${SRC} ${RESOURCES})
 
-add_qt_library(QT_DEPLIBS "${QT_LIB_LIST}")
 target_link_libraries(glacier-components
-        ${QT_DEPLIBS}
+	Qt5::Gui
+	Qt5::Qml
+	Qt5::Quick
 	Glacier::App
 )
 
