@@ -86,8 +86,7 @@ install(TARGETS nemocontrolsplugin
 )
 
 install(DIRECTORY qml/
-    DESTINATION ${QT_INSTALL_QML}/Nemo/Controls
-    PATTERN "dialogs" EXCLUDE)
+    DESTINATION ${QT_INSTALL_QML}/Nemo/Controls)
 
 install(DIRECTORY images
     DESTINATION ${QT_INSTALL_QML}/Nemo/Controls)
