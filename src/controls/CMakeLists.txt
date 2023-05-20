@@ -44,8 +44,7 @@ set(QML
     qml/Spinner.qml
     qml/TextField.qml
     qml/TimePicker.qml
-    qml/ToolButton.qml
-    qml/Wallpaper.qml)
+    qml/ToolButton.qml)
 
 add_library(nemocontrolsplugin SHARED ${SRC} ${MLITE})
 

@@ -159,7 +159,11 @@ NemoWindow {
 
     SystemPalette {id: syspal}
 
-    Wallpaper {id: wallpaper}
+    Rectangle {
+        id: background
+        anchors.fill: parent
+        color: Theme.backgroundColor
+    }
 
     Item {
         id: backgroundItem
