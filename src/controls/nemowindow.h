@@ -44,9 +44,6 @@ signals:
     void allowedOrientationsChanged();
     void desktopModeChanged();
 
-private slots:
-    void orientationChanged(Qt::ScreenOrientation orientation);
-
 private:
     // This is the global allowed orientations settings:
     // it's the settings used when the current Page doesn't specify any allowedOrientations, otherwise
