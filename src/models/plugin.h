@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2023 Andrea Bernabei <and.bernabei@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -17,17 +17,17 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "plugin.h"
-#include "calendarmodel.h"
+#ifndef NEMOCMODELEXTENSIONPLUGIN_H
+#define NEMOCMODELEXTENSIONPLUGIN_H
 
-#include <QQmlEngine>
 #include <QQmlExtensionPlugin>
-#include <QtGlobal>
-#include <QtQml>
 
-void QQuickNemoModelsExtensionPlugin::registerTypes(const char* uri)
-{
-    Q_ASSERT(uri == QLatin1String("Nemo.Models"));
-    qmlRegisterModule(uri, 2, 0);
-    qmlRegisterType<CalendarModel>(uri, 2, 0, "CalendarModel");
-}
+class QQuickNemoModelsExtensionPlugin : public QQmlExtensionPlugin {
+public:
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID QQmlEngineExtensionInterface_iid FILE "nemo.models.json")
+public:
+    void registerTypes(const char* uri);
+};
+
+#endif // NEMOCMODELEXTENSIONPLUGIN_H

@@ -1,2 +1,2 @@
-module Nemo.UX.Models
-plugin nemouxmodels
+module Nemo.Models
+plugin nemomodels
