@@ -96,7 +96,6 @@ NemoWindow {
         }
 
         function onCurrentItemChanged(currentItem) {
-            pageStack.currentItem.parent  = root
             var qmltype = pageStack.currentItem.toString()
             if (qmltype.slice(0, 10) === "QQuickText") {
                 _errorTimer.errorString = pageStack.currentItem.text
@@ -278,16 +277,6 @@ NemoWindow {
                         function onAllowedOrientationsChanged() { root.orientationConstraintsChanged() }
                     }
 
-                    pushEnter: Transition {
-                        PropertyAnimation {
-                            target: enterItem
-                            property: "x"
-                            from: target.width
-                            to: 0
-                            duration: 500
-                            easing.type: Easing.OutQuad
-                        }
-                    }
                     popEnter: Transition {
                         PropertyAnimation {
                             property: "x"
