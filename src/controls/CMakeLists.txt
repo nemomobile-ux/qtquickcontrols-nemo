@@ -90,3 +90,6 @@ install(DIRECTORY qml/
 
 install(DIRECTORY images
     DESTINATION ${QT_INSTALL_QML}/Nemo/Controls)
+
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/.qsb/qml/shaders
+    DESTINATION ${QT_INSTALL_QML}/Nemo/Controls)
