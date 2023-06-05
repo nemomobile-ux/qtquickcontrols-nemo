@@ -31,6 +31,7 @@ Button {
     property bool primary: false
 
     background: Rectangle {
+        anchors.fill: control
         implicitWidth: Theme.itemWidthMedium
         implicitHeight: Theme.itemHeightMedium
         clip: true
@@ -44,20 +45,50 @@ Button {
             fillMode: Image.Tile
         }
 
-        // The effect which shows the pressed state
-        RadialGradient {
-            focalX: control.pressX - width/2
-            focalY: control.pressY - height/2
+        Shape{
+            id: radialShape
+            anchors.fill: parent
+            visible: control.pressed
 
-            GradientStop {
-                position: 0.29
-                color: control.primary ? Theme.backgroundAccentColor
-                                       : Theme.accentColor
-            }
-            GradientStop {
-                position: 0.5;
-                color: control.primary ? Theme.accentColor
-                                       : "transparent"
+            ShapePath {
+                strokeWidth: 0
+                strokeColor: "transparent"
+                // The effect which shows the pressed state
+                fillGradient: RadialGradient {
+                    centerX: control.pressX
+                    centerY: control.pressY
+
+                    centerRadius: Math.min(radialShape.width, radialShape.height)
+                    focalX: centerX; focalY: centerY
+
+                    GradientStop {
+                        position: 0
+                        color: control.primary ? Theme.backgroundAccentColor
+                                               : Theme.accentColor
+                    }
+                    GradientStop {
+                        position: 1;
+                        color: control.primary ? Theme.accentColor
+                                               : "transparent"
+                    }
+                }
+                fillColor: Theme.accentColor
+                strokeStyle: ShapePath.SolidLine
+                dashPattern: [ 1, 4 ]
+                startX: 0
+                startY: 0
+                PathLine {
+                    x: radialShape.width
+                    y: 0
+                }
+                PathLine {
+                    x: radialShape.width
+                    y: radialShape.height
+                }
+                PathLine {
+                    x: 0
+                    y: radialShape.height
+                }
             }
         }
     }
@@ -75,5 +106,3 @@ Button {
         opacity: control.enabled ? 1.0 : 0.3
     }
 }
-
-
