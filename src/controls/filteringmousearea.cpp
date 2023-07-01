@@ -1,7 +1,7 @@
-#include "qquickfilteringmousearea.h"
+#include "filteringmousearea.h"
 #include <QQuickWindow>
 
-QQuickFilteringMouseArea::QQuickFilteringMouseArea(QQuickItem* parent)
+FilteringMouseArea::FilteringMouseArea(QQuickItem* parent)
     : QQuickItem(parent)
     , m_pressed(false)
     , m_swipingX(false)
@@ -12,7 +12,7 @@ QQuickFilteringMouseArea::QQuickFilteringMouseArea(QQuickItem* parent)
     setAcceptedMouseButtons(Qt::LeftButton);
 }
 
-void QQuickFilteringMouseArea::setPressed(const bool pressed)
+void FilteringMouseArea::setPressed(const bool pressed)
 {
     if (m_pressed != pressed) {
         m_pressed = pressed;
@@ -20,7 +20,7 @@ void QQuickFilteringMouseArea::setPressed(const bool pressed)
     }
 }
 
-void QQuickFilteringMouseArea::setPosition(const QPointF &pos)
+void FilteringMouseArea::setPosition(const QPointF &pos)
 {
     if (m_lastPos != pos) {
         m_lastPos = pos;
@@ -28,7 +28,7 @@ void QQuickFilteringMouseArea::setPosition(const QPointF &pos)
     }
 }
 
-void QQuickFilteringMouseArea::setPressPos(const QPointF &pos)
+void FilteringMouseArea::setPressPos(const QPointF &pos)
 {
     if (m_pressPos != pos) {
         m_pressPos = pos;
@@ -36,7 +36,7 @@ void QQuickFilteringMouseArea::setPressPos(const QPointF &pos)
     }
 }
 
-void QQuickFilteringMouseArea::setDeltaPos(const QPointF &pos)
+void FilteringMouseArea::setDeltaPos(const QPointF &pos)
 {
     if (m_deltaPos != pos) {
         m_deltaPos = pos;
@@ -44,7 +44,7 @@ void QQuickFilteringMouseArea::setDeltaPos(const QPointF &pos)
     }
 }
 
-void QQuickFilteringMouseArea::setSwipingX(const bool swiping)
+void FilteringMouseArea::setSwipingX(const bool swiping)
 {
     if (m_swipingX != swiping) {
         m_swipingX = swiping;
@@ -52,7 +52,7 @@ void QQuickFilteringMouseArea::setSwipingX(const bool swiping)
     }
 }
 
-void QQuickFilteringMouseArea::setSwipingY(const bool swiping)
+void FilteringMouseArea::setSwipingY(const bool swiping)
 {
     if (m_swipingY != swiping) {
         m_swipingY = swiping;
@@ -60,7 +60,7 @@ void QQuickFilteringMouseArea::setSwipingY(const bool swiping)
     }
 }
 
-void QQuickFilteringMouseArea::setSwipingThreshold(const int threshold)
+void FilteringMouseArea::setSwipingThreshold(const int threshold)
 {
     if (m_swipingThreshold != threshold) {
         m_swipingThreshold = threshold;
@@ -68,7 +68,7 @@ void QQuickFilteringMouseArea::setSwipingThreshold(const int threshold)
     }
 }
 
-bool QQuickFilteringMouseArea::childMouseEventFilter(QQuickItem* i, QEvent* e)
+bool FilteringMouseArea::childMouseEventFilter(QQuickItem* i, QEvent* e)
 {
     if (!isVisible() || !isEnabled())
         return QQuickItem::childMouseEventFilter(i, e);
@@ -90,7 +90,7 @@ bool QQuickFilteringMouseArea::childMouseEventFilter(QQuickItem* i, QEvent* e)
     return QQuickItem::childMouseEventFilter(i, e);
 }
 
-void QQuickFilteringMouseArea::mouseMoveEvent(QMouseEvent* event)
+void FilteringMouseArea::mouseMoveEvent(QMouseEvent* event)
 {
     if (!isEnabled() || !isPressed()) {
         QQuickItem::mouseMoveEvent(event);
@@ -113,7 +113,7 @@ void QQuickFilteringMouseArea::mouseMoveEvent(QMouseEvent* event)
     setPosition(event->position());
 }
 
-void QQuickFilteringMouseArea::mousePressEvent(QMouseEvent* event)
+void FilteringMouseArea::mousePressEvent(QMouseEvent* event)
 {
     if (!isEnabled() || !(event->button() & acceptedMouseButtons())) {
         QQuickItem::mousePressEvent(event);
@@ -125,7 +125,7 @@ void QQuickFilteringMouseArea::mousePressEvent(QMouseEvent* event)
     }
 }
 
-void QQuickFilteringMouseArea::mouseReleaseEvent(QMouseEvent* event)
+void FilteringMouseArea::mouseReleaseEvent(QMouseEvent* event)
 {
     if (!isEnabled() && !isPressed()) {
         QQuickItem::mouseReleaseEvent(event);
@@ -138,7 +138,7 @@ void QQuickFilteringMouseArea::mouseReleaseEvent(QMouseEvent* event)
     }
 }
 
-bool QQuickFilteringMouseArea::sendMouseEvent(QQuickItem* item, QMouseEvent* event)
+bool FilteringMouseArea::sendMouseEvent(QQuickItem* item, QMouseEvent* event)
 {
     Q_UNUSED(item);
 
@@ -168,7 +168,7 @@ bool QQuickFilteringMouseArea::sendMouseEvent(QQuickItem* item, QMouseEvent* eve
     return false;
 }
 
-void QQuickFilteringMouseArea::mouseUngrabEvent()
+void FilteringMouseArea::mouseUngrabEvent()
 {
     setPressed(false);
     setSwipingX(false);
@@ -178,13 +178,13 @@ void QQuickFilteringMouseArea::mouseUngrabEvent()
         ungrabMouse();
 }
 
-void QQuickFilteringMouseArea::grabMouseEvents()
+void FilteringMouseArea::grabMouseEvents()
 {
     qDebug() << "Glacier Header: Grabbing mouse!";
     grabMouse();
 }
 
-void QQuickFilteringMouseArea::ungrabMouseEvents()
+void FilteringMouseArea::ungrabMouseEvents()
 {
     ungrabMouse();
 }

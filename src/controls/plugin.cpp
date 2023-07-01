@@ -24,7 +24,7 @@
 #include "nemofocussingleton.h"
 #include "nemopage.h"
 #include "nemowindow.h"
-#include "qquickfilteringmousearea.h"
+#include "filteringmousearea.h"
 #include "ringindicator.h"
 #include <QtQml>
 
@@ -45,5 +45,5 @@ void QQuickNemoControlsExtensionPlugin::registerTypes(const char* uri)
     qmlRegisterType<NemoWindow>(uri, 2, 0, "NemoWindow");
     qmlRegisterType<NemoPage>(uri, 2, 0, "NemoPage");
     qmlRegisterType<RingIndicator>(uri, 2, 0, "RingIndicator");
-    qmlRegisterType<QQuickFilteringMouseArea>(uri, 2, 0, "FilteringMouseArea");
+    qmlRegisterType<FilteringMouseArea>(uri, 2, 0, "FilteringMouseArea");
 }

@@ -1,6 +1,6 @@
 set(SRC
     ringindicator.cpp
-    qquickfilteringmousearea.cpp
+    filteringmousearea.cpp
     nemopage.cpp
     qrc_internal_resources.cpp
     plugin.cpp
@@ -13,7 +13,7 @@ set(HEADERS
     editfilter.h
     ringindicator.h
     plugin.h
-    qquickfilteringmousearea.h
+    filteringmousearea.h
     nemofocussingleton.h
     nemowindow.h
     nemopage.h)

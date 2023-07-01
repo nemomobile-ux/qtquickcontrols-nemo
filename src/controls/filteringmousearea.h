@@ -4,7 +4,7 @@
 #include <QMouseEvent>
 #include <QQuickItem>
 
-class QQuickFilteringMouseArea : public QQuickItem {
+class FilteringMouseArea : public QQuickItem {
     Q_OBJECT
     Q_PROPERTY(bool pressed READ isPressed NOTIFY pressedChanged)
     Q_PROPERTY(QPointF pressPos READ pressPos NOTIFY pressPosChanged)
@@ -14,7 +14,7 @@ class QQuickFilteringMouseArea : public QQuickItem {
     Q_PROPERTY(int swipingThreshold READ swipingThreshold WRITE setSwipingThreshold NOTIFY swipingThresholdChanged)
 
 public:
-    explicit QQuickFilteringMouseArea(QQuickItem* parent = 0);
+    explicit FilteringMouseArea(QQuickItem* parent = 0);
 
     bool handlePress();
     bool handleMove();
