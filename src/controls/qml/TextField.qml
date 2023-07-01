@@ -36,6 +36,8 @@ import QtQuick.Controls
 import Nemo
 
 TextField {
+    id: control
+    color: Theme.textColor
     selectedTextColor: Theme.textColor
     selectionColor: Theme.accentColor
     font.pixelSize: Theme.fontSizeMedium

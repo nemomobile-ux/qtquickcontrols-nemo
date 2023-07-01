@@ -107,40 +107,5 @@ Page {
             text: qsTr("Disabled textfield")
             enabled: false
         }
-
-        TextField {
-            anchors.margins: Theme.itemSpacingLarge
-            placeholderText: qsTr("Text input")
-            style: touchStyle
-        }
-
-        TextField {
-            anchors.margins: Theme.itemSpacingLarge
-            text: "Readonly Text input"
-            style: touchStyle
-            readOnly: true
-        }
-    }
-
-
-    Component {
-        id: touchStyle
-
-        TextFieldStyle {
-            textColor: Theme.textColor
-            font.pixelSize: Theme.fontSizeMedium
-            background: Item {
-                implicitHeight: Theme.itemHeightMedium
-                implicitWidth: Theme.itemWidthLarge
-                BorderImage {
-                    source: "../images/textinput.png"
-                    border.left: Theme.itemSpacingExtraSmall
-                    border.right: Theme.itemSpacingExtraSmall
-                    anchors.bottom: parent.bottom
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                }
-            }
-        }
     }
 }
