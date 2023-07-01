@@ -42,6 +42,9 @@ Button {
     property bool active: false
     property int counterValue: 0
 
+    backgrounded: true
+    width: height
+
     NemoIcon {
         id: iconImage
         anchors.fill: parent

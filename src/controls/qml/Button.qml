@@ -29,6 +29,7 @@ Button {
 
     // A primary button is the main button of a view, and it is styled accordingly.
     property bool primary: false
+    property bool backgrounded: false
 
     background: Rectangle {
         anchors.fill: control
@@ -36,7 +37,7 @@ Button {
         implicitHeight: Theme.itemHeightMedium
         clip: true
         color: control.primary ? Theme.accentColor
-                               : Theme.fillColor
+                               : control.backgrounded ? Theme.backgroundColor : Theme.fillColor
         Image {
             id: disabledImg
             anchors.fill: parent
