@@ -21,10 +21,10 @@
  */
 
 #include "plugin.h"
+#include "filteringmousearea.h"
 #include "nemofocussingleton.h"
 #include "nemopage.h"
 #include "nemowindow.h"
-#include "filteringmousearea.h"
 #include "ringindicator.h"
 #include <QtQml>
 

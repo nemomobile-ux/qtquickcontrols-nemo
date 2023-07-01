@@ -20,7 +20,7 @@ void FilteringMouseArea::setPressed(const bool pressed)
     }
 }
 
-void FilteringMouseArea::setPosition(const QPointF &pos)
+void FilteringMouseArea::setPosition(const QPointF& pos)
 {
     if (m_lastPos != pos) {
         m_lastPos = pos;
@@ -28,7 +28,7 @@ void FilteringMouseArea::setPosition(const QPointF &pos)
     }
 }
 
-void FilteringMouseArea::setPressPos(const QPointF &pos)
+void FilteringMouseArea::setPressPos(const QPointF& pos)
 {
     if (m_pressPos != pos) {
         m_pressPos = pos;
@@ -36,7 +36,7 @@ void FilteringMouseArea::setPressPos(const QPointF &pos)
     }
 }
 
-void FilteringMouseArea::setDeltaPos(const QPointF &pos)
+void FilteringMouseArea::setDeltaPos(const QPointF& pos)
 {
     if (m_deltaPos != pos) {
         m_deltaPos = pos;
