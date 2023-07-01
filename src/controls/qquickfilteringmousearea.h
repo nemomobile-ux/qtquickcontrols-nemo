@@ -21,67 +21,25 @@ public:
     bool handleRelease();
 
     bool isPressed() const { return m_pressed; }
-    void setPressed(const bool pressed)
-    {
-        if (m_pressed != pressed) {
-            m_pressed = pressed;
-            emit pressedChanged();
-        }
-    }
+    void setPressed(const bool pressed);
 
     QPointF position() const { return m_lastPos; }
-    void setPosition(const QPointF& pos)
-    {
-        if (m_lastPos != pos) {
-            m_lastPos = pos;
-            emit positionChanged(pos);
-        }
-    }
+    void setPosition(const QPointF& pos);
 
     QPointF pressPos() const { return m_pressPos; }
-    void setPressPos(const QPointF& pos)
-    {
-        if (m_pressPos != pos) {
-            m_pressPos = pos;
-            emit pressPosChanged();
-        }
-    }
+    void setPressPos(const QPointF& pos);
 
     QPointF deltaPos() const { return m_deltaPos; }
-    void setDeltaPos(const QPointF& pos)
-    {
-        if (m_deltaPos != pos) {
-            m_deltaPos = pos;
-            emit deltaPosChanged();
-        }
-    }
+    void setDeltaPos(const QPointF& pos);
 
     bool isSwipingX() const { return m_swipingX; }
-    void setSwipingX(const bool swiping)
-    {
-        if (m_swipingX != swiping) {
-            m_swipingX = swiping;
-            emit swipingXChanged();
-        }
-    }
+    void setSwipingX(const bool swiping);
 
     bool isSwipingY() const { return m_swipingY; }
-    void setSwipingY(const bool swiping)
-    {
-        if (m_swipingY != swiping) {
-            m_swipingY = swiping;
-            emit swipingYChanged();
-        }
-    }
+    void setSwipingY(const bool swiping);
 
     int swipingThreshold() const { return m_swipingThreshold; }
-    void setSwipingThreshold(const int threshold)
-    {
-        if (m_swipingThreshold != threshold) {
-            m_swipingThreshold = threshold;
-            emit swipingThresholdChanged();
-        }
-    }
+    void setSwipingThreshold(const int threshold);
 
 signals:
     void pressedChanged();
