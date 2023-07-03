@@ -30,7 +30,7 @@
 **
 ****************************************************************************************/
 
-import QtQuick 2.1
+import QtQuick
 import QtQuick.Controls
 
 import Nemo.Controls
@@ -43,18 +43,20 @@ Page {
         title: qsTr("Spinner")
     }
 
-    Column {
-        spacing: 40
+
+    Spinner {
+        id: spinner
         anchors.centerIn: parent
-
-        Button {
-            text: qsTr("Toggle spinner")
-            onClicked: spinner.enabled = !spinner.enabled
-        }
-
-        Spinner {
-            id: spinner
-        }
     }
 
+
+    Button {
+        text: qsTr("Toggle spinner")
+        onClicked: spinner.enabled = !spinner.enabled
+        anchors{
+            horizontalCenter: parent.horizontalCenter
+            top: spinner.bottom
+            topMargin: Theme.itemSpacingLarge
+        }
+    }
 }
