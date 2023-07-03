@@ -29,9 +29,10 @@
 **
 ****************************************************************************************/
 
-import QtQuick 2.1
+import QtQuick
 import QtQuick.Controls
 
+import Nemo
 import Nemo.Controls
 
 Page {
@@ -87,8 +88,8 @@ Page {
                 anchors.margins: 20
                 value: 0
                 showValue: true
-                minimumValue: 0
-                maximumValue: 360
+                from: 0
+                to: 360
                 stepSize: 1
                 alwaysUp: true
             }
@@ -104,8 +105,8 @@ Page {
                 anchors.margins: 20
                 value: 90
                 showValue: true
-                minimumValue: 0
-                maximumValue: 360
+                from: 0
+                to: 360
                 stepSize: 1
                 alwaysUp: true
             }
@@ -121,8 +122,8 @@ Page {
                 anchors.margins: 20
                 value: 10
                 showValue: true
-                minimumValue: 0
-                maximumValue: 100
+                from: 0
+                to: 100
                 stepSize: 1
                 alwaysUp: true
             }
