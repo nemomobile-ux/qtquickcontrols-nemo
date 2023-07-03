@@ -104,6 +104,6 @@ Button {
         font.family: Theme.fontFamily
         font.pixelSize: Theme.fontSizeMedium
         font.weight: control.primary ? Theme.fontWeightLarge : Theme.fontWeightMedium
-        opacity: control.enabled ? 1.0 : 0.3
+        opacity: control.enabled ? 1.0 : 0.7
     }
 }
