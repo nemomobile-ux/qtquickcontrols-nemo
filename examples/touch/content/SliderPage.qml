@@ -65,8 +65,8 @@ Page {
             anchors.margins: 20
             value: 50
             showValue: true
-            minimumValue: 1
-            maximumValue: 100
+            from: 1
+            to: 100
             stepSize: 1
             alwaysUp: true
         }
@@ -74,8 +74,8 @@ Page {
             anchors.margins: 20
             showValue: true
             value: 0.5
-            minimumValue: 1
-            maximumValue: 100
+            from: 1
+            to: 100
             stepSize: 1
 
         }
@@ -83,43 +83,6 @@ Page {
             anchors.margins: 20
             enabled: false
             value: 0.75
-        }
-        Slider {
-            anchors.margins: 20
-            style: touchStyle
-            value: 1.0
-        }
-    }
-
-    Component {
-        id: touchStyle
-        SliderStyle {
-            handle: Rectangle {
-                width: 30
-                height: 30
-                radius: height
-                antialiasing: true
-                color: Qt.lighter("#468bb7", 1.2)
-            }
-
-            groove: Item {
-                implicitHeight: 50
-                implicitWidth: 400
-                Rectangle {
-                    height: 8
-                    width: parent.width
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: "#444"
-                    opacity: 0.8
-                    Rectangle {
-                        antialiasing: true
-                        radius: 1
-                        color: "#468bb7"
-                        height: parent.height
-                        width: parent.width * control.value / control.maximumValue
-                    }
-                }
-            }
         }
     }
 }
