@@ -26,3 +26,4 @@ TextField 2.0 TextField.qml
 ProgressBar 2.0 ProgressBar.qml
 ActionButton 2.0 ActionButton.qml
 NemoIcon 2.0 NemoIcon.qml
+TabButton 2.0 TabButton.qml
