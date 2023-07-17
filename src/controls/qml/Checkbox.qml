@@ -129,6 +129,7 @@ CheckBox {
 
     contentItem: Label {
         text: control.text
+        color: Theme.textColor
         font.pixelSize:control.fontSize
         verticalAlignment: Text.AlignVCenter
         leftPadding: control.indicator.width + control.spacing
