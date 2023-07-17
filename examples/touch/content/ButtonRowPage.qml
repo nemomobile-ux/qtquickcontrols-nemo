@@ -106,4 +106,9 @@ Page {
             }
         }
     }
+
+    Component.onCompleted:{
+        row.currentIndex = 2
+        row2.currentIndex = 3
+    }
 }
