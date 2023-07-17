@@ -277,15 +277,6 @@ NemoWindow {
                         function onAllowedOrientationsChanged() { root.orientationConstraintsChanged() }
                     }
 
-                    popEnter: Transition {
-                        PropertyAnimation {
-                            property: "x"
-                            from: -target.width
-                            to: 0
-                            duration: 500
-                            easing.type: Easing.OutQuad
-                        }
-                    }
                     SequentialAnimation {
                         id: imHideAnimation
                         PauseAnimation {
@@ -356,12 +347,6 @@ NemoWindow {
                                 rotation: 270
                                 uiOrientation: Qt.LandscapeOrientation
                             }
-                            PropertyChanges {
-                                target: headerDimmer
-                                height: Theme.itemHeightExtraSmall/2
-                                width: parent.height
-                                rotation: -90
-                            }
                             AnchorChanges {
                                 target: clipping
                                 anchors.top: undefined
@@ -431,10 +416,6 @@ NemoWindow {
                             }
                             AnchorAnimation {
                                 duration: 0
-                            }
-                            PropertyAction {
-                                target: headerDimmer
-                                properties: 'width,height,rotation'
                             }
                             NumberAnimation {
                                 target: contentArea
