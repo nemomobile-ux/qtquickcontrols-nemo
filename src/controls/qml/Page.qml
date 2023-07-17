@@ -80,7 +80,5 @@ NemoPage {
     onParentChanged: if(parent != null) {
                          page.width = parent.width
                          page.height = parent.height
-                     } else {
-                         console.warn("OOPS!")
                      }
 }
