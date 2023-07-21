@@ -19,40 +19,20 @@
  */
 
 #include "nemowindow.h"
-#include "nemopage.h"
-#include <MGConfItem>
-#include <QDebug>
-#include <QGuiApplication>
 #include <QScreen>
 
 NemoWindow::NemoWindow(QWindow* parent)
     : QQuickWindow(parent)
-    , m_defaultAllowedOrientations(Qt::PortraitOrientation | Qt::LandscapeOrientation)
 {
-    m_allowedOrientations = m_defaultAllowedOrientations;
     m_filter = new EditFilter();
     this->installEventFilter(m_filter);
+
+    m_screen = this->screen();
+    connect(m_screen, &QScreen::orientationChanged, this, &NemoWindow::orientationChanged);
 }
 
-Qt::ScreenOrientations NemoWindow::allowedOrientations() const
+Qt::ScreenOrientation NemoWindow::primaryOrientation() const
 {
-    return m_allowedOrientations;
-}
 
-const Qt::ScreenOrientations NemoWindow::defaultAllowedOrientations() const
-{
-    return m_defaultAllowedOrientations;
-}
-
-void NemoWindow::setAllowedOrientations(Qt::ScreenOrientations allowed)
-{
-    // This way no invalid values can get assigned to allowedOrientations
-    if (m_allowedOrientations != allowed) {
-        if (NemoPage::isOrientationMaskValid(allowed)) {
-            m_allowedOrientations = allowed;
-            emit allowedOrientationsChanged();
-        } else {
-            qDebug() << "NemoWindow: invalid allowedOrientation!";
-        }
-    }
+    return m_screen->primaryOrientation();
 }

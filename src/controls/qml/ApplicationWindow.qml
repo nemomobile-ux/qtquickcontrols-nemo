@@ -52,13 +52,6 @@ NemoWindow {
         contentOrientation = orientation
     }
 
-    //README: allowedOrientations' default value is set in NemoWindow's c++ implementation
-    //The app developer can overwrite it from QML
-
-    onAllowedOrientationsChanged: {
-        orientationConstraintsChanged()
-    }
-
     //Safety version of pageStack.push - if we can't load component - show error page page with
     //error message and back button
 
@@ -268,7 +261,6 @@ NemoWindow {
 
                     //This properties are accessible for free by the Page via Stack.view.<property>
                     readonly property int orientation: contentArea.uiOrientation
-                    property alias allowedOrientations: root.allowedOrientations
                     property alias orientationTransitionRunning: contentArea.orientationTransitionRunning
 
                     Connections {

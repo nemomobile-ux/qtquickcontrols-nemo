@@ -52,8 +52,6 @@ ApplicationWindow {
 
     id: appWindow
 
-    allowedOrientations:  Qt.PortraitOrientation | Qt.LandscapeOrientation | Qt.InvertedLandscapeOrientation | Qt.InvertedPortraitOrientation
-
     // Implements back key navigation
     Item{
         id: keysHandler
@@ -154,6 +152,7 @@ ApplicationWindow {
 
     initialPage: Page {
         id: pageItem
+        allowedOrientations:  Qt.PortraitOrientation | Qt.LandscapeOrientation | Qt.InvertedLandscapeOrientation | Qt.InvertedPortraitOrientation
 
         headerTools: HeaderToolsLayout {
             id: tools

@@ -23,35 +23,19 @@
 
 #include "editfilter.h"
 #include <QQuickWindow>
-#include <QtCore/qnamespace.h>
 
 class NemoWindow : public QQuickWindow {
     Q_OBJECT
-    Q_PROPERTY(Qt::ScreenOrientations allowedOrientations READ allowedOrientations WRITE setAllowedOrientations NOTIFY allowedOrientationsChanged)
-    Q_PROPERTY(Qt::ScreenOrientations defaultAllowedOrientations READ allowedOrientations)
-
 public:
     explicit NemoWindow(QWindow* parent = 0);
-
-    Qt::ScreenOrientations allowedOrientations() const;
-    const Qt::ScreenOrientations defaultAllowedOrientations() const;
-
-    void setAllowedOrientations(Qt::ScreenOrientations allowed);
-
     Qt::ScreenOrientation primaryOrientation() const;
 
 signals:
-    void allowedOrientationsChanged();
-    void desktopModeChanged();
+    void orientationChanged(Qt::ScreenOrientation orientation);
 
-private:
-    // This is the global allowed orientations settings:
-    // it's the settings used when the current Page doesn't specify any allowedOrientations, otherwise
-    // allowedOrientations of that Page is used
-    Qt::ScreenOrientations m_allowedOrientations;
-    Qt::ScreenOrientations m_defaultAllowedOrientations;
-
+private:    
     EditFilter* m_filter;
+    QScreen *m_screen;
 };
 
 #endif // NEMOWINDOW_H

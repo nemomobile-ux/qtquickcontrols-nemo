@@ -17,8 +17,11 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include <QVariant>
+
+#include "nemofocussingleton.h"
 #include "editfilter.h"
-class QVariant;
+
 EditFilter::EditFilter(QObject* parent)
     : QObject(parent)
 {

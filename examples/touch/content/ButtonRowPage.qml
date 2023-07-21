@@ -42,6 +42,7 @@ Page {
         showBackButton: true;
         title: qsTr("Button row (Landscape only)")
     }
+
     allowedOrientations: Qt.LandscapeOrientation
 
     Column {
