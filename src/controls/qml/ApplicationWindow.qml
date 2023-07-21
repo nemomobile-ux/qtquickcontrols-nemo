@@ -96,28 +96,6 @@ NemoWindow {
         }
     }
 
-    function orientationConstraintsChanged()
-    {
-        //if the current orientation is not allowed anymore, fallback to an allowed one
-        //stackInitialized check prevents setting an orientation before the stackview
-        //(but more importantly the initialItem of the stack) has been created
-        if (stackView.stackInitialized) {
-            //- This is to give priority to the current screen orientation
-            //- This case happens when, for example, you're on a landscape only page,
-            //  the phone is in portrait, and a page allowing portrait mode is pushed on the stack.
-            //  When the page is pushed, we don't get any orientationChanged signal from the Screen element
-            //  because the phone was already held in portrait mode, se we have to enforce it here.
-            if (isOrientationAllowed(root.orientation)) {
-                contentArea.filteredOrientation = root.orientation
-            }
-            //- If neither the current screen orientation nor the one which the UI is already presented in (filteredOrientation)
-            //  are allowed, then fallback to an allowed orientation.
-            else if (!isOrientationAllowed(contentArea.filteredOrientation)) {
-                fallbackToAnAllowedOrientation()
-            }
-        }
-    }
-
     function fallbackToAnAllowedOrientation()
     {
         var orientations = [Qt.PortraitOrientation, Qt.LandscapeOrientation,
@@ -255,8 +233,9 @@ NemoWindow {
 
                     //update orientation constraints when a Page is pushed/popped
                     onCurrentItemChanged: {
-                        if (_isCurrentItemNemoPage())
-                            root.orientationConstraintsChanged()
+                        if (_isCurrentItemNemoPage()) {
+                            root.fallbackToAnAllowedOrientation()
+                        }
                     }
 
                     //This properties are accessible for free by the Page via Stack.view.<property>
@@ -266,7 +245,7 @@ NemoWindow {
                     Connections {
                         id: pageConn
                         target: stackView._isCurrentItemNemoPage() ? stackView.currentItem : null
-                        function onAllowedOrientationsChanged() { root.orientationConstraintsChanged() }
+                        function onAllowedOrientationsChanged() { root.fallbackToAnAllowedOrientation() }
                     }
 
                     SequentialAnimation {
