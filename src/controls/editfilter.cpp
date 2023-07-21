@@ -19,8 +19,8 @@
 
 #include <QVariant>
 
-#include "nemofocussingleton.h"
 #include "editfilter.h"
+#include "nemofocussingleton.h"
 
 EditFilter::EditFilter(QObject* parent)
     : QObject(parent)

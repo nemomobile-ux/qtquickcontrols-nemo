@@ -33,9 +33,9 @@ public:
 signals:
     void orientationChanged(Qt::ScreenOrientation orientation);
 
-private:    
+private:
     EditFilter* m_filter;
-    QScreen *m_screen;
+    QScreen* m_screen;
 };
 
 #endif // NEMOWINDOW_H
