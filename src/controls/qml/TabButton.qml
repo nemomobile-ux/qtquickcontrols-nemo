@@ -5,19 +5,11 @@ import Nemo
 
 TabButton {
     id: control
+    implicitHeight: Theme.itemHeightMedium
 
     background: Rectangle{
         anchors.fill: parent
         color: Theme.backgroundColor
-
-        Rectangle {
-            anchors{
-                left: parent.left
-            }
-            width: size.dp(1)
-            height: parent.height
-            color: Theme.fillDarkColor
-        }
 
         Rectangle {
             visible: control.checked

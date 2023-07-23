@@ -43,6 +43,7 @@ set(QML
     qml/Slider.qml
     qml/Spinner.qml
     qml/TextField.qml
+    qml/TabButton.qml
     qml/TimePicker.qml
     qml/ToolButton.qml)
 
