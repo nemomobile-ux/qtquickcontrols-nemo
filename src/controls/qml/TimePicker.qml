@@ -30,7 +30,7 @@
 ****************************************************************************************/
 
 import QtQuick 2.6
-import QtQuick.Controls.Nemo 1.0
+import Nemo.Controls
 
 Item{
     id: timePicker

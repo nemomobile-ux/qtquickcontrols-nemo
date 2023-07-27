@@ -19,13 +19,11 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.0
-import QtQuick.Controls 1.0
-import QtQuick.Controls.Nemo 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
-
-import QtGraphicalEffects 1.0
+import QtQuick.Controls
 
 import QtQml 2.14
+
+import Nemo
 
 Item {
     id: root
@@ -246,17 +244,17 @@ Item {
                 }
 
                 if (appWindow.isUiPortrait) {
-                    startMouseCoord = (mouse.y + root.y)
+                    startMouseCoord = (mouseY + root.y)
                     startCoord = root.y
                 } else { //assuming that otherwise we're in landscape...is this safe?
-                    startMouseCoord = (mouse.x + root.x)
+                    startMouseCoord = (mouseX + root.x)
                     startCoord = root.x
                 }
             }
 
             onPositionChanged: {
                 if (appWindow.isUiPortrait) {
-                    deltaCoord = (mouse.y + root.y) - startMouseCoord
+                    deltaCoord = (mouseY + root.y) - startMouseCoord
                     if (Math.abs(deltaCoord) > swipeThreshold && !swiping) { swiping = true; }
 
                     if (swiping) {
@@ -269,7 +267,7 @@ Item {
                         }
                     }
                 } else {
-                    deltaCoord = (mouse.x + root.x) - startMouseCoord
+                    deltaCoord = (mouseX + root.x) - startMouseCoord
                     if (Math.abs(deltaCoord) > swipeThreshold && !swiping) { swiping = true; }
                     if (swiping) {
                         //this is the coord that the drawer would be at if it were following our finger

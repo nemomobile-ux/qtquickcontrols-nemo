@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021-2023 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -17,18 +17,62 @@
  * Boston, MA 02110-1301, USA.
  */
 
-import QtQuick 2.6
-import QtQuick.Controls 1.0
+import QtQuick
+import QtQuick.Controls
 
-import QtQuick.Controls.Styles.Nemo 1.0
-
+import Nemo
 
 Slider {
-    id: slider
+    id: control
     property bool showValue: false
     property int valueFontSize: Theme.fontSizeTiny
     property bool useSpecSlider: Theme.desktopMode ? false : true
     property bool alwaysUp: false
 
-    style: SliderStyle{}
+    background: Rectangle {
+        x: control.leftPadding
+        y: control.topPadding + control.availableHeight / 2 - height / 2
+        implicitWidth: Theme.itemWidthLarge + Theme.itemWidthSmall
+        implicitHeight: Theme.itemHeightExtraSmall / 2
+        width: control.availableWidth
+        height: implicitHeight
+        color: Theme.fillDarkColor
+        clip: true
+
+        Rectangle {
+            width: control.visualPosition * parent.width
+            height: parent.height
+            color: Theme.accentColor
+        }
+
+        Image {
+            id: disabledImg
+            anchors.fill: parent
+            visible: !control.enabled
+            source: "images/disabled-overlay.png"
+            fillMode: Image.Tile
+        }
+    }
+
+    handle: Rectangle {
+        x: control.leftPadding + control.visualPosition * (control.availableWidth - width)
+        y: control.topPadding + control.availableHeight / 2 - height / 2
+        implicitWidth: Theme.itemHeightExtraSmall
+        implicitHeight: Theme.itemHeightExtraSmall
+        radius: implicitHeight / 2
+        color: Theme.backgroundColor
+        border.color: Theme.textColor
+        border.width: Theme.itemSpacingExtraSmall/4
+
+        scale: control.pressed ? 1.2 : 1
+
+        Text{
+            id: valueLabel
+            anchors.centerIn: parent
+            text: parseInt(control.value)
+            visible: control.showValue
+            color: Theme.textColor
+            font.pixelSize: control.valueFontSize
+        }
+    }
 }

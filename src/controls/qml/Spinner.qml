@@ -1,6 +1,7 @@
 /****************************************************************************************
 **
 ** Copyright (C) 2013 Lucien Xu <sfietkonstantin@free.fr>
+** Copyright (C) 2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -29,11 +30,15 @@
 **
 ****************************************************************************************/
 
-import QtQuick 2.6
-import QtQuick.Controls.Nemo 1.0
+import QtQuick
+import Nemo
 
 Item {
     id: container
+    width: (Theme.itemHeightExtraSmall + Theme.itemSpacingMedium)*2
+    height: (Theme.itemHeightExtraSmall + Theme.itemSpacingMedium)*2
+
+    clip: true
 
     function stop() {
         if(state=="enabled") {

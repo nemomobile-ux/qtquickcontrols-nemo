@@ -17,11 +17,9 @@
  * Boston, MA 02110-1301, USA.
  */
 
-import QtQuick 2.6
-import QtQuick.Window 2.0
-import QtQuick.Controls 1.0
-import QtQuick.Controls.Nemo 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick
+import QtQuick.Window
+import Nemo.Controls
 
 ApplicationWindow {
     id: appWindow

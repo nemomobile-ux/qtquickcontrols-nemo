@@ -29,10 +29,10 @@
 **
 ****************************************************************************************/
 
-import QtQuick 2.6
-import QtQuick.Controls.Nemo 1.0
+import QtQuick
 
-import Nemo.UX.Models 1.0
+import Nemo.Controls
+import Nemo.Models
 
 Item {
     id: datePicker

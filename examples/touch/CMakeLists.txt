@@ -4,14 +4,15 @@ set(SRC
 	src/main.cpp
 )
 
-qt_add_resources(RESOURCES glacier-components.qrc)
+qt6_add_resources(RESOURCES glacier-components.qrc)
 
 add_executable(glacier-components ${SRC} ${RESOURCES})
 
-add_qt_library(QT_DEPLIBS "${QT_LIB_LIST}")
 target_link_libraries(glacier-components
-        ${QT_DEPLIBS}
-	Glacier::App
+        Qt6::Gui
+        Qt6::Qml
+        Qt6::Quick
+        PkgConfig::GLACIER
 )
 
 install(TARGETS glacier-components RUNTIME

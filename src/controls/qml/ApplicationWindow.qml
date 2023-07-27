@@ -22,11 +22,11 @@
 
 import QtQuick.Window 2.2
 import QtQuick 2.6
-import QtQuick.Controls 1.0
+import QtQuick.Controls
 import QtQuick.Layouts 1.0
-import QtQuick.Controls.Private 1.0
-import QtQuick.Controls.Nemo 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
+
+import Nemo
+import Nemo.Controls
 
 NemoWindow {
     id: root
@@ -50,13 +50,6 @@ NemoWindow {
         }
 
         contentOrientation = orientation
-    }
-
-    //README: allowedOrientations' default value is set in NemoWindow's c++ implementation
-    //The app developer can overwrite it from QML
-
-    onAllowedOrientationsChanged: {
-        orientationConstraintsChanged()
     }
 
     //Safety version of pageStack.push - if we can't load component - show error page page with
@@ -103,28 +96,6 @@ NemoWindow {
         }
     }
 
-    function orientationConstraintsChanged()
-    {
-        //if the current orientation is not allowed anymore, fallback to an allowed one
-        //stackInitialized check prevents setting an orientation before the stackview
-        //(but more importantly the initialItem of the stack) has been created
-        if (stackView.stackInitialized) {
-            //- This is to give priority to the current screen orientation
-            //- This case happens when, for example, you're on a landscape only page,
-            //  the phone is in portrait, and a page allowing portrait mode is pushed on the stack.
-            //  When the page is pushed, we don't get any orientationChanged signal from the Screen element
-            //  because the phone was already held in portrait mode, se we have to enforce it here.
-            if (isOrientationAllowed(root.orientation)) {
-                contentArea.filteredOrientation = root.orientation
-            }
-            //- If neither the current screen orientation nor the one which the UI is already presented in (filteredOrientation)
-            //  are allowed, then fallback to an allowed orientation.
-            else if (!isOrientationAllowed(contentArea.filteredOrientation)) {
-                fallbackToAnAllowedOrientation()
-            }
-        }
-    }
-
     function fallbackToAnAllowedOrientation()
     {
         var orientations = [Qt.PortraitOrientation, Qt.LandscapeOrientation,
@@ -158,7 +129,11 @@ NemoWindow {
 
     SystemPalette {id: syspal}
 
-    Wallpaper {id: wallpaper}
+    Rectangle {
+        id: background
+        anchors.fill: parent
+        color: Theme.backgroundColor
+    }
 
     Item {
         id: backgroundItem
@@ -208,9 +183,9 @@ NemoWindow {
                     property real panelSize: 0
                     property real previousImSize: 0
                     property real imSize: !Qt.application.active ? 0 : (isUiPortrait ? (root._transpose ? Qt.inputMethod.keyboardRectangle.width
-                                                                                                         : Qt.inputMethod.keyboardRectangle.height)
-                                                                                      : (root._transpose ? Qt.inputMethod.keyboardRectangle.height
-                                                                                                         : Qt.inputMethod.keyboardRectangle.width))
+                                                                                                        : Qt.inputMethod.keyboardRectangle.height)
+                                                                                     : (root._transpose ? Qt.inputMethod.keyboardRectangle.height
+                                                                                                        : Qt.inputMethod.keyboardRectangle.width))
 
 
                     //  TODO: fix on landscape and inverted landscape
@@ -258,76 +233,21 @@ NemoWindow {
 
                     //update orientation constraints when a Page is pushed/popped
                     onCurrentItemChanged: {
-                        if (_isCurrentItemNemoPage())
-                            root.orientationConstraintsChanged()
+                        if (_isCurrentItemNemoPage()) {
+                            root.fallbackToAnAllowedOrientation()
+                        }
                     }
 
                     //This properties are accessible for free by the Page via Stack.view.<property>
                     readonly property int orientation: contentArea.uiOrientation
-                    property alias allowedOrientations: root.allowedOrientations
                     property alias orientationTransitionRunning: contentArea.orientationTransitionRunning
 
                     Connections {
                         id: pageConn
                         target: stackView._isCurrentItemNemoPage() ? stackView.currentItem : null
-                        function onAllowedOrientationsChanged() { root.orientationConstraintsChanged() }
+                        function onAllowedOrientationsChanged() { root.fallbackToAnAllowedOrientation() }
                     }
 
-                    delegate: StackViewDelegate {
-                        pushTransition: Component {
-                            StackViewTransition {
-                                ScriptAction {
-                                    script: {
-                                        imShowAnimation.stop()
-                                        imHideAnimation.start()
-                                    }
-                                }
-                                PropertyAnimation {
-                                    target: enterItem
-                                    property: "x"
-                                    from: target.width
-                                    to: 0
-                                    duration: 500
-                                    easing.type: Easing.OutQuad
-                                }
-                                PropertyAnimation {
-                                    target: exitItem
-                                    property: "x"
-                                    from: 0
-                                    to: -target.width
-                                    duration: 500
-                                    easing.type: Easing.OutQuad
-                                }
-                            }
-                        }
-                        popTransition: Component {
-                            StackViewTransition {
-                                ScriptAction {
-                                    script: {
-                                        imShowAnimation.stop()
-                                        imHideAnimation.start()
-                                    }
-                                }
-                                PropertyAnimation {
-                                    target: enterItem
-                                    property: "x"
-                                    from: -target.width
-                                    to: 0
-                                    duration: 500
-                                    easing.type: Easing.OutQuad
-                                }
-                                PropertyAnimation {
-                                    target: exitItem
-                                    property: "x"
-                                    from: 0
-                                    to: target.width
-                                    duration: 500
-                                    easing.type: Easing.OutQuad
-                                }
-                            }
-                        }
-
-                    }
                     SequentialAnimation {
                         id: imHideAnimation
                         PauseAnimation {
@@ -398,12 +318,6 @@ NemoWindow {
                                 rotation: 270
                                 uiOrientation: Qt.LandscapeOrientation
                             }
-                            PropertyChanges {
-                                target: headerDimmer
-                                height: Theme.itemHeightExtraSmall/2
-                                width: parent.height
-                                rotation: -90
-                            }
                             AnchorChanges {
                                 target: clipping
                                 anchors.top: undefined
@@ -473,10 +387,6 @@ NemoWindow {
                             }
                             AnchorAnimation {
                                 duration: 0
-                            }
-                            PropertyAction {
-                                target: headerDimmer
-                                properties: 'width,height,rotation'
                             }
                             NumberAnimation {
                                 target: contentArea

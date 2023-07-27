@@ -18,33 +18,92 @@
  */
 
 import QtQuick 2.6
-import QtQuick.Controls 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick.Controls
+
+import QtQuick.Shapes 1.5
+
+import Nemo
 
 Button {
-    id: butt
-
-    property int pressX: 0
-    property int pressY: 0
+    id: control
 
     // A primary button is the main button of a view, and it is styled accordingly.
     property bool primary: false
+    property bool backgrounded: false
 
-    // XXX HACK: Workaround for QQC Button not exposing x/y of pressed state
-    // We need those for Glacier's Button pressed effect
-    Connections {
-        target: butt.__behavior
-        function onPressed(mouse) {
-            pressX = mouse.x
-            pressY = mouse.y
+    background: Rectangle {
+        anchors.fill: control
+        implicitWidth: Theme.itemWidthMedium
+        implicitHeight: Theme.itemHeightMedium
+        clip: true
+        color: control.primary ? Theme.accentColor
+                               : control.backgrounded ? Theme.backgroundColor : Theme.fillColor
+        Image {
+            id: disabledImg
+            anchors.fill: parent
+            visible: !control.enabled
+            source: "images/disabled-overlay.png"
+            fillMode: Image.Tile
         }
-        function onPositionChanged(mouse) {
-            pressX = mouse.x
-            pressY = mouse.y
+
+        Shape{
+            id: radialShape
+            anchors.fill: parent
+            visible: control.pressed
+
+            ShapePath {
+                strokeWidth: 0
+                strokeColor: "transparent"
+                // The effect which shows the pressed state
+                fillGradient: RadialGradient {
+                    centerX: control.pressX
+                    centerY: control.pressY
+
+                    centerRadius: Math.min(radialShape.width, radialShape.height)
+                    focalX: centerX; focalY: centerY
+
+                    GradientStop {
+                        position: 0
+                        color: control.primary ? Theme.backgroundAccentColor
+                                               : Theme.accentColor
+                    }
+                    GradientStop {
+                        position: 1;
+                        color: control.primary ? Theme.accentColor
+                                               : "transparent"
+                    }
+                }
+                fillColor: Theme.accentColor
+                strokeStyle: ShapePath.SolidLine
+                dashPattern: [ 1, 4 ]
+                startX: 0
+                startY: 0
+                PathLine {
+                    x: radialShape.width
+                    y: 0
+                }
+                PathLine {
+                    x: radialShape.width
+                    y: radialShape.height
+                }
+                PathLine {
+                    x: 0
+                    y: radialShape.height
+                }
+            }
         }
     }
 
-    style: ButtonStyle{}
+    // The label of the button.
+    contentItem: Text {
+        renderType: Text.NativeRendering
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        text: control.text
+        color: Theme.textColor
+        font.family: Theme.fontFamily
+        font.pixelSize: Theme.fontSizeMedium
+        font.weight: control.primary ? Theme.fontWeightLarge : Theme.fontWeightMedium
+        opacity: control.enabled ? 1.0 : 0.7
+    }
 }
-
-

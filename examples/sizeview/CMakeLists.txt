@@ -4,14 +4,15 @@ set(SRC
 	main.cpp
 )
 
-qt_add_resources(RESOURCES glacier-sizeview.qrc)
+qt6_add_resources(RESOURCES glacier-sizeview.qrc)
 
 add_executable(glacier-sizeview ${SRC} ${RESOURCES})
 
-add_qt_library(QT_DEPLIBS "${QT_LIB_LIST}")
 target_link_libraries(glacier-sizeview
-        ${QT_DEPLIBS}
-	Glacier::App
+        Qt6::Gui
+        Qt6::Qml
+        Qt6::Quick
+        PkgConfig::GLACIER
 )
 
 install(TARGETS glacier-sizeview RUNTIME

@@ -1,7 +1,7 @@
 /****************************************************************************************
 **
 ** Copyright (c) 2017, Eetu Kahelin
-** Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2021-2023 Chupligin Sergey <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -30,16 +30,47 @@
 **
 ****************************************************************************************/
 
-import QtQuick 2.6
-import QtQuick.Controls 1.0
-import QtQuick.Controls.Nemo 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick
+import QtQuick.Controls
+
+import Nemo
 
 TextField {
+    id: control
+    color: Theme.textColor
+    selectedTextColor: Theme.textColor
+    selectionColor: Theme.accentColor
+    font.pixelSize: Theme.fontSizeMedium
+    font.family: Theme.fontFamily
+    placeholderTextColor: Theme.fillColor
+
     onActiveFocusChanged: {
         if(activeFocus) NemoFocus.nemoregister(this)
         else NemoFocus.nemoregister(null)
     }
 
-    style: TextFieldStyle { }
+    background: Item {
+        anchors{
+            leftMargin: Theme.itemSpacingMedium
+            rightMargin: Theme.itemSpacingMedium
+        }
+
+        implicitHeight: Theme.itemHeightSmall
+        implicitWidth: Theme.itemWidthLarge
+        opacity: control.enabled ? 1 : 0.6
+        Image {
+            anchors.fill: parent
+            visible: !control.enabled
+            source: "images/disabled-overlay-inverse.png"
+            fillMode: Image.Tile
+        }
+        Rectangle {
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: size.dp(2)
+            width: parent.width
+            color: control.readOnly ? Theme.fillDarkColor : Theme.accentColor
+        }
+    }
 }

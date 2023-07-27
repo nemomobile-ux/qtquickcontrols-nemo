@@ -39,19 +39,18 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.6
-import QtQuick.Controls 1.0
-import QtQuick.Controls.Nemo 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
-import QtQuick.Window 2.1
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Window
+
+import Nemo
+import Nemo.Controls
 
 import "content"
 
 ApplicationWindow {
 
     id: appWindow
-
-    allowedOrientations:  Qt.PortraitOrientation | Qt.LandscapeOrientation | Qt.InvertedLandscapeOrientation | Qt.InvertedPortraitOrientation
 
     // Implements back key navigation
     Item{
@@ -153,6 +152,7 @@ ApplicationWindow {
 
     initialPage: Page {
         id: pageItem
+        allowedOrientations:  Qt.PortraitOrientation | Qt.LandscapeOrientation | Qt.InvertedLandscapeOrientation | Qt.InvertedPortraitOrientation
 
         headerTools: HeaderToolsLayout {
             id: tools
@@ -305,7 +305,7 @@ ApplicationWindow {
             delegate: ListViewItemWithActions {
                 iconVisible: false
                 label: title
-                onClicked: pageItem.Stack.view.push(Qt.resolvedUrl(page))
+                onClicked: pageStack.push(Qt.resolvedUrl(page))
             }
 
             ScrollDecorator{

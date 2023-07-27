@@ -30,22 +30,20 @@
 ****************************************************************************************/
 
 import QtQuick 2.6
-import QtQuick.Controls 1.0 // Needed for things like Stack attached properties
-import QtQuick.Controls.Nemo 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick.Controls // Needed for things like Stack attached properties
 import QtQuick.Window 2.0
+
+import Nemo
+import Nemo.Controls
 
 NemoPage {
     id: page
 
-    width: parent.width
-    height: parent.height
-
     readonly property double backGestureThreshold: Theme.itemHeightLarge
 
-    property int status: pageStack ? Stack.status : Stack.Inactive
+    property int status: pageStack ? StackView.status : StackView.Inactive
     property variant headerTools
-    readonly property StackView pageStack: Stack.view
+    property StackView pageStack
 
     //Children of "page" will be automatically reparented to "content"
     default  property alias __content: content.data
@@ -68,8 +66,19 @@ NemoPage {
 
     property bool __isNemoPage
 
+    Rectangle {
+        id: background
+        anchors.fill: parent
+        color: Theme.backgroundColor
+    }
+
     MouseArea {
         id: content
         anchors.fill: parent
     }
+
+    onParentChanged: if(parent != null) {
+                         page.width = parent.width
+                         page.height = parent.height
+                     }
 }

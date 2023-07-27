@@ -30,10 +30,10 @@
 **
 ****************************************************************************************/
 
-import QtQuick 2.1
-import QtQuick.Controls 1.0 //needed for the Stack attached property
-import QtQuick.Controls.Nemo 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick
+import QtQuick.Controls
+
+import Nemo.Controls
 
 Page {
     id: root
@@ -43,18 +43,20 @@ Page {
         title: qsTr("Spinner")
     }
 
-    Column {
-        spacing: 40
+
+    Spinner {
+        id: spinner
         anchors.centerIn: parent
-
-        Button {
-            text: qsTr("Toggle spinner")
-            onClicked: spinner.enabled = !spinner.enabled
-        }
-
-        Spinner {
-            id: spinner
-        }
     }
 
+
+    Button {
+        text: qsTr("Toggle spinner")
+        onClicked: spinner.enabled = !spinner.enabled
+        anchors{
+            horizontalCenter: parent.horizontalCenter
+            top: spinner.bottom
+            topMargin: Theme.itemSpacingLarge
+        }
+    }
 }

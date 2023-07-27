@@ -1,7 +1,5 @@
 import QtQuick 2.6
-import QtQuick.Controls 1.0
-import QtGraphicalEffects 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick.Controls
 
 ListView {
     id: listView
@@ -52,17 +50,6 @@ ListView {
         anchors.bottom: parent.bottom
 
         visible: listView.contentHeight > listView.height
-
-        LinearGradient{
-            anchors.fill: parent
-            start: Qt.point(0, 0)
-            end: Qt.point(0, Theme.itemHeightExtraSmall)
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "transparent" }
-                GradientStop { position: 1.0; color: bottomGradientColor }
-            }
-
-        }
     }
 }
 

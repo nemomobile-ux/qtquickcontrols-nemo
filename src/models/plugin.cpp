@@ -17,6 +17,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "plugin.h"
 #include "calendarmodel.h"
 
 #include <QQmlEngine>
@@ -24,23 +25,9 @@
 #include <QtGlobal>
 #include <QtQml>
 
-class Q_DECL_EXPORT NemoSettingsPlugin : public QQmlExtensionPlugin {
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID "Nemo.Models")
-
-public:
-    virtual ~NemoSettingsPlugin() { }
-
-    void initializeEngine(QQmlEngine*, const char* uri)
-    {
-        Q_ASSERT(uri == QLatin1String("Nemo.UX.Models") || uri == QLatin1String("org.nemomobile.uxmodels"));
-    }
-
-    void registerTypes(const char* uri)
-    {
-        Q_ASSERT(uri == QLatin1String("Nemo.UX.Models") || uri == QLatin1String("org.nemomobile.uxmodels"));
-        qmlRegisterType<CalendarModel>(uri, 1, 0, "CalendarModel");
-    }
-};
-
-#include "plugin.moc"
+void QQuickNemoModelsExtensionPlugin::registerTypes(const char* uri)
+{
+    Q_ASSERT(uri == QLatin1String("Nemo.Models"));
+    qmlRegisterModule(uri, 2, 0);
+    qmlRegisterType<CalendarModel>(uri, 2, 0, "CalendarModel");
+}

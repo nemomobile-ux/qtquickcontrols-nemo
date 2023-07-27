@@ -39,10 +39,10 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.6
-import QtQuick.Controls 1.0 //needed for the Stack attached property
-import QtQuick.Controls.Nemo 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Nemo.Controls
 
 Page {
     id: root
@@ -52,21 +52,38 @@ Page {
         title: qsTr("Tab bars")
     }
 
-    TabView {
-        anchors.fill: parent
+    TabBar {
+        id: bar
+        width: parent.width
+        TabButton {
+            text: qsTr("Buttons")
+        }
+        TabButton {
+            text: qsTr("Sliders")
+        }
+        TabButton {
+            text: qsTr("Progress")
+        }
+    }
 
-        style: TabViewStyle { }
-        Tab {
-            title: qsTr("Buttons")
-            ButtonPage{ visible: true }
+    StackLayout {
+        width: parent.width
+        height: parent.height - bar.height
+
+        currentIndex: bar.currentIndex
+
+        anchors{
+            top: bar.bottom
         }
-        Tab {
-            title: qsTr("Sliders")
-            SliderPage{ visible: true }
+
+        ButtonPage {
+            id: buttonTab
         }
-        Tab {
-            title: qsTr("Progress")
-            ProgressBarPage{ visible: true }
+        SliderPage {
+            id: sliderTab
+        }
+        ProgressBarPage {
+            id: progressBarTab
         }
     }
 }

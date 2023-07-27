@@ -30,9 +30,9 @@
 ****************************************************************************************/
 
 import QtQuick 2.15
-import QtQuick.Controls.Nemo 1.0
+import QtQuick.Shapes 1.5
 
-import QtGraphicalEffects 1.0
+import Nemo.Controls
 
 Item {
     id: root
@@ -45,16 +45,16 @@ Item {
     property string subdescription: ""
     property string icon: ""
     property Component iconDelegate: NemoIcon{
-            id: itemIcon
-            width: parent.width
-            height: parent.height
+        id: itemIcon
+        width: parent.width
+        height: parent.height
 
-            colorized: iconColorized
-            sourceSize.width: width
-            sourceSize.height: height
-            source: (icon != "") ? icon : iconVisible ? "images/listview-icon-template-s.svg" : ""
-            fillMode: Image.PreserveAspectFit
-        }
+        colorized: iconColorized
+        sourceSize.width: width
+        sourceSize.height: height
+        source: (icon != "") ? icon : iconVisible ? "images/listview-icon-template-s.svg" : ""
+        fillMode: Image.PreserveAspectFit
+    }
 
 
     property bool showNext: true
@@ -91,29 +91,13 @@ Item {
         clip: true
 
         RadialGradient {
-            x: mouse.mouseX - width/2 + listArea.x
-            y: mouse.mouseY - height/2
-            width: visible ? Theme.itemWidthSmall : 0
-            height: visible ? Theme.itemWidthSmall : 0
-            visible: mouse.pressed
-
-            gradient: Gradient {
-                GradientStop {
-                    position: 0.29
-                    color: Theme.accentColor
-                }
-                GradientStop {
-                    position: 0.5;
-                    color: "transparent"
-                }
+            GradientStop {
+                position: 0.29
+                color: Theme.accentColor
             }
-
-            Behavior on width {
-                NumberAnimation { duration: 200 }
-            }
-
-            Behavior on height {
-                NumberAnimation { duration: 200 }
+            GradientStop {
+                position: 0.5;
+                color: "transparent"
             }
         }
     }

@@ -18,10 +18,10 @@
  */
 
 import QtQuick 2.6
-import QtQuick.Controls.Nemo 1.0
-import QtQuick.Controls.Styles.Nemo 1.0
+import QtQuick.Shapes 1.5
 
-import QtGraphicalEffects 1.0
+import Nemo
+import Nemo.Controls
 
 //This item handles the UI representation for the toolbar
 //The UI representation of the drawerLevels is inside the header
@@ -90,7 +90,8 @@ Item {
         color: Theme.textColor
         font.pixelSize: Theme.fontSizeLarge
         font.weight: Font.ExtraBold
-        LinearGradient {
+        // @todo: need port qt6
+        /*LinearGradient {
             anchors.right: parent.right
             width: Theme.itemHeightMedium
             height: parent.paintedHeight
@@ -99,7 +100,7 @@ Item {
             end: Qt.point(width,0)
             gradient: Gradient { GradientStop { position: 0; color: "transparent"}
                 GradientStop {position: 0.9; color: Theme.backgroundColor } }
-        }
+        }*/
     }
 
 

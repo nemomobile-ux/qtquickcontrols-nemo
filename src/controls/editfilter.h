@@ -19,13 +19,8 @@
 #ifndef EDITFILTER_H
 #define EDITFILTER_H
 
-#include "nemofocussingleton.h"
 #include <QEvent>
 #include <QObject>
-#include <QString>
-#include <QVariant>
-
-#include <QVariant>
 
 class EditFilter : public QObject {
     Q_OBJECT
