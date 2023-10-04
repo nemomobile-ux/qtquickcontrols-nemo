@@ -40,6 +40,7 @@ NemoWindow {
     property alias orientation: contentArea.uiOrientation
 
     property bool isUiPortrait: root.width < root.height
+    color: Theme.backgroundColor
 
 
     //Handles orientation of keyboard, MInputMethodQuick.appOrientation.
@@ -125,14 +126,6 @@ NemoWindow {
         //NOTE: this also returns false if orientationToBeChecked == 0,
         //so we don't need additional checks for that
         return (orientationToBeChecked & allowedOrientations)
-    }
-
-    SystemPalette {id: syspal}
-
-    Rectangle {
-        id: background
-        anchors.fill: parent
-        color: Theme.backgroundColor
     }
 
     Item {
