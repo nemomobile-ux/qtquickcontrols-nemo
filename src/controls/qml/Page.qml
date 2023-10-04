@@ -66,12 +66,6 @@ NemoPage {
 
     property bool __isNemoPage
 
-    Rectangle {
-        id: background
-        anchors.fill: parent
-        color: Theme.backgroundColor
-    }
-
     MouseArea {
         id: content
         anchors.fill: parent
