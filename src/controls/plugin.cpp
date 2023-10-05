@@ -2,7 +2,7 @@
  * Copyright (C) 2013 Tomasz Olszak <olszak.tomasz@gmail.com>
  * Copyright (C) 2013 Andrea Bernabei <and.bernabei@gmail.com>
  * Copyright (C) 2017 Eetu Kahelin
- * Copyright (C) 2021-2022 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021-2023 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -22,6 +22,7 @@
 
 #include "plugin.h"
 #include "filteringmousearea.h"
+#include "inversemousearea.h"
 #include "nemofocussingleton.h"
 #include "nemopage.h"
 #include "nemowindow.h"
@@ -46,4 +47,5 @@ void QQuickNemoControlsExtensionPlugin::registerTypes(const char* uri)
     qmlRegisterType<NemoPage>(uri, 2, 0, "NemoPage");
     qmlRegisterType<RingIndicator>(uri, 2, 0, "RingIndicator");
     qmlRegisterType<FilteringMouseArea>(uri, 2, 0, "FilteringMouseArea");
+    qmlRegisterType<InverseMouseArea>(uri, 2, 0, "InverseMouseArea");
 }

@@ -16,7 +16,6 @@ ListView 2.0 ListView.qml
 ListViewItemWithActions 2.0 ListViewItemWithActions.qml
 GlacierRoller 2.0 GlacierRoller.qml
 GlacierRollerItem 2.0 GlacierRollerItem.qml
-InverseMouseArea 2.0 InverseMouseArea.qml
 IconButton 2.0 IconButton.qml
 DatePicker 2.0 DatePicker.qml
 TimePicker 2.0 TimePicker.qml
