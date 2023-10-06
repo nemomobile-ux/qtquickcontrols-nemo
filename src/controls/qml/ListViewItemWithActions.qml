@@ -1,6 +1,6 @@
 /****************************************************************************************
 **
-** Copyright (C) 2017-2022 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2017-2023 Chupligin Sergey <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -35,7 +35,7 @@ import QtQuick.Shapes 1.5
 import Nemo.Controls
 
 Item {
-    id: root
+    id: listViewItemWithActions
     width: parent ? parent.width : 0
     height: Theme.itemHeightLarge
 
@@ -69,13 +69,13 @@ Item {
     signal clicked
 
     function hideAllActions() {
-        if(actions && root.ListView.view) {
-            root.ListView.view.hideAllActions(index)
+        if(actions && listViewItemWithActions.ListView.view) {
+            listViewItemWithActions.ListView.view.hideAllActions(index)
         }
     }
 
     Connections {
-        target: root.ListView.view
+        target: listViewItemWithActions.ListView.view
         function onHideAllActions(hideIndex) {
             if (hideIndex != index) {
                 listArea.x = 0
@@ -128,8 +128,8 @@ Item {
 
     Rectangle{
         id: listArea
-        width: root.width
-        height: root.height
+        width: listViewItemWithActions.width
+        height: listViewItemWithActions.height
         color: selected ? Theme.accentColor :"transparent"
 
         Behavior on x{
@@ -252,7 +252,7 @@ Item {
             onClicked: {
                 //if actions is hide
                 if(listArea.x === 0) {
-                    root.clicked()
+                    listViewItemWithActions.clicked()
                 } else {
                     listArea.x = 0
                 }

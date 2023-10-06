@@ -2,7 +2,7 @@
  * Copyright (C) 2013 Andrea Bernabei <and.bernabei@gmail.com>
  * Copyright (C) 2013 Jolla Ltd.
  * Copyright (C) 2017 Eetu Kahelin
- * Copyright (C) 2021-2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+ * Copyright (C) 2021-2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -29,7 +29,7 @@ import Nemo
 import Nemo.Controls
 
 NemoWindow {
-    id: root
+    id: applicationWindow
 
     property alias header: toolBar
     /*! \internal */
@@ -39,15 +39,19 @@ NemoWindow {
     property alias initialPage: stackView.initialItem
     property alias orientation: contentArea.uiOrientation
 
-    property bool isUiPortrait: root.width < root.height
+    property bool isUiPortrait: applicationWindow.width < applicationWindow.height
+
+    property alias mainMenu: mainMenuArea.sourceComponent
+    property int mainMenuWidth: Theme.itemWidthExtraLarge
+
     color: Theme.backgroundColor
 
 
     //Handles orientation of keyboard, MInputMethodQuick.appOrientation.
     contentOrientation: orientation
     onOrientationChanged: {
-        if (root.isOrientationAllowed(root.orientation)) {
-            contentArea.filteredOrientation = root.orientation
+        if (applicationWindow.isOrientationAllowed(applicationWindow.orientation)) {
+            contentArea.filteredOrientation = applicationWindow.orientation
         }
 
         contentOrientation = orientation
@@ -60,10 +64,13 @@ NemoWindow {
         if(!params){
             params = {}
         }
-        console.log("##", url, params, pageStack)
         var component = Qt.createComponent(url)
         if (component.status === Component.Ready) {
-            pageStack.push(component.createObject(pageStack, params))
+            if(mainMenuArea.width != applicationWindow.width && mainMenuArea.width != 0) {
+                pageStack.replace(component.createObject(pageStack, params))
+            } else {
+                pageStack.push(component.createObject(pageStack, params))
+            }
         } else {
             console.warn("Error loading component", url, component.errorString())
             pageStack.push(Qt.resolvedUrl("ErrorStackPage.qml"), {error: component.errorString()})
@@ -114,7 +121,7 @@ NemoWindow {
 
     function isOrientationAllowed(orientationToBeChecked)
     {
-        var allowedOrientations = root.allowedOrientations
+        var allowedOrientations = applicationWindow.allowedOrientations
 
         //use Page's allowed orientations if available
         if (stackView._isCurrentItemNemoPage() && stackView.currentItem.allowedOrientations) {
@@ -166,18 +173,41 @@ NemoWindow {
 
                 property bool orientationTransitionRunning: false
 
+                Loader{
+                    id: mainMenuArea
+                    height: parent.height
+                    width: if(sourceComponent === null) {
+                               return 0
+                           } else if (applicationWindow.isUiPortrait) {
+                               if(stackView.depth == 1) {
+                                   return parent.width
+                               } else {
+                                   return 0
+                               }
+
+                           } else {
+                               return applicationWindow.mainMenuWidth
+                           }
+
+                    anchors{
+                        top: applicationWindow.isUiPortrait ? toolBar.bottom : parent.top
+                        left: applicationWindow.isUiPortrait ? parent.left : toolBar.right
+                    }
+                }
+
+
                 StackView {
                     id: stackView
-                    anchors.top: root.isUiPortrait ? toolBar.bottom : parent.top
+                    anchors.top: mainMenuArea.top
                     anchors.right: parent.right
-                    anchors.left: root.isUiPortrait ? parent.left : toolBar.right
+                    anchors.left: mainMenuArea.right
                     anchors.bottom: parent.bottom
 
                     property real panelSize: 0
                     property real previousImSize: 0
-                    property real imSize: !Qt.application.active ? 0 : (isUiPortrait ? (root._transpose ? Qt.inputMethod.keyboardRectangle.width
+                    property real imSize: !Qt.application.active ? 0 : (isUiPortrait ? (applicationWindow._transpose ? Qt.inputMethod.keyboardRectangle.width
                                                                                                         : Qt.inputMethod.keyboardRectangle.height)
-                                                                                     : (root._transpose ? Qt.inputMethod.keyboardRectangle.height
+                                                                                     : (applicationWindow._transpose ? Qt.inputMethod.keyboardRectangle.height
                                                                                                         : Qt.inputMethod.keyboardRectangle.width))
 
 
@@ -209,11 +239,11 @@ NemoWindow {
                     property bool stackInitialized: false
                     onStackInitializedChanged: if (stackInitialized) {
                                                    //set Screen.orientation as default, if allowed
-                                                   if (root.isOrientationAllowed(root.orientation)) {
-                                                       contentArea.filteredOrientation = root.orientation
+                                                   if (applicationWindow.isOrientationAllowed(applicationWindow.orientation)) {
+                                                       contentArea.filteredOrientation = applicationWindow.orientation
                                                    } else {
                                                        //let the window handle it, it will fall back to an allowed orientation
-                                                       root.fallbackToAnAllowedOrientation()
+                                                       applicationWindow.fallbackToAnAllowedOrientation()
                                                    }
                                                }
 
@@ -227,7 +257,7 @@ NemoWindow {
                     //update orientation constraints when a Page is pushed/popped
                     onCurrentItemChanged: {
                         if (_isCurrentItemNemoPage()) {
-                            root.fallbackToAnAllowedOrientation()
+                            applicationWindow.fallbackToAnAllowedOrientation()
                         }
                     }
 
@@ -238,7 +268,7 @@ NemoWindow {
                     Connections {
                         id: pageConn
                         target: stackView._isCurrentItemNemoPage() ? stackView.currentItem : null
-                        function onAllowedOrientationsChanged() { root.fallbackToAnAllowedOrientation() }
+                        function onAllowedOrientationsChanged() { applicationWindow.fallbackToAnAllowedOrientation() }
                     }
 
                     SequentialAnimation {
@@ -267,8 +297,8 @@ NemoWindow {
 
                 Header {
                     id: toolBar
-                    stackView: root.pageStack
-                    appWindow: root
+                    stackView: applicationWindow.pageStack
+                    appWindow: applicationWindow
                 }
 
                 Item {

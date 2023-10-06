@@ -10,6 +10,7 @@ class Theme : public QObject {
 
     Q_PROPERTY(qreal iconSizeLauncher READ iconSizeLauncher NOTIFY iconSizeLauncherChanged)
 
+    Q_PROPERTY(qreal itemWidthExtraLarge READ itemWidthExtraLarge WRITE setItemWidthExtraLarge NOTIFY itemWidthExtraLargeChanged)
     Q_PROPERTY(qreal itemWidthLarge READ itemWidthLarge NOTIFY itemWidthLargeChanged)
     Q_PROPERTY(qreal itemWidthMedium READ itemWidthMedium NOTIFY itemWidthMediumChanged)
     Q_PROPERTY(qreal itemWidthSmall READ itemWidthSmall NOTIFY itemWidthSmallChanged)
@@ -94,6 +95,9 @@ public:
 
     Sizing* size;
 
+    qreal itemWidthExtraLarge() const;
+    void setItemWidthExtraLarge(qreal newItemWidthExtraLarge);
+
 signals:
     void themeUpdate();
 
@@ -135,6 +139,8 @@ signals:
 
     void desktopModeChanged();
 
+    void itemWidthExtraLargeChanged();
+
 private slots:
     void desktopModeValueChanged();
     void themeValueChanged();
@@ -142,6 +148,7 @@ private slots:
 private:
     qreal m_iconSizeLauncher; // 86 or 108 or 128 or 256
 
+    qreal m_itemWidthExtraLarge; // 450
     qreal m_itemWidthLarge; // 320
     qreal m_itemWidthMedium; // 240
     qreal m_itemWidthSmall; // 120
