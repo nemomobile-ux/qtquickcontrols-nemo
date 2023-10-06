@@ -7,6 +7,7 @@ set(SRC
     editfilter.cpp
     nemofocussingleton.cpp
     nemowindow.cpp
+    inversemousearea.cpp
     )
 
 set(HEADERS
@@ -16,7 +17,8 @@ set(HEADERS
     filteringmousearea.h
     nemofocussingleton.h
     nemowindow.h
-    nemopage.h)
+    nemopage.h
+    inversemousearea.h )
 
 set(QML
     qml/ActionButton.qml
@@ -32,7 +34,6 @@ set(QML
     qml/HeaderToolsIndicator.qml
     qml/HeaderToolsLayout.qml
     qml/IconButton.qml
-    qml/InverseMouseArea.qml
     qml/Label.qml
     qml/ListViewItemWithActions.qml
     qml/ListView.qml
