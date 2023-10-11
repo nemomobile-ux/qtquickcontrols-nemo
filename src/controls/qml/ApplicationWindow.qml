@@ -19,11 +19,8 @@
  * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  */
-
-import QtQuick.Window 2.2
-import QtQuick 2.6
+import QtQuick
 import QtQuick.Controls
-import QtQuick.Layouts 1.0
 
 import Nemo
 import Nemo.Controls
@@ -55,6 +52,10 @@ NemoWindow {
         }
 
         contentOrientation = orientation
+    }
+
+    onGoBack: {
+        pageStack.pop()
     }
 
     //Safety version of pageStack.push - if we can't load component - show error page page with
