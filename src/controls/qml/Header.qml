@@ -17,12 +17,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-import QtQuick 2.6
-import QtQuick.Window 2.0
+import QtQuick
 import QtQuick.Controls
-
-import QtQml 2.14
-
 import Nemo
 
 Item {
@@ -314,7 +310,7 @@ Item {
                         //Fully Close/Open the drawer
                         header.slideDrawerTo((header.x == header.closedX) ? 0 : header.closedX)
                     } else {
-                        deltaCoord = (mouse.x + header.x) - startMouseCoord
+                        deltaCoord = (mouseX + header.x) - startMouseCoord
                         if (deltaCoord > gestureThreshold) {
                             header.slideDrawerTo(startCoord < 0 ? 0 : closedX)
                         } else if (deltaCoord < -gestureThreshold){

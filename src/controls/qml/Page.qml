@@ -1,6 +1,7 @@
 /****************************************************************************************
 **
 ** Copyright (C) 2013 Andrea Bernabei <and.bernabei@gmail.com>
+** Copyright (C) 2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -29,9 +30,8 @@
 **
 ****************************************************************************************/
 
-import QtQuick 2.6
+import QtQuick
 import QtQuick.Controls // Needed for things like Stack attached properties
-import QtQuick.Window 2.0
 
 import Nemo
 import Nemo.Controls
@@ -70,8 +70,4 @@ NemoPage {
         id: content
         anchors.fill: parent
     }
-
-    onParentChanged: if(parent != null) {
-                         page.anchors.fill = parent
-                     }
 }

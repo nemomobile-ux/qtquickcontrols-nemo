@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2013 Andrea Bernabei <and.bernabei@gmail.com>
- * Copyright (C) 2021-2022 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021-2023 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -30,8 +30,12 @@ public:
     explicit NemoWindow(QWindow* parent = 0);
     Qt::ScreenOrientation primaryOrientation() const;
 
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+
 signals:
     void orientationChanged(Qt::ScreenOrientation orientation);
+    void goBack();
 
 private:
     EditFilter* m_filter;
