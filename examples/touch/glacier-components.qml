@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
-** Copyright (C) 2017-2021 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2017-2023 Chupligin Sergey <neochapay@gmail.com>
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the Qt Quick Controls module of the Qt Toolkit.
@@ -49,20 +49,21 @@ import Nemo.Controls
 import "content"
 
 ApplicationWindow {
-
     id: appWindow
 
-    // Implements back key navigation
-    Item{
-        id: keysHandler
-        focus: true
-        Keys.onReleased: {
-            if (event.key === Qt.Key_Back || event.key === Qt.Key_Escape) {
-                if (pageStack.depth > 1) {
-                    pageStack.pop();
-                    event.accepted = true;
-                } else { Qt.quit(); }
-            }
+    mainMenu: ListView {
+        id: mainList
+        model: pageModel
+        anchors.fill: parent
+        clip: true
+        delegate: ListViewItemWithActions {
+            iconVisible: false
+            label: title
+            onClicked: appWindow.push(Qt.resolvedUrl(page))
+        }
+
+        ScrollDecorator{
+            flickable: mainList
         }
     }
 
@@ -295,22 +296,6 @@ ApplicationWindow {
                 }
 
             ]
-        }
-
-        ListView {
-            id: mainList
-            model: pageModel
-            anchors.fill: parent
-            clip: true
-            delegate: ListViewItemWithActions {
-                iconVisible: false
-                label: title
-                onClicked: pageStack.push(Qt.resolvedUrl(page))
-            }
-
-            ScrollDecorator{
-                flickable: mainList
-            }
         }
     }
 }

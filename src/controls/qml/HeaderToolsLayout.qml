@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2021 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2018-2023 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -56,7 +56,7 @@ Item {
 
         rotation: isUiPortrait ? 0 : 90
 
-        visible: showBackButton
+        visible: showBackButton && applicationWindow.pageStack.depth > 1
 
         NemoIcon {
             anchors.centerIn: parent

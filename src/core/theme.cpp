@@ -90,6 +90,11 @@ void Theme::setThemeValues()
         updated = true;
     }
 
+    if (theme.value("itemWidthExtraLarge").toString().toFloat() != 0 && floor(theme.value("itemWidthExtraLarge").toString().toFloat()) != m_itemWidthExtraLarge) {
+        m_itemWidthExtraLarge = floor(theme.value("itemWidthExtraLarge").toString().toFloat() * size->dpScaleFactor());
+        emit itemWidthExtraLargeChanged();
+        updated = true;
+    }
     if (theme.value("itemWidthLarge").toString().toFloat() != 0 && floor(theme.value("itemWidthLarge").toString().toFloat()) != m_itemWidthLarge) {
         m_itemWidthLarge = floor(theme.value("itemWidthLarge").toString().toFloat() * size->dpScaleFactor());
         emit itemWidthLargeChanged();
@@ -267,6 +272,7 @@ void Theme::themeValueChanged()
 void Theme::loadDefaultValue()
 {
     // Load defaults
+    m_itemWidthExtraLarge = floor(450 * size->dpScaleFactor());
     m_itemWidthLarge = floor(320 * size->dpScaleFactor());
     m_itemWidthMedium = floor(240 * size->dpScaleFactor());
     m_itemWidthSmall = floor(120 * size->dpScaleFactor());
@@ -300,4 +306,17 @@ void Theme::loadDefaultValue()
     m_textColor = "#ffffff";
     m_backgroundColor = "#000000";
     m_backgroundAccentColor = "#ffffff";
+}
+
+qreal Theme::itemWidthExtraLarge() const
+{
+    return m_itemWidthExtraLarge;
+}
+
+void Theme::setItemWidthExtraLarge(qreal newItemWidthExtraLarge)
+{
+    if (qFuzzyCompare(m_itemWidthExtraLarge, newItemWidthExtraLarge))
+        return;
+    m_itemWidthExtraLarge = newItemWidthExtraLarge;
+    emit itemWidthExtraLargeChanged();
 }

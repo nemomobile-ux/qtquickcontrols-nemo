@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2018-2023 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,7 +26,7 @@ import QtQml 2.14
 import Nemo
 
 Item {
-    id: root
+    id: header
 
     //TODO: Add logic/animations to handle dynamic change of tools and drawer levels in the same page
 
@@ -62,14 +62,14 @@ Item {
             when: appWindow && appWindow.isUiPortrait
             AnchorChanges {
                 target: toolBarRect;
-                anchors.left: root.left
+                anchors.left: header.left
             }
             AnchorChanges {
                 target: drawerContainer;
                 anchors.top: undefined
                 anchors.bottom: toolBarRect.top
-                anchors.left: root.left
-                anchors.right: root.right
+                anchors.left: header.left
+                anchors.right: header.right
             }
             AnchorChanges {
                 target: drawer;
@@ -80,7 +80,7 @@ Item {
             }
             //having width/height as PropertyChanges avoids creating binding loops
             PropertyChanges {
-                target: root
+                target: header
                 width: parent.width
                 //the height of the drawer in portrait is limited by the size of the shorter edge of the screen
                 height: toolBarRect.height + drawer.height
@@ -101,8 +101,8 @@ Item {
             }
             AnchorChanges {
                 target: drawerContainer;
-                anchors.top: root.top
-                anchors.bottom: root.bottom
+                anchors.top: header.top
+                anchors.bottom: header.bottom
                 anchors.left: undefined
                 anchors.right: toolBarRect.left
             }
@@ -114,7 +114,7 @@ Item {
                 anchors.horizontalCenter: undefined
             }
             PropertyChanges {
-                target: root
+                target: header
                 width: toolBarRect.width + drawer.width
                 height: parent.height
             }
@@ -174,28 +174,28 @@ Item {
     }
 
     function updateHeaderTools() {
-        root.toolBarLayout = stackView.currentItem ? stackView.currentItem.headerTools : undefined
+        header.toolBarLayout = stackView.currentItem ? stackView.currentItem.headerTools : undefined
     }
 
     SequentialAnimation {
         id: changeToolsLayoutAnim
-        NumberAnimation { id: fadeOut; target: root; property: "opacity"; to: 0;
+        NumberAnimation { id: fadeOut; target: header; property: "opacity"; to: 0;
             duration: 250; easing.type: Easing.OutQuad; loops: !toolBarLayout ? 0 : 1 }
         //headerTools may change now, so we have to close the drawer
         ScriptAction { script: closeDrawer() }
         ScriptAction { script: updateHeaderTools() }
         //tell the (maybe new) layout that we're its container
         ScriptAction { script: propagateHeaderReference() }
-        NumberAnimation { id: fadeIn; target: root; property: "opacity"; to: 1;
+        NumberAnimation { id: fadeIn; target: header; property: "opacity"; to: 1;
             duration: 250; easing.type: Easing.OutQuad; loops: !toolBarLayout ? 0 : 1  }
 
     }
 
     NumberAnimation {
         id: slidingAnim
-        target: root
+        target: header
         property: appWindow.isUiPortrait ? "y" : "x"
-        from: appWindow.isUiPortrait ? root.y : root.x
+        from: appWindow.isUiPortrait ? header.y : header.x
         easing.type: Easing.OutExpo
     }
 
@@ -244,30 +244,30 @@ Item {
                 }
 
                 if (appWindow.isUiPortrait) {
-                    startMouseCoord = (mouseY + root.y)
-                    startCoord = root.y
+                    startMouseCoord = (mouseY + header.y)
+                    startCoord = header.y
                 } else { //assuming that otherwise we're in landscape...is this safe?
-                    startMouseCoord = (mouseX + root.x)
-                    startCoord = root.x
+                    startMouseCoord = (mouseX + header.x)
+                    startCoord = header.x
                 }
             }
 
             onPositionChanged: {
                 if (appWindow.isUiPortrait) {
-                    deltaCoord = (mouseY + root.y) - startMouseCoord
+                    deltaCoord = (mouseY + header.y) - startMouseCoord
                     if (Math.abs(deltaCoord) > swipeThreshold && !swiping) { swiping = true; }
 
                     if (swiping) {
                         var swipingY = startCoord + deltaCoord
                         if ( swipingY > 0) {
-                            root.y = Math.sqrt(swipingY)
+                            header.y = Math.sqrt(swipingY)
                         } else {
-                            if (swipingY < root.closedY) root.y = root.closedY
-                            else root.y = swipingY
+                            if (swipingY < header.closedY) header.y = header.closedY
+                            else header.y = swipingY
                         }
                     }
                 } else {
-                    deltaCoord = (mouseX + root.x) - startMouseCoord
+                    deltaCoord = (mouseX + header.x) - startMouseCoord
                     if (Math.abs(deltaCoord) > swipeThreshold && !swiping) { swiping = true; }
                     if (swiping) {
                         //this is the coord that the drawer would be at if it were following our finger
@@ -275,11 +275,11 @@ Item {
                         //if the left/top side of the drawer is entering the screen, pull the breaks!
                         //quadratic slowdown effect
                         if ( swipingX > 0) {
-                            root.x = Math.sqrt(swipingX)
+                            header.x = Math.sqrt(swipingX)
                         } else {
                             //don't let the toolbar go out of screen
-                            if (swipingX < root.closedX) root.x = root.closedX
-                            else root.x = swipingX
+                            if (swipingX < header.closedX) header.x = header.closedX
+                            else header.x = swipingX
                         }
                     }
                 }
@@ -289,10 +289,10 @@ Item {
                 if (appWindow.isUiPortrait) {
                     if (!swiping) {
                         //Fully Close/Open the drawer
-                        root.slideDrawerTo((root.y == root.closedY) ? 0 : root.closedY)
+                        header.slideDrawerTo((header.y == header.closedY) ? 0 : header.closedY)
                     } else {
-                        //this is the y at the top of the screen, relative to the header dock (root)
-                        var topY = -root.y
+                        //this is the y at the top of the screen, relative to the header dock (header)
+                        var topY = -header.y
 
                         //We cannot use QML's childAt because it requires both x and y
                         //and we don't have an x to provide (and it wouldn't make sense to have one,
@@ -304,23 +304,23 @@ Item {
                         if (item == undefined) {
                             //if the drawer is closed or half open, we open it totally.
                             //if it was opened already, we close it ("pull down to close" feature)
-                            root.slideDrawerTo(startCoord == 0 ? root.closedY : 0)
+                            header.slideDrawerTo(startCoord == 0 ? header.closedY : 0)
                         } else {
-                            root.slideDrawerTo(((topY - item.y) <= (speedBumpThreshold * item.height)) ? -item.y : -(item.y + item.height))
+                            header.slideDrawerTo(((topY - item.y) <= (speedBumpThreshold * item.height)) ? -item.y : -(item.y + item.height))
                         }
                     }
                 } else {
                     if (!swiping) {
                         //Fully Close/Open the drawer
-                        root.slideDrawerTo((root.x == root.closedX) ? 0 : root.closedX)
+                        header.slideDrawerTo((header.x == header.closedX) ? 0 : header.closedX)
                     } else {
-                        deltaCoord = (mouse.x + root.x) - startMouseCoord
+                        deltaCoord = (mouse.x + header.x) - startMouseCoord
                         if (deltaCoord > gestureThreshold) {
-                            root.slideDrawerTo(startCoord < 0 ? 0 : closedX)
+                            header.slideDrawerTo(startCoord < 0 ? 0 : closedX)
                         } else if (deltaCoord < -gestureThreshold){
-                            root.slideDrawerTo(closedX)
+                            header.slideDrawerTo(closedX)
                         } else { //i.e (-gestureThreshold <= deltaCoord <= gestureThreshold)
-                            root.slideDrawerTo((startCoord === root.closedX) ? root.closedX : 0)
+                            header.slideDrawerTo((startCoord === header.closedX) ? header.closedX : 0)
                         }
                     }
 
@@ -334,7 +334,7 @@ Item {
             width: parent.width
             height: Theme.itemHeightExtraSmall/8
             anchors.top: parent.top
-            visible: drawerContainer.height > 0 && -root.y == drawerContainer.height
+            visible: drawerContainer.height > 0 && -header.y == drawerContainer.height
         }
     }
 
@@ -367,7 +367,9 @@ Item {
                 }
             }
 
-            children: if (toolBarLayout) toolBarLayout.drawerLevels
+            children: if (toolBarLayout) {
+                          toolBarLayout.drawerLevels
+                      }
         }
     }
 }

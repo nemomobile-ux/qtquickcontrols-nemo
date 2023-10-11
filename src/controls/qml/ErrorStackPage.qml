@@ -1,6 +1,6 @@
 /****************************************************************************************
 **
-** Copyright (C) 2018 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2018-2023 Chupligin Sergey <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -33,7 +33,7 @@ import QtQuick 2.6
 import Nemo
 
 Page {
-    id: root
+    id: errorStackPage
 
     property alias error: errorLabel.text
 
