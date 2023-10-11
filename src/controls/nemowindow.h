@@ -26,20 +26,35 @@
 
 class NemoWindow : public QQuickWindow {
     Q_OBJECT
+    Q_PROPERTY(bool allowExtendedEvents READ allowExtendedEvents WRITE setAllowExtendedEvents NOTIFY allowExtendedEventsChanged)
+
 public:
     explicit NemoWindow(QWindow* parent = 0);
     Qt::ScreenOrientation primaryOrientation() const;
 
+    bool allowExtendedEvents() const;
+    void setAllowExtendedEvents(bool newAllowExtendedEvents);
+
 protected:
-    void keyPressEvent(QKeyEvent *event) override;
+    void keyPressEvent(QKeyEvent* event) override;
+    void mousePressEvent(QMouseEvent*) override;
+    void mouseReleaseEvent(QMouseEvent*) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
 
 signals:
     void orientationChanged(Qt::ScreenOrientation orientation);
     void goBack();
 
+    void allowExtendedEventsChanged();
+
 private:
     EditFilter* m_filter;
     QScreen* m_screen;
+
+    bool m_mousePressed;
+    bool m_mouseEventTriggered;
+    QPointF m_firstPoint;
+    bool m_allowExtendedEvents;
 };
 
 #endif // NEMOWINDOW_H
