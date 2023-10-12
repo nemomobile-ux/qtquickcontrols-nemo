@@ -47,6 +47,9 @@ signals:
 
     void allowExtendedEventsChanged();
 
+private slots:
+    void touchEventHandler(QEvent* event);
+
 private:
     EditFilter* m_filter;
     QScreen* m_screen;

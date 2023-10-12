@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2017 Eetu Kahelin
+ * Copyright (C) 2023 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -29,6 +30,10 @@ EditFilter::EditFilter(QObject* parent)
 
 bool EditFilter::eventFilter(QObject* obj, QEvent* event)
 {
+    if (event->type() == QEvent::TouchBegin || event->type() == QEvent::TouchEnd) {
+        emit touchEvent(event);
+    }
+
     if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::TouchBegin) {
         NemoFocusSingleton* nemoFocus = NemoFocusSingleton::instance();
         if (nemoFocus->edit() != NULL) {

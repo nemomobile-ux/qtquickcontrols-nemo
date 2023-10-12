@@ -37,6 +37,7 @@ NemoWindow::NemoWindow(QWindow* parent)
 
     installEventFilter(m_filter);
     connect(m_screen, &QScreen::orientationChanged, this, &NemoWindow::orientationChanged);
+    connect(m_filter, &EditFilter::touchEvent, this, &NemoWindow::touchEventHandler);
 }
 
 Qt::ScreenOrientation NemoWindow::primaryOrientation() const
@@ -86,6 +87,20 @@ void NemoWindow::mouseMoveEvent(QMouseEvent* event)
         } else {
             m_mouseEventTriggered = false;
         }
+    }
+}
+
+void NemoWindow::touchEventHandler(QEvent* event)
+{
+    QTouchEvent* tEvent = static_cast<QTouchEvent*>(event);
+    if (event->type() == QEvent::TouchBegin) {
+        m_mousePressed = true;
+        m_firstPoint = tEvent->points().first().position();
+    } else if (event->type() == QEvent::TouchEnd
+        && tEvent->points().first().position().x() - m_firstPoint.x() > width() / 4
+        && m_firstPoint.x() < width() / 4
+        && allowExtendedEvents()) {
+        emit goBack();
     }
 }
 

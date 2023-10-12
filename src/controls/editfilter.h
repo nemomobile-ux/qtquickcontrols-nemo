@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2017 Eetu Kahelin
+ * Copyright (C) 2023 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -16,6 +17,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  */
+
 #ifndef EDITFILTER_H
 #define EDITFILTER_H
 
@@ -26,6 +28,9 @@ class EditFilter : public QObject {
     Q_OBJECT
 public:
     explicit EditFilter(QObject* parent = 0);
+
+signals:
+    void touchEvent(QEvent* event);
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event);
