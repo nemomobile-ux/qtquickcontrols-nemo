@@ -78,6 +78,24 @@ NemoWindow {
         }
     }
 
+    function pop() {
+        pageStack.pop()
+    }
+
+    function replace(url, params) {
+        if(!params){
+            params = {}
+        }
+
+        var component = Qt.createComponent(url)
+        if (component.status === Component.Ready) {
+            pageStack.push(component.createObject(pageStack, params))
+        } else {
+            console.warn("Error loading component", url, component.errorString())
+            pageStack.push(Qt.resolvedUrl("ErrorStackPage.qml"), {error: component.errorString()})
+        }
+    }
+
     Timer {
         id: _errorTimer
         property string errorString
