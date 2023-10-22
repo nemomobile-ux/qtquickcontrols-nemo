@@ -195,6 +195,7 @@ NemoWindow {
                 Loader{
                     id: mainMenuArea
                     height: parent.height
+                    clip: true
                     width: if(sourceComponent === null) {
                                return 0
                            } else if (applicationWindow.isUiPortrait) {
