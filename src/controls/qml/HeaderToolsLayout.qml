@@ -105,7 +105,7 @@ Item {
             verticalCenter: parent.verticalCenter
         }
 
-        width: tools ? (Theme.itemHeightMedium * Math.min(maxNumberOfToolButtons, tools.length)) : 0
+        width: tools ? (toolsLayoutItem.height * Math.min(maxNumberOfToolButtons, tools.length)) : 0
         height: toolsLayoutItem.height
 
         property int maxNumberOfToolButtons: 3
@@ -122,12 +122,13 @@ Item {
         id: dots
         anchors{
             right: parent.right
-            rightMargin: Theme.itemSpacingLarge
             verticalCenter: parent.verticalCenter
         }
         fillMode: Image.PreserveAspectFit
         height: toolMeasure
+        width: toolMeasure
         sourceSize.height: height
+        sourceSize.width: width
         visible: drawerLevels && drawerLevels.length > 1
         source: "image://theme/ellipsis-v"
         rotation: isUiPortrait ? 0 : 90
