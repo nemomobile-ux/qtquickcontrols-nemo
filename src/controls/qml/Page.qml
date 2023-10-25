@@ -66,7 +66,7 @@ NemoPage {
 
     property bool __isNemoPage
 
-    MouseArea {
+    Item {
         id: content
         anchors.fill: parent
     }
