@@ -49,8 +49,8 @@ Item {
 
     NemoIcon {
         id: iconImage
-        width: Theme.itemHeightSmall
-        height: Theme.itemHeightSmall
+        width: toolButton.height/2
+        height: toolButton.height/2
         color: bMouseArea.pressed ? Theme.accentColor : active ? Theme.accentColor : Theme.textColor
         anchors.centerIn: parent
         fillMode: Image.PreserveAspectFit

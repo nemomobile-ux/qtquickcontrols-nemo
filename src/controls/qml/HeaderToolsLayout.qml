@@ -50,7 +50,7 @@ Item {
 
         anchors{
             leftMargin: Theme.itemSpacingLarge
-        //check if Stack.view has already been initialized as well
+            //check if Stack.view has already been initialized as well
             verticalCenter: parent.verticalCenter
         }
 
@@ -118,19 +118,26 @@ Item {
         }
     }
 
-    NemoIcon {
+    Item{
         id: dots
         anchors{
             right: parent.right
             verticalCenter: parent.verticalCenter
         }
-        fillMode: Image.PreserveAspectFit
-        height: toolMeasure
-        width: toolMeasure
-        sourceSize.height: height
-        sourceSize.width: width
+        height: toolsLayoutItem.height
+        width: height
         visible: drawerLevels && drawerLevels.length > 1
-        source: "image://theme/ellipsis-v"
-        rotation: isUiPortrait ? 0 : 90
+
+        NemoIcon {
+            width: parent.height/2
+            height: parent.height/2
+            anchors.centerIn: parent
+            fillMode: Image.PreserveAspectFit
+
+            sourceSize.height: height
+            sourceSize.width: width
+            source: "image://theme/ellipsis-v"
+            rotation: isUiPortrait ? 0 : 90
+        }
     }
 }
