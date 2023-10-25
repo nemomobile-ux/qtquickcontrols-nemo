@@ -51,7 +51,7 @@ Item {
         id: iconImage
         width: Theme.itemHeightExtraSmall
         height: Theme.itemHeightExtraSmall
-        color: Theme.accentColor
+        color: bMouseArea.pressed ? Theme.accentColor : active ? Theme.accentColor : Theme.textColor
         anchors.centerIn: parent
         fillMode: Image.PreserveAspectFit
     }
