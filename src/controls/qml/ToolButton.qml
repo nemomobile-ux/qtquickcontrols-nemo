@@ -34,7 +34,7 @@ import QtQuick.Controls
 
 import Nemo.Controls
 
-Button {
+Item {
     id: toolButton
     property alias iconSource: iconImage.source
     property bool showCounter: false
@@ -42,15 +42,18 @@ Button {
     property bool active: false
     property int counterValue: 0
 
-    backgrounded: true
+    signal clicked()
+
     width: height
+    height: parent.height
 
     NemoIcon {
         id: iconImage
-        anchors.fill: parent
+        width: Theme.itemHeightExtraSmall
+        height: Theme.itemHeightExtraSmall
+        color: Theme.accentColor
+        anchors.centerIn: parent
         fillMode: Image.PreserveAspectFit
-        anchors.margins: Theme.itemSpacingExtraSmall
-        color: active ? Theme.accentColor : Theme.textColor
     }
 
     Rectangle{
@@ -78,5 +81,11 @@ Button {
             anchors.centerIn: parent
             font.pixelSize: counter.height*0.8
         }
+    }
+
+    MouseArea{
+        id: bMouseArea
+        anchors.fill: parent
+        onClicked: toolButton.clicked()
     }
 }

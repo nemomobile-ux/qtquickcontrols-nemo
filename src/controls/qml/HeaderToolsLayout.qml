@@ -43,22 +43,30 @@ Item {
     property bool showBackButton: false
     property int toolMeasure: Theme.itemHeightSmall
     height: toolMeasure
-    Rectangle {
+    Item {
         id: backButton
-        width: opacity ? Theme.itemHeightHuge : 0
-        anchors.leftMargin: Theme.itemSpacingLarge
+        width: opacity ? backButton.height : 0
+        height: toolsLayoutItem.height
+
+        anchors{
+            leftMargin: Theme.itemSpacingLarge
         //check if Stack.view has already been initialized as well
-        anchors.verticalCenter: parent.verticalCenter
-        antialiasing: true
-        height: width
-        radius: Theme.itemSpacingExtraSmall / 2
-        color: backmouse.pressed ? "#222" : "transparent"
+            verticalCenter: parent.verticalCenter
+        }
 
         rotation: isUiPortrait ? 0 : 90
-
         visible: showBackButton && applicationWindow.pageStack.depth > 1
 
-        NemoIcon {
+        Rectangle{
+            id: background
+            width: parent.height*0.9
+            height: parent.height*0.9
+            anchors.centerIn: parent
+            color: backmouse.pressed ? Theme.fillDarkColor : "transparent"
+            radius: width
+        }
+
+        Image {
             anchors.centerIn: parent
             height: toolMeasure
             width: height
@@ -82,51 +90,30 @@ Item {
             right: toolButtonsContainer.left
             left: backButton.visible ? backButton.right : parent.left
             verticalCenter: parent.verticalCenter
-            leftMargin: Theme.itemSpacingLarge
-            rightMargin: Theme.itemSpacingLarge
+            leftMargin: backButton.visible ? 0 : Theme.itemSpacingLarge
         }
         clip: true
-        font.family: Theme.fontFamily
-        color: Theme.textColor
         font.pixelSize: Theme.fontSizeLarge
-        font.weight: Font.ExtraBold
-        // @todo: need port qt6
-        /*LinearGradient {
-            anchors.right: parent.right
-            width: Theme.itemHeightMedium
-            height: parent.paintedHeight
-            visible: titleTxt.paintedWidth >  titleTxt.width
-            start: Qt.point(0,0)
-            end: Qt.point(width,0)
-            gradient: Gradient { GradientStop { position: 0; color: "transparent"}
-                GradientStop {position: 0.9; color: Theme.backgroundColor } }
-        }*/
+        font.weight: Font.Bold
     }
 
 
     Item {
         id: toolButtonsContainer
-        anchors.right: dots.visible ? dots.left : parent.right
-        anchors.rightMargin: Theme.itemSpacingLarge
-        anchors.verticalCenter: parent.verticalCenter
+        anchors{
+            right: dots.visible ? dots.left : parent.right
+            verticalCenter: parent.verticalCenter
+        }
+
         width: tools ? (Theme.itemHeightMedium * Math.min(maxNumberOfToolButtons, tools.length)) : 0
+        height: toolsLayoutItem.height
+
         property int maxNumberOfToolButtons: 3
 
         Row {
             id: toolsRow
             anchors.centerIn: parent
-            height: toolMeasure
-            function assignRotationBindings() {
-                for (var i=0; i<children.length; ++i) {
-                    children[i].rotation = Qt.binding(function() { return isUiPortrait ? 0 : 90 })
-                }
-            }
-
-            //TODO: THIS IS STUPID :D This is run once every added item (i.e. EVEN IF you add 3 items at the same time)
-            //but it's not critical since it will always have a very limited amount of children
-            onChildrenChanged: {
-                assignRotationBindings()
-            }
+            height: toolButtonsContainer.height
             children: tools
         }
     }
