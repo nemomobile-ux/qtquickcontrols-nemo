@@ -38,7 +38,7 @@ Image {
 
     layer.effect: ShaderEffect {
         id: shaderItem
-        property color tint: nemoIcon.color
+        property color color: nemoIcon.color
         property variant source: nemoIcon
         fragmentShader: "shaders/NemoIcon.frag.qsb"
     }
