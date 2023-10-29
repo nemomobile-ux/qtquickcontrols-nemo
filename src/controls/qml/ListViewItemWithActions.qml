@@ -29,8 +29,8 @@
 **
 ****************************************************************************************/
 
-import QtQuick 2.15
-import QtQuick.Shapes 1.5
+import QtQuick
+import QtQuick.Shapes
 
 import Nemo.Controls
 
@@ -44,12 +44,11 @@ Item {
     property string description: ""
     property string subdescription: ""
     property string icon: ""
-    property Component iconDelegate: NemoIcon{
+    property Component iconDelegate: Image{
         id: itemIcon
         width: parent.width
         height: parent.height
 
-        colorized: iconColorized
         sourceSize.width: width
         sourceSize.height: height
         source: (icon != "") ? icon : iconVisible ? "images/listview-icon-template-s.svg" : ""
@@ -228,7 +227,7 @@ Item {
             }
         }
 
-        NemoIcon {
+        Image {
             id: arrowItem
             height: parent.height- Theme.itemSpacingMedium
             width: height
@@ -242,7 +241,7 @@ Item {
             sourceSize.width: width
             sourceSize.height: height
 
-            source: "images/listview-icon-arrow.svg"
+            source: "images/listview-icon-arrow.svg?" + Theme.textColor
             visible: showNext
         }
 

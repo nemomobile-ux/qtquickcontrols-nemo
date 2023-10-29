@@ -36,7 +36,7 @@ import Nemo.Controls
 
 Item {
     id: toolButton
-    property alias iconSource: iconImage.source
+    property string iconSource
     property bool showCounter: false
     property bool showZeroCounter: false
     property bool active: false
@@ -47,13 +47,15 @@ Item {
     width: height
     height: parent.height
 
-    NemoIcon {
+    Image {
         id: iconImage
         width: toolButton.height/2
         height: toolButton.height/2
         color: bMouseArea.pressed ? Theme.accentColor : active ? Theme.accentColor : Theme.textColor
         anchors.centerIn: parent
         fillMode: Image.PreserveAspectFit
+        anchors.margins: Theme.itemSpacingExtraSmall
+        source: toolButton.iconSource + "?" + (active ? Theme.accentColor : Theme.textColor)
     }
 
     Rectangle{

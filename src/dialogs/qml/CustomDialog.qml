@@ -13,7 +13,7 @@ Item {
     property alias acceptEnabled: accept.enabled
     property alias headingText: heading.text
     property alias subLabelText: subLabel.text
-    property alias iconColorized: icon.colorized
+    property bool iconColorized
     property list<Item> content;
 
     property real bgOpacity: 1;
@@ -58,10 +58,9 @@ Item {
             height: Theme.itemSpacingHuge
             visible: icon.visible
 
-            NemoIcon{
+            Image {
                 id: icon
-                source: shell.icon
-                color: Theme.textColor
+                source: shell.icon + ( shell.iconColorized ? "?" + Theme.textColor : "" )
                 width: Theme.itemHeightMedium
                 height: width
                 anchors{

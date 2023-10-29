@@ -57,15 +57,6 @@ Item {
         rotation: isUiPortrait ? 0 : 90
         visible: showBackButton && applicationWindow.pageStack.depth > 1
 
-        Rectangle{
-            id: background
-            width: parent.height*0.9
-            height: parent.height*0.9
-            anchors.centerIn: parent
-            color: backmouse.pressed ? Theme.fillDarkColor : "transparent"
-            radius: width
-        }
-
         Image {
             anchors.centerIn: parent
             height: toolMeasure
@@ -73,7 +64,7 @@ Item {
             fillMode: Image.PreserveAspectFit
             sourceSize.width: width
             sourceSize.height: height
-            source: "image://theme/chevron-left"
+            source: "image://theme/chevron-left?" + Theme.textColor
         }
 
         MouseArea {
@@ -86,6 +77,10 @@ Item {
 
     Label {
         id: titleTxt
+        FontLoader {
+            id: localFont
+            source: Theme.fontPath
+        }
         anchors{
             right: toolButtonsContainer.left
             left: backButton.visible ? backButton.right : parent.left
@@ -118,7 +113,7 @@ Item {
         }
     }
 
-    Item{
+    Image {
         id: dots
         anchors{
             right: parent.right
@@ -128,16 +123,7 @@ Item {
         width: height
         visible: drawerLevels && drawerLevels.length > 1
 
-        NemoIcon {
-            width: parent.height/2
-            height: parent.height/2
-            anchors.centerIn: parent
-            fillMode: Image.PreserveAspectFit
-
-            sourceSize.height: height
-            sourceSize.width: width
-            source: "image://theme/ellipsis-v"
-            rotation: isUiPortrait ? 0 : 90
-        }
+        source: "image://theme/ellipsis-v?" + Theme.textColor
+        rotation: isUiPortrait ? 0 : 90
     }
 }
