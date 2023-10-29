@@ -1,6 +1,6 @@
 /****************************************************************************************
 **
-** Copyright (C) 2019-2021 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2019-2023 Chupligin Sergey <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -77,6 +77,13 @@ Item {
 
         Text {
             id: counterText
+            FontLoader {
+                id: localFont
+                source: Theme.fontPath
+            }
+            font.family: localFont.font.family
+            font.styleName: localFont.font.styleName
+
             text: toolButton.counterValue >= 100 ? "99+" : toolButton.counterValue
             color: Theme.textColor
             anchors.centerIn: parent

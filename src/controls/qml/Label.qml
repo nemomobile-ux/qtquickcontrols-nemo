@@ -1,6 +1,7 @@
 /****************************************************************************************
 **
 ** Copyright (C) 2013 Aleksi Suomalainen <suomalainen.aleksi@gmail.com>
+** Copyright (C) 2023 Chupligin Sergey <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
