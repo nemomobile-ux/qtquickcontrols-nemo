@@ -119,7 +119,7 @@ Item {
             right: parent.right
             verticalCenter: parent.verticalCenter
         }
-        height: toolsLayoutItem.height
+        height: toolsLayoutItem.height/2
         width: height
         visible: drawerLevels && drawerLevels.length > 1
 

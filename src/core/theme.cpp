@@ -209,14 +209,14 @@ void Theme::setThemeValues()
         updated = true;
     }
 
-    if (theme.value("fontFamily").toString() != "" && theme.value("fontFamily").toString() != m_fontFamily) {
+    if (theme.value("fontPath").toString() != "" && theme.value("fontPath").toString() != m_fontPath) {
         QFile fontFile;
-        fontFile.setFileName(theme.value("fontFamily").toString());
+        fontFile.setFileName(theme.value("fontPath").toString());
         if (!themeFile.exists()) {
             qDebug() << "Font file " << fontFile.fileName() << " not found";
         } else {
-            m_fontFamily = theme.value("fontFamily").toString();
-            emit fontFamilyChanged();
+            m_fontPath = theme.value("fontPath").toString();
+            emit fontPathChanged();
             updated = true;
         }
     }
@@ -298,7 +298,7 @@ void Theme::loadDefaultValue()
     m_fontSizeTiny = floor(14 * size->dpScaleFactor());
     m_fontWeightLarge = 63 * size->dpScaleFactor();
     m_fontWeightMedium = 25 * size->dpScaleFactor();
-    m_fontFamily = "/usr/share/fonts/google-opensans/OpenSans-Regular.ttf";
+    m_fontPath = "/usr/share/fonts/google-opensans/OpenSans-Regular.ttf";
 
     m_accentColor = "#0091e5";
     m_fillColor = "#474747";

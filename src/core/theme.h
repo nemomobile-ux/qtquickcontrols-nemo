@@ -37,7 +37,7 @@ class Theme : public QObject {
     Q_PROPERTY(int fontWeightLarge READ fontWeightLarge NOTIFY fontWeightLargeChanged)
     Q_PROPERTY(int fontWeightMedium READ fontWeightMedium NOTIFY fontWeightMediumChanged)
 
-    Q_PROPERTY(QString fontFamily READ fontFamily NOTIFY fontFamilyChanged)
+    Q_PROPERTY(QString fontPath READ fontPath NOTIFY fontPathChanged)
 
     Q_PROPERTY(QString accentColor READ accentColor NOTIFY accentColorChanged)
     Q_PROPERTY(QString fillColor READ fillColor NOTIFY fillColorChanged)
@@ -79,7 +79,7 @@ public:
     int fontWeightLarge() { return m_fontWeightLarge; }
     int fontWeightMedium() { return m_fontWeightMedium; }
 
-    QString fontFamily() { return m_fontFamily; }
+    QString fontPath() { return m_fontPath; }
 
     QString accentColor() { return m_accentColor; }
     QString fillColor() { return m_fillColor; }
@@ -126,7 +126,7 @@ signals:
     void fontSizeTinyChanged();
     void fontWeightLargeChanged();
     void fontWeightMediumChanged();
-    void fontFamilyChanged();
+    void fontPathChanged();
 
     void accentColorChanged();
     void fillColorChanged();
@@ -174,7 +174,7 @@ private:
     int m_fontSizeTiny; // 16
     int m_fontWeightLarge; // 63
     int m_fontWeightMedium; // 25
-    QString m_fontFamily; //???
+    QString m_fontPath; //???
 
     QString m_accentColor; //#0091e5
     QString m_fillColor; //#474747

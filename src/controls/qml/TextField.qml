@@ -41,12 +41,21 @@ TextField {
     selectedTextColor: Theme.textColor
     selectionColor: Theme.accentColor
     font.pixelSize: Theme.fontSizeMedium
-    font.family: Theme.fontFamily
+    font.family: localFont.font.family
+    font.styleName: localFont.font.styleName
     placeholderTextColor: Theme.fillColor
 
+    FontLoader {
+        id: localFont
+        source: Theme.fontPath
+    }
+
     onActiveFocusChanged: {
-        if(activeFocus) NemoFocus.nemoregister(this)
-        else NemoFocus.nemoregister(null)
+        if(activeFocus) {
+            NemoFocus.nemoregister(this)
+        } else {
+            NemoFocus.nemoregister(null)
+        }
     }
 
     background: Item {

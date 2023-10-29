@@ -32,10 +32,13 @@ import QtQuick 2.6
 import Nemo
 
 Text {
-    renderType: Text.NativeRendering
-    font.family: Theme.fontFamily
+    FontLoader {
+        id: localFont
+        source: Theme.fontPath
+    }
     color: Theme.textColor
     font.pixelSize: Theme.fontSizeMedium
-    font.weight: Font.Light
+    font.family: localFont.font.family
+    font.styleName: localFont.font.styleName
     elide: horizontalAlignment == Text.AlignLeft ? Text.ElideRight : (horizontalAlignment == Text.AlignRight ? Text.ElideLeft : Text.ElideMiddle)
 }
