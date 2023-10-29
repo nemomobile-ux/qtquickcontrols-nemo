@@ -150,7 +150,7 @@ QPixmap MLocalThemeDaemonClient::requestPixmap(const QString& id, const QSize& r
             pixmap = QPixmap::fromImage(image);
         }
         if (parts.length() > 1)
-            if (parts.length() > 1 && QColor::isValidColor(parts.at(1))) {
+            if (parts.length() > 1 && QColor::isValidColorName(parts.at(1))) {
                 QPainter painter(&pixmap);
                 painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
                 painter.fillRect(pixmap.rect(), parts.at(1));
