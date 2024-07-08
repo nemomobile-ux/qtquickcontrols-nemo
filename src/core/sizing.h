@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2021 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2018-2024 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -27,28 +27,14 @@
 class Sizing : public QObject {
     Q_OBJECT
 
-    enum Densitie {
-        ldpi,
-        mdpi,
-        hdpi,
-        xhdpi,
-        xxhdpi,
-        xxxhdpi
-    };
-    Q_ENUMS(Densities)
-
     Q_PROPERTY(float mmScaleFactor READ mmScaleFactor WRITE setMmScaleFactor NOTIFY mmScaleFactorChanged)
     Q_PROPERTY(float dpScaleFactor READ dpScaleFactor NOTIFY dpScaleFactorChanged)
-
-    Q_PROPERTY(Densitie densitie READ densitie NOTIFY densitieChanged)
 
 public:
     explicit Sizing(QObject* parent = 0);
 
     float mmScaleFactor() { return m_mmScaleFactor; }
     float dpScaleFactor() { return m_dpScaleFactor; }
-
-    Densitie densitie() { return m_densitie; };
 
     void setMmScaleFactor(float value);
     void setDpScaleFactor();
@@ -59,24 +45,16 @@ public:
 signals:
     void mmScaleFactorChanged();
     void dpScaleFactorChanged();
-    void densitieChanged();
     void screenDPIChanged();
 
 private slots:
-    void physicalDotsPerInchChanged(qreal dpi);
-    void physicalSizeChanged(const QSizeF& size);
+    void recalcConstants();
 
 private:
-    QSizeF m_physicalScreenSize;
-    QSize m_screenSize;
-
     float m_mmScaleFactor;
     float m_dpScaleFactor;
 
     qreal m_screenDPI;
-    Densitie m_densitie;
-
-    bool m_forceDpiScaleFactor;
 };
 
 #endif // SIZING_H

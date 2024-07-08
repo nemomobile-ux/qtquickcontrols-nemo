@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017-2021 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2017-2024 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -79,8 +79,13 @@ ApplicationWindow {
 
             Column {
                 id: content
-                width: parent.width
+                width: parent.width - Theme.itemSpacingLarge*2
                 spacing: Theme.itemSpacingLarge
+
+                anchors{
+                    left: parent.left
+                    leftMargin: Theme.itemSpacingLarge
+                }
 
                 Label{
                     text: "DP Scale factor: " + size.dpScaleFactor;
@@ -89,6 +94,17 @@ ApplicationWindow {
 
                 Label{
                     text: "MM Scale factor: " + size.mmScaleFactor;
+                }
+
+                Rectangle{
+                    color: Theme.accentColor
+                    width: size.mm(10)
+                    height: size.mm(10)
+
+                    Label{
+                        anchors.centerIn: parent
+                        text: "1 cm"
+                    }
                 }
 
                 Rectangle{
