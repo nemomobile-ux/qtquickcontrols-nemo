@@ -18,7 +18,7 @@
  */
 
 #include "theme.h"
-#include <QDebug>
+#include "logging.h"
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -47,12 +47,12 @@ bool Theme::loadTheme(QString fileName)
     QFile themeFile(fileName);
 
     if (!themeFile.exists()) {
-        qDebug() << "Theme file " << fileName << " not found";
+        qCDebug(lcNemoControlsCoreLog) << "Theme file " << fileName << " not found";
         return false;
     }
 
     if (themeFile.size() == 0) {
-        qDebug() << "Theme file " << fileName << " is empty";
+        qCDebug(lcNemoControlsCoreLog) << "Theme file " << fileName << " is empty";
         return false;
     }
 
@@ -208,7 +208,7 @@ void Theme::setThemeValues()
         QFile fontFile;
         fontFile.setFileName(theme.value("fontPath").toString());
         if (!themeFile.exists()) {
-            qDebug() << "Font file " << fontFile.fileName() << " not found";
+            qCDebug(lcNemoControlsCoreLog) << "Font file " << fontFile.fileName() << " not found";
         } else {
             m_fontPath = theme.value("fontPath").toString();
             emit fontPathChanged();

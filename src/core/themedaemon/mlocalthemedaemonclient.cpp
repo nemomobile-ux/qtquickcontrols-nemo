@@ -40,8 +40,8 @@
 
 #include "mlocalthemedaemonclient.h"
 
+#include "../logging.h"
 #include <QCoreApplication>
-#include <QDebug>
 #include <QDir>
 #include <QDirIterator>
 #include <QSettings>
@@ -82,7 +82,7 @@ MLocalThemeDaemonClient::MLocalThemeDaemonClient(const QString& testPath, QObjec
 #define THEME_NAME "glacier"
 #endif
 #ifdef HAVE_MLITE
-        qDebug() << Q_FUNC_INFO << "Theme: " << themeItem.value(THEME_NAME).toString();
+        qCDebug(lcNemoControlsCoreLog) << "Theme: " << themeItem.value(THEME_NAME).toString();
         themeName = themeItem.value(THEME_NAME).toString();
 #else
         themeName = QLatin1String(THEME_NAME);
@@ -95,12 +95,12 @@ MLocalThemeDaemonClient::MLocalThemeDaemonClient(const QString& testPath, QObjec
         const QSettings themeIndexFile(themeIndexFileName, QSettings::IniFormat);
 
         if (themeIndexFile.status() != QSettings::NoError) {
-            qWarning() << Q_FUNC_INFO << "Theme" << themeName << "does not exist! Falling back to " << THEME_NAME;
+            qCWarning(lcNemoControlsCoreLog) << "Theme" << themeName << "does not exist! Falling back to " << THEME_NAME;
         }
 
         // we need to have X-MeeGoTouch-Metatheme group in index.theme
         if (!themeIndexFile.childGroups().contains(QString("X-MeeGoTouch-Metatheme"))) {
-            qWarning() << Q_FUNC_INFO << "Theme" << themeName << " is invalid";
+            qCWarning(lcNemoControlsCoreLog) << "Theme" << themeName << " is invalid";
         }
 
         // the paths should be stored in reverse order than in the inheritance chain
@@ -108,7 +108,7 @@ MLocalThemeDaemonClient::MLocalThemeDaemonClient(const QString& testPath, QObjec
         themeRoots.prepend(themeRoot + QDir::separator() + themeName + QDir::separator() + QLatin1String("fontawesome"));
 
     } else {
-        qDebug() << Q_FUNC_INFO << "Theme: test mode: " << themeRoot;
+        qCDebug(lcNemoControlsCoreLog) << "Theme: test mode: " << themeRoot;
         themeRoots += themeRoot;
     }
 
@@ -190,10 +190,10 @@ QImage MLocalThemeDaemonClient::readImage(const QString& id) const
                 }
             }
         }
-        qDebug() << "Unknown theme image:" << id;
+        qCDebug(lcNemoControlsCoreLog) << "Unknown theme image:" << id;
         QDir hicolorIconsDir("/usr/share/icons/hicolor/scalable/");
         if (hicolorIconsDir.exists()) {
-            qDebug() << "trying load into hicolor scalable dir";
+            qCDebug(lcNemoControlsCoreLog) << "trying load into hicolor scalable dir";
             QDirIterator it("/usr/share/icons/hicolor/scalable/", QStringList() << "*.svg", QDir::Files, QDirIterator::Subdirectories);
 
             while (it.hasNext()) {

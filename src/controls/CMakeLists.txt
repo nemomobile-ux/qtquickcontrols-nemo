@@ -8,7 +8,7 @@ set(SRC
     nemofocussingleton.cpp
     nemowindow.cpp
     inversemousearea.cpp
-    )
+    logging.cpp)
 
 set(HEADERS
     editfilter.h
@@ -18,7 +18,8 @@ set(HEADERS
     nemofocussingleton.h
     nemowindow.h
     nemopage.h
-    inversemousearea.h )
+    inversemousearea.h
+    logging.h)
 
 set(QML
     qml/ActionButton.qml
@@ -79,7 +80,6 @@ target_link_libraries(nemocontrolsplugin PUBLIC
     Qt6::Qml
     Qt6::Quick
     PkgConfig::MLITE)
-
 
 install(TARGETS nemocontrolsplugin
     RUNTIME DESTINATION "${QT_INSTALL_QML}/Nemo/Controls"

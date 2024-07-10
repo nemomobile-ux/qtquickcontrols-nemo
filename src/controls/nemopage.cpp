@@ -19,7 +19,7 @@
  */
 
 #include "nemopage.h"
-#include <QDebug>
+#include "logging.h"
 
 NemoPage::NemoPage(QQuickItem* parent)
     : QQuickItem(parent)
@@ -43,7 +43,7 @@ void NemoPage::setAllowedOrientations(Qt::ScreenOrientations allowed)
             m_allowedOrientations = allowed;
             emit allowedOrientationsChanged();
         } else {
-            qDebug() << "NemoPage: invalid allowedOrientation!";
+            qCDebug(lcNemoControlsControlsLog) << "NemoPage: invalid allowedOrientation!";
         }
     }
 }

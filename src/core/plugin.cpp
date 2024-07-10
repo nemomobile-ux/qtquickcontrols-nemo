@@ -1,6 +1,5 @@
 #include "plugin.h"
 #include "nemoimageprovider.h"
-#include "sizing.h"
 #include "theme.h"
 #include <QtQml>
 

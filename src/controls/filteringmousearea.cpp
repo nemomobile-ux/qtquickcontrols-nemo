@@ -1,4 +1,5 @@
 #include "filteringmousearea.h"
+#include "logging.h"
 #include <QQuickWindow>
 
 FilteringMouseArea::FilteringMouseArea(QQuickItem* parent)
@@ -180,7 +181,7 @@ void FilteringMouseArea::mouseUngrabEvent()
 
 void FilteringMouseArea::grabMouseEvents()
 {
-    qDebug() << "Glacier Header: Grabbing mouse!";
+    qCDebug(lcNemoControlsControlsLog) << "Glacier Header: Grabbing mouse!";
     grabMouse();
 }
 

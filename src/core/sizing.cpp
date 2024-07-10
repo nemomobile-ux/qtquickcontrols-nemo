@@ -18,9 +18,9 @@
  */
 
 #include "sizing.h"
+#include "logging.h"
 
 #include <MGConfItem>
-#include <QDebug>
 #include <QGuiApplication>
 #include <QScreen>
 #include <math.h>
@@ -80,7 +80,7 @@ void Sizing::recalcConstants()
         return;
     }
 
-    qDebug() << "Screen DPI is: " << dpi;
+    qCDebug(lcNemoControlsCoreLog) << "Screen DPI is: " << dpi;
 
     float dpScaleFactor;
 

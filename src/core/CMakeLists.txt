@@ -4,13 +4,15 @@ set(SRC
     plugin.cpp
     themedaemon/mlocalthemedaemonclient.cpp
     themedaemon/mabstractthemedaemonclient.cpp
-    theme.cpp)
+    theme.cpp
+    logging.cpp)
 
 set(HEADERS
     nemoimageprovider.h
     plugin.h
     sizing.h
     theme.h
+    logging.h
     themedaemon/mlocalthemedaemonclient.h
     themedaemon/mabstractthemedaemonclient.h)
 
