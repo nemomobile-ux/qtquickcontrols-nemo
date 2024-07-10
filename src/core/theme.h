@@ -45,8 +45,6 @@ class Theme : public QObject {
     Q_PROPERTY(QString textColor READ textColor NOTIFY textColorChanged)
     Q_PROPERTY(QString backgroundColor READ backgroundColor NOTIFY backgroundColorChanged)
     Q_PROPERTY(QString backgroundAccentColor READ backgroundAccentColor NOTIFY backgroundAccentColorChanged)
-
-    Q_PROPERTY(bool desktopMode READ desktopMode NOTIFY desktopModeChanged)
     Q_PROPERTY(QString themePath READ themePath NOTIFY themeUpdate)
 
 public:
@@ -89,8 +87,6 @@ public:
     QString backgroundAccentColor() { return m_backgroundAccentColor; }
 
     qreal iconSizeLauncher() { return m_iconSizeLauncher; }
-
-    bool desktopMode() { return m_desktopMode; }
     QString themePath() { return m_theme; }
 
     Sizing* size;
@@ -142,7 +138,6 @@ signals:
     void itemWidthExtraLargeChanged();
 
 private slots:
-    void desktopModeValueChanged();
     void themeValueChanged();
 
 private:
@@ -183,7 +178,6 @@ private:
     QString m_backgroundColor; //#000000
     QString m_backgroundAccentColor; //#ffffff
 
-    bool m_desktopMode;
     QString m_theme;
 
     void loadDefaultValue();

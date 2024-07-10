@@ -31,15 +31,10 @@ Theme::Theme(QObject* parent)
 
     loadDefaultValue();
 
-    MGConfItem* desktopModeValue = new MGConfItem(QStringLiteral("/nemo/apps/libglacier/desktopmode"));
     m_themeValue = new MGConfItem(QStringLiteral("/nemo/apps/libglacier/themePath"));
-
-    m_desktopMode = desktopModeValue->value().toBool();
     m_theme = m_themeValue->value().toString();
 
-    connect(desktopModeValue, &MGConfItem::valueChanged, this, &Theme::desktopModeValueChanged);
     connect(m_themeValue, &MGConfItem::valueChanged, this, &Theme::themeValueChanged);
-
     connect(size, &Sizing::dpScaleFactorChanged, this, &Theme::setThemeValues);
 
     if (!m_theme.isEmpty()) {
@@ -255,12 +250,6 @@ void Theme::setThemeValues()
     if (updated) {
         emit themeUpdate();
     }
-}
-
-void Theme::desktopModeValueChanged()
-{
-    m_desktopMode = MGConfItem(QStringLiteral("/nemo/apps/libglacier/desktopmode")).value().toBool();
-    emit desktopModeChanged();
 }
 
 void Theme::themeValueChanged()
