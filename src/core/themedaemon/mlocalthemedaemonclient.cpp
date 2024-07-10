@@ -47,7 +47,7 @@
 #include <QSettings>
 
 #ifndef QT_INSTALL_QML
-   #error QT_INSTALL_QML is not set!
+#error QT_INSTALL_QML is not set!
 #endif
 
 MLocalThemeDaemonClient::MLocalThemeDaemonClient(const QString& testPath, QObject* parent)
@@ -116,14 +116,10 @@ MLocalThemeDaemonClient::MLocalThemeDaemonClient(const QString& testPath, QObjec
         if (themeRoots.at(i).endsWith(QDir::separator()))
             themeRoots[i].truncate(themeRoots.at(i).length() - 1);
 
-        buildHash(themeRoots.at(i) + QDir::separator() + "icons", QStringList() << "*.svg"
-                                                                                << "*.png"
-                                                                                << "*.jpg");
+        buildHash(themeRoots.at(i) + QDir::separator() + "icons", QStringList() << "*.svg" << "*.png" << "*.jpg");
     }
 
-    m_imageDirNodes.append(ImageDirNode("icons", QStringList() << ".svg"
-                                                               << ".png"
-                                                               << ".jpg"));
+    m_imageDirNodes.append(ImageDirNode("icons", QStringList() << ".svg" << ".png" << ".jpg"));
 }
 
 MLocalThemeDaemonClient::~MLocalThemeDaemonClient()

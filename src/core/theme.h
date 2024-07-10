@@ -171,12 +171,12 @@ private:
     int m_fontWeightMedium; // 25
     QString m_fontPath; //???
 
-    QString m_accentColor; //#0091e5
-    QString m_fillColor; //#474747
-    QString m_fillDarkColor; //#313131
-    QString m_textColor; //#ffffff
-    QString m_backgroundColor; //#000000
-    QString m_backgroundAccentColor; //#ffffff
+    QString m_accentColor; // #0091e5
+    QString m_fillColor; // #474747
+    QString m_fillDarkColor; // #313131
+    QString m_textColor; // #ffffff
+    QString m_backgroundColor; // #000000
+    QString m_backgroundAccentColor; // #ffffff
 
     QString m_theme;
 

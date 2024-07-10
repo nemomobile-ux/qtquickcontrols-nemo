@@ -25,18 +25,17 @@
 #include <QScreen>
 #include <math.h>
 
-
 Sizing::Sizing(QObject* parent)
     : QObject(parent)
     , m_mmScaleFactor(10)
     , m_dpScaleFactor(1)
     , m_screenDPI(0)
 {
-//All sizes we get from LipstickSettings::exportScreenProperties()
+    // All sizes we get from LipstickSettings::exportScreenProperties()
     MGConfItem* physicalDotsPerInchConf = new MGConfItem("/lipstick/screen/primary/physicalDotsPerInch");
     connect(physicalDotsPerInchConf, &MGConfItem::valueChanged, this, &Sizing::recalcConstants);
-    if(physicalDotsPerInchConf->value().isNull()) {
-        QScreen *primaryScreen = QGuiApplication::primaryScreen();
+    if (physicalDotsPerInchConf->value().isNull()) {
+        QScreen* primaryScreen = QGuiApplication::primaryScreen();
         physicalDotsPerInchConf->set(primaryScreen->physicalDotsPerInch());
         physicalDotsPerInchConf->sync();
     }
@@ -83,7 +82,7 @@ void Sizing::recalcConstants()
 
     qDebug() << "Screen DPI is: " << dpi;
 
-    qreal dpScaleFactor;
+    float dpScaleFactor;
 
     if (dpi < 200) {
         dpScaleFactor = 1;
@@ -91,7 +90,7 @@ void Sizing::recalcConstants()
         dpScaleFactor = 1.5;
     } else if (dpi >= 300 && dpi < 450) {
         dpScaleFactor = 2;
-    } else if (dpi >= 450 && dpi < 600) {
+    } else {
         dpScaleFactor = 2.5;
     }
 
@@ -103,8 +102,8 @@ void Sizing::recalcConstants()
         emit dpScaleFactorChanged();
     }
 
-    float pixelsInMM = dpi/2.45/10;
-    if(pixelsInMM != m_mmScaleFactor) {
+    float pixelsInMM = dpi / 2.45 / 10;
+    if (pixelsInMM != m_mmScaleFactor) {
         m_mmScaleFactor = pixelsInMM;
         emit mmScaleFactorChanged();
     }
