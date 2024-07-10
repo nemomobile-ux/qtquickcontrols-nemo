@@ -2,7 +2,7 @@
  **
  ** Copyright (C) 2013 Jolla Ltd.
  ** Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
- ** Copyright (C) 2022 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+ ** Copyright (C) 2022-2024 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  **
  ** This file is part of the Qt Components project.
  **
@@ -45,6 +45,10 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QSettings>
+
+#ifndef QT_INSTALL_QML
+   #error QT_INSTALL_QML is not set!
+#endif
 
 MLocalThemeDaemonClient::MLocalThemeDaemonClient(const QString& testPath, QObject* parent)
     : MAbstractThemeDaemonClient(parent)
@@ -148,6 +152,8 @@ QPixmap MLocalThemeDaemonClient::requestPixmap(const QString& id, const QSize& r
         const QImage image = readImage(parts.at(0));
         if (!image.isNull()) {
             pixmap = QPixmap::fromImage(image);
+        } else {
+            pixmap = QPixmap::fromImage(QImage(QString::fromUtf8(QT_INSTALL_QML) + "/Nemo/Controls/images/no-icon.png"));
         }
         if (parts.length() > 1)
 #if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)

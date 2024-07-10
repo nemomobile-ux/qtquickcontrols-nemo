@@ -15,6 +15,7 @@ set(HEADERS
     themedaemon/mabstractthemedaemonclient.h)
 
 add_library(nemocoreplugin SHARED ${SRC} ${MLITE})
+add_definitions( -DQT_INSTALL_QML="${QT_INSTALL_QML}")
 
 qt6_add_qml_module(nemocoreplugin
     URI Nemo
