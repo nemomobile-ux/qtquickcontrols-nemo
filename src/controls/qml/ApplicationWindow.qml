@@ -196,6 +196,7 @@ NemoWindow {
                     id: mainMenuArea
                     height: parent.height
                     clip: true
+                    visible: width != 0
                     width: if(sourceComponent === null) {
                                return 0
                            } else if (applicationWindow.isUiPortrait) {
