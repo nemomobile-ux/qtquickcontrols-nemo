@@ -28,16 +28,19 @@ Slider {
     property int valueFontSize: Theme.fontSizeTiny
     property bool useSpecSlider: Theme.desktopMode ? false : true
     property bool alwaysUp: false
+    height: Theme.itemHeightExtraSmall * 1.2
 
     background: Rectangle {
         x: control.leftPadding
-        y: control.topPadding + control.availableHeight / 2 - height / 2
         implicitWidth: Theme.itemWidthLarge + Theme.itemWidthSmall
         implicitHeight: Theme.itemHeightExtraSmall / 2
         width: control.availableWidth
         height: implicitHeight
         color: Theme.fillDarkColor
         clip: true
+        anchors{
+            verticalCenter: control.verticalCenter
+        }
 
         Rectangle {
             width: control.visualPosition * parent.width
