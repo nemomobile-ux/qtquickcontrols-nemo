@@ -34,25 +34,12 @@ NemoWindow {
 
     property alias pageStack: stackView
     property alias initialPage: stackView.initialItem
-    property alias orientation: contentArea.uiOrientation
-
     property bool isUiPortrait: applicationWindow.width < applicationWindow.height
 
     property alias mainMenu: mainMenuArea.sourceComponent
     property int mainMenuWidth: Theme.itemWidthExtraLarge
 
     color: Theme.backgroundColor
-
-
-    //Handles orientation of keyboard, MInputMethodQuick.appOrientation.
-    contentOrientation: orientation
-    onOrientationChanged: {
-        if (applicationWindow.isOrientationAllowed(applicationWindow.orientation)) {
-            contentArea.filteredOrientation = applicationWindow.orientation
-        }
-
-        contentOrientation = orientation
-    }
 
     onGoBack: {
         pageStack.pop()
