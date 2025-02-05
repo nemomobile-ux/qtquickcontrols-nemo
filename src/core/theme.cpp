@@ -19,6 +19,8 @@
 
 #include "theme.h"
 #include "logging.h"
+#include "sizing.h"
+
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>

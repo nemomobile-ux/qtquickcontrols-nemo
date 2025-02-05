@@ -1,9 +1,10 @@
 #ifndef THEME_H
 #define THEME_H
 
-#include "sizing.h"
 #include <MGConfItem>
 #include <QObject>
+
+class Sizing;
 
 class Theme : public QObject {
     Q_OBJECT
