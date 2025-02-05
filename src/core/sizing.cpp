@@ -20,7 +20,7 @@
 #include "sizing.h"
 #include "logging.h"
 
-#include <MGConfItem>
+#include <MDConfItem>
 #include <QGuiApplication>
 #include <QScreen>
 #include <math.h>
@@ -32,8 +32,8 @@ Sizing::Sizing(QObject* parent)
     , m_screenDPI(0)
 {
     // All sizes we get from LipstickSettings::exportScreenProperties()
-    MGConfItem* physicalDotsPerInchConf = new MGConfItem("/lipstick/screen/primary/physicalDotsPerInch");
-    connect(physicalDotsPerInchConf, &MGConfItem::valueChanged, this, &Sizing::recalcConstants);
+    MDConfItem* physicalDotsPerInchConf = new MDConfItem("/lipstick/screen/primary/physicalDotsPerInch");
+    connect(physicalDotsPerInchConf, &MDConfItem::valueChanged, this, &Sizing::recalcConstants);
     if (physicalDotsPerInchConf->value().isNull()) {
         QScreen* primaryScreen = QGuiApplication::primaryScreen();
         physicalDotsPerInchConf->set(primaryScreen->physicalDotsPerInch());
@@ -45,7 +45,7 @@ Sizing::Sizing(QObject* parent)
 
 void Sizing::setDpScaleFactor()
 {
-    MGConfItem* dpScaleFactorValue = new MGConfItem(QStringLiteral("/nemo/apps/libglacier/dpScaleFactor"));
+    MDConfItem* dpScaleFactorValue = new MDConfItem(QStringLiteral("/nemo/apps/libglacier/dpScaleFactor"));
     float value = dpScaleFactorValue->value("0").toFloat();
 
     if (value != m_dpScaleFactor && value != 0) {
@@ -74,7 +74,7 @@ float Sizing::mm(float value)
 
 void Sizing::recalcConstants()
 {
-    qreal dpi = MGConfItem("/lipstick/screen/primary/physicalDotsPerInch").value().toReal();
+    qreal dpi = MDConfItem("/lipstick/screen/primary/physicalDotsPerInch").value().toReal();
 
     if (dpi == m_screenDPI) {
         return;

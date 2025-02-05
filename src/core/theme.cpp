@@ -33,10 +33,10 @@ Theme::Theme(QObject* parent)
 
     loadDefaultValue();
 
-    m_themeValue = new MGConfItem(QStringLiteral("/nemo/apps/libglacier/themePath"));
+    m_themeValue = new MDConfItem(QStringLiteral("/nemo/apps/libglacier/themePath"));
     m_theme = m_themeValue->value().toString();
 
-    connect(m_themeValue, &MGConfItem::valueChanged, this, &Theme::themeValueChanged);
+    connect(m_themeValue, &MDConfItem::valueChanged, this, &Theme::themeValueChanged);
     connect(size, &Sizing::dpScaleFactorChanged, this, &Theme::setThemeValues);
 
     if (!m_theme.isEmpty()) {

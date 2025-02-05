@@ -1,7 +1,7 @@
 #ifndef THEME_H
 #define THEME_H
 
-#include <MGConfItem>
+#include <MDConfItem>
 #include <QObject>
 
 class Sizing;
@@ -184,7 +184,7 @@ private:
     void loadDefaultValue();
     void setThemeValues();
 
-    MGConfItem* m_themeValue;
+    MDConfItem* m_themeValue;
 };
 
 #endif // THEME_H
