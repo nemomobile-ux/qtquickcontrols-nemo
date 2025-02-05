@@ -32,7 +32,7 @@ Slider {
 
     background: Rectangle {
         x: control.leftPadding
-        implicitWidth: Theme.itemWidthLarge + Theme.itemWidthSmall
+        implicitWidth: Theme.itemWidthLarge + Theme.itemWidthSmall - Theme.itemHeightExtraSmall*0.4
         implicitHeight: Theme.itemHeightExtraSmall / 2
         width: control.availableWidth
         height: implicitHeight
@@ -58,7 +58,7 @@ Slider {
     }
 
     handle: Rectangle {
-        x: control.leftPadding + control.visualPosition * (control.availableWidth - width)
+        x: control.leftPadding + control.visualPosition * (control.availableWidth - width) + Theme.itemHeightExtraSmall*0.2
         y: control.topPadding + control.availableHeight / 2 - height / 2
         implicitWidth: Theme.itemHeightExtraSmall
         implicitHeight: Theme.itemHeightExtraSmall
