@@ -1,7 +1,7 @@
 #include "plugin.h"
 #include "nemoimageprovider.h"
-#include "theme.h"
 #include "sizing.h"
+#include "theme.h"
 #include <QtQml>
 
 void QQuickNemoControlsExtensionPlugin::registerTypes(const char* uri)

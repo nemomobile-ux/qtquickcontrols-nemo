@@ -69,7 +69,7 @@ class Theme : public QObject {
 
 public:
     explicit Theme(QObject* parent = nullptr);
-    Sizing* size() const {return m_size;}
+    Sizing* size() const { return m_size; }
 
     Q_INVOKABLE bool loadTheme(const QString fileName);
     qreal itemWidthLarge() const { return m_itemWidthLarge; }
@@ -110,7 +110,7 @@ public:
     qreal iconSizeLauncher() const { return m_iconSizeLauncher; }
     QString themePath() const { return m_theme; }
 
-    qreal itemWidthExtraLarge() const {return m_itemHeightExtraLarge; }
+    qreal itemWidthExtraLarge() const { return m_itemHeightExtraLarge; }
 
 signals:
     void themeUpdated();
