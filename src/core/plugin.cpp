@@ -16,7 +16,7 @@ void QQuickNemoControlsExtensionPlugin::initializeEngine(QQmlEngine* engine, con
 
     QQmlExtensionPlugin::initializeEngine(engine, uri);
     QQmlContext* context = engine->rootContext();
-    context->setContextProperty("size", theme->size);
+    context->setContextProperty("size", theme->size());
     context->setContextProperty("Theme", theme);
 
     engine->addImageProvider(QLatin1String("theme"), new NemoImageProvider);
