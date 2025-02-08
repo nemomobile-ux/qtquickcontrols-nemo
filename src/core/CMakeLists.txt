@@ -12,13 +12,13 @@ set(SRC
 set(HEADERS
     nemoimageprovider.h
     plugin.h
-    sizing.h
     logging.h
     themedaemon/mlocalthemedaemonclient.h
     themedaemon/mabstractthemedaemonclient.h)
 
 set(PUBLIC_HEADERS
-    theme.h)
+    theme.h
+    sizing.h)
 
 add_library(${PACKAGE} SHARED ${SRC} ${MLITE})
 add_definitions( -DQT_INSTALL_QML="${QT_INSTALL_QML}")
