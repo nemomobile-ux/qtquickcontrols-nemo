@@ -1,10 +1,10 @@
 prefix="@CMAKE_INSTALL_PREFIX@"
 exec_prefix=${prefix}
-libdir=${prefix}/lib
+libdir="@QT_INSTALL_QML@/Nemo/"
 includedir=${prefix}/include/nemocontrols/core
 
 Name: @PROJECT_NAME@
 Description: @CMAKE_PROJECT_DESCRIPTION@
 Version: @PROJECT_VERSION@
-Libs: -lnemocoreplugin
+Libs: -L${libdir} -lnemocoreplugin
 Cflags: -I${includedir}
