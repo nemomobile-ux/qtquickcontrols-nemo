@@ -17,7 +17,6 @@
  * Boston, MA 02110-1301, USA.
  */
 
-
 #include "plugin.h"
 #include "nemoimageprovider.h"
 #include "theme.h"

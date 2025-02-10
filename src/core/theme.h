@@ -72,7 +72,7 @@ class Theme : public QObject {
 
 public:
     explicit Theme(QObject* parent = nullptr);
-    static QObject *qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
+    static QObject* qmlInstance(QQmlEngine* engine, QJSEngine* scriptEngine);
 
     Q_INVOKABLE bool loadTheme(const QString fileName);
     Q_INVOKABLE float dp(float value);

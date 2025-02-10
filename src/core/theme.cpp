@@ -20,13 +20,13 @@
 #include "theme.h"
 #include "logging.h"
 
+#include <MDConfItem>
 #include <QFile>
-#include <QScreen>
+#include <QGuiApplication>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QScreen>
 #include <math.h>
-#include <QGuiApplication>
-#include <MDConfItem>
 
 static Theme* themeInstance = 0;
 
@@ -62,11 +62,11 @@ Theme::Theme(QObject* parent)
     }
 }
 
-QObject *Theme::qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine)
+QObject* Theme::qmlInstance(QQmlEngine* engine, QJSEngine* scriptEngine)
 {
     Q_UNUSED(engine);
     Q_UNUSED(scriptEngine);
-    if(!themeInstance) {
+    if (!themeInstance) {
         themeInstance = new Theme();
     }
     return themeInstance;
