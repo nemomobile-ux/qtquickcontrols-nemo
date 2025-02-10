@@ -24,11 +24,12 @@
 #include <QObject>
 #include <QQmlEngine>
 
-class Sizing;
-
 class Theme : public QObject {
     Q_OBJECT
     Q_DISABLE_COPY(Theme)
+
+    Q_PROPERTY(float mmScaleFactor READ mmScaleFactor NOTIFY mmScaleFactorChanged)
+    Q_PROPERTY(float dpScaleFactor READ dpScaleFactor NOTIFY dpScaleFactorChanged)
 
     Q_PROPERTY(qreal iconSizeLauncher READ iconSizeLauncher NOTIFY themeUpdated)
 
@@ -73,9 +74,10 @@ public:
     explicit Theme(QObject* parent = nullptr);
     static QObject *qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
 
-    Sizing* size() const { return m_size; }
-
     Q_INVOKABLE bool loadTheme(const QString fileName);
+    Q_INVOKABLE float dp(float value);
+    Q_INVOKABLE float mm(float value);
+
     qreal itemWidthLarge() const { return m_itemWidthLarge; }
     qreal itemWidthMedium() const { return m_itemWidthMedium; }
     qreal itemWidthSmall() const { return m_itemWidthSmall; }
@@ -110,15 +112,18 @@ public:
     QString textColor() const { return m_textColor; }
     QString backgroundColor() const { return m_backgroundColor; }
     QString backgroundAccentColor() const { return m_backgroundAccentColor; }
-
     qreal iconSizeLauncher() const { return m_iconSizeLauncher; }
     QString themePath() const { return m_theme; }
-
     qreal itemWidthExtraLarge() const { return m_itemHeightExtraLarge; }
+
+    float mmScaleFactor() const;
+    float dpScaleFactor() const;
 
 signals:
     void themeUpdated();
     void desktopModeChanged();
+    void mmScaleFactorChanged();
+    void dpScaleFactorChanged();
 
 private slots:
     void themeValueChanged();
@@ -167,7 +172,8 @@ private:
     void setThemeValues();
 
     MDConfItem* m_themeValue;
-    Sizing* m_size;
+    float m_mmScaleFactor;
+    float m_dpScaleFactor;
 };
 
 #endif // THEME_H

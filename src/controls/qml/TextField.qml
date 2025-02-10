@@ -1,7 +1,7 @@
 /****************************************************************************************
 **
 ** Copyright (c) 2017, Eetu Kahelin
-** Copyright (C) 2021-2023 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2021-2025 Chupligin Sergey <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -77,7 +77,7 @@ TextField {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            height: size.dp(2)
+            height: Theme.dp(2)
             width: parent.width
             color: control.readOnly ? Theme.fillDarkColor : Theme.accentColor
         }

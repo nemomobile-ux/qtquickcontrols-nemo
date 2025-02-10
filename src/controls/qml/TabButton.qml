@@ -48,7 +48,7 @@ TabButton {
                 bottom: parent.bottom
             }
             width: parent.width
-            height: size.dp(1)
+            height: Theme.dp(1)
             color: Theme.accentColor
         }
     }

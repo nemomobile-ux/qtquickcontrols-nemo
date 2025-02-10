@@ -1,7 +1,6 @@
 set(PACKAGE nemocoreplugin)
 
 set(SRC
-    sizing.cpp
     nemoimageprovider.cpp
     plugin.cpp
     themedaemon/mlocalthemedaemonclient.cpp
@@ -17,8 +16,7 @@ set(HEADERS
     themedaemon/mabstractthemedaemonclient.h)
 
 set(PUBLIC_HEADERS
-    theme.h
-    sizing.h)
+    theme.h)
 
 add_library(${PACKAGE} SHARED ${SRC} ${MLITE})
 add_definitions( -DQT_INSTALL_QML="${QT_INSTALL_QML}")

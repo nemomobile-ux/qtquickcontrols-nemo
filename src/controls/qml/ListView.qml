@@ -1,6 +1,6 @@
 /****************************************************************************************
 **
-** Copyright (C) 2023 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2023-2025 Chupligin Sergey <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -31,6 +31,8 @@
 
 import QtQuick 2.6
 import QtQuick.Controls
+
+import Nemo
 
 ListView {
     id: listView
@@ -68,7 +70,7 @@ ListView {
 
             Rectangle{
                 id: line
-                height: size.dp(1)
+                height: Theme.dp(1)
                 color: Theme.textColor
                 width: listView.width-sectionText.width-Theme.itemHeightExtraSmall
                 anchors{

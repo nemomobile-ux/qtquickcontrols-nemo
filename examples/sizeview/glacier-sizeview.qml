@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017-2024 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2017-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -19,6 +19,7 @@
 
 import QtQuick
 import QtQuick.Window
+import Nemo
 import Nemo.Controls
 
 ApplicationWindow {
@@ -88,18 +89,18 @@ ApplicationWindow {
                 }
 
                 Label{
-                    text: "DP Scale factor: " + size.dpScaleFactor;
+                    text: "DP Scale factor: " + Theme.dpScaleFactor;
                 }
 
 
                 Label{
-                    text: "MM Scale factor: " + size.mmScaleFactor;
+                    text: "MM Scale factor: " + Theme.mmScaleFactor;
                 }
 
                 Rectangle{
                     color: Theme.accentColor
-                    width: size.mm(10)
-                    height: size.mm(10)
+                    width: Theme.mm(10)
+                    height: Theme.mm(10)
 
                     Label{
                         anchors.centerIn: parent
