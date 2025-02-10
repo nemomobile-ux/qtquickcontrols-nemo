@@ -22,11 +22,13 @@
 
 #include <MDConfItem>
 #include <QObject>
+#include <QQmlEngine>
 
 class Sizing;
 
 class Theme : public QObject {
     Q_OBJECT
+    Q_DISABLE_COPY(Theme)
 
     Q_PROPERTY(qreal iconSizeLauncher READ iconSizeLauncher NOTIFY themeUpdated)
 
@@ -69,6 +71,8 @@ class Theme : public QObject {
 
 public:
     explicit Theme(QObject* parent = nullptr);
+    static QObject *qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
+
     Sizing* size() const { return m_size; }
 
     Q_INVOKABLE bool loadTheme(const QString fileName);

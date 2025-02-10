@@ -26,6 +26,8 @@
 #include <QJsonObject>
 #include <math.h>
 
+static Theme* themeInstance = 0;
+
 Theme::Theme(QObject* parent)
     : QObject(parent)
     , m_size(new Sizing)
@@ -43,6 +45,16 @@ Theme::Theme(QObject* parent)
     if (!m_theme.isEmpty()) {
         loadTheme(m_theme);
     }
+}
+
+QObject *Theme::qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine)
+{
+    Q_UNUSED(engine);
+    Q_UNUSED(scriptEngine);
+    if(!themeInstance) {
+        themeInstance = new Theme();
+    }
+    return themeInstance;
 }
 
 bool Theme::loadTheme(QString fileName)
