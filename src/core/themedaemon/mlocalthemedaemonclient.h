@@ -49,7 +49,7 @@
 #include <QString>
 
 #ifdef HAVE_MLITE
-#include <mgconfitem.h>
+#include <MDConfItem>
 #endif
 
 class QDir;
@@ -110,7 +110,7 @@ private:
     QHash<QString, QString> m_filenameHash;
 
 #ifdef HAVE_MLITE
-    MGConfItem themeItem;
+    MDConfItem themeItem;
 #endif
 
     friend uint qHash(const MLocalThemeDaemonClient::PixmapIdentifier& id);

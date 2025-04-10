@@ -28,6 +28,10 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(MLITE mlite6 IMPORTED_TARGET)
 pkg_check_modules(GLACIER glacierapp6 IMPORTED_TARGET)
 
+if(MLITE_FOUND)
+    add_definitions(-DHAVE_MLITE=1)
+endif()
+
 ### Sets QT_INSTALL_QML to the directory where QML Plugins should be installed
 function(FindQtInstallQml)
     find_program(QMAKE NAMES qmake6 qmake)
