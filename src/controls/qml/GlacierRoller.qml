@@ -28,6 +28,8 @@ Item {
     property int currentIndex: -1
     property int activateSize: 5
     property alias itemHeight: view.itemHeight
+    property int labelLeftMargin: 0;
+    property int viewLeftMargin: 0
 
     property bool activated: false
 
@@ -46,7 +48,7 @@ Item {
         anchors{
             top: parent.top
             left: parent.left
-            leftMargin: itemHeight/2
+            leftMargin: glacierRoller.labelLeftMargin
         }
     }
 
@@ -82,7 +84,7 @@ Item {
             top: label.bottom
             topMargin:Theme.itemSpacingLarge
             left: label.left
-            leftMargin:Theme.itemSpacingLarge + Theme.itemSpacingSmall
+            leftMargin: glacierRoller.viewLeftMargin
         }
 
         pathItemCount: height/itemHeight
