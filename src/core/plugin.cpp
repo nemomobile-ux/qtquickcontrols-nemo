@@ -28,3 +28,8 @@ void QQuickNemoControlsExtensionPlugin::registerTypes(const char* uri)
     qmlRegisterModule(uri, 2, 0);
     qmlRegisterSingletonType<Theme>(uri, 1, 0, "Theme", &Theme::qmlInstance);
 }
+
+void QQuickNemoControlsExtensionPlugin::initializeEngine(QQmlEngine *engine, const char *uri)
+{
+    engine->addImageProvider(QLatin1String("theme"), new NemoImageProvider);
+}

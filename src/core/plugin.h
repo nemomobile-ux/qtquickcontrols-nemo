@@ -28,6 +28,7 @@ public:
     Q_PLUGIN_METADATA(IID QQmlEngineExtensionInterface_iid FILE "nemo.json")
 public:
     void registerTypes(const char* uri);
+    void initializeEngine(QQmlEngine* engine, const char* uri);
 };
 
 #endif // QQUICKNEMOCONTROLSEXTENSIONPLUGIN_H
