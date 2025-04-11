@@ -1,7 +1,7 @@
 /****************************************************************************************
 **
 ** Copyright (C) 2013 Lucien Xu <sfietkonstantin@free.fr>
-** Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2021-2025 Chupligin Sergey <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -47,7 +47,10 @@ Page {
 
     Spinner {
         id: spinner
+        width: (Theme.itemHeightExtraSmall + Theme.itemSpacingMedium)*2
+        height: (Theme.itemHeightExtraSmall + Theme.itemSpacingMedium)*2
         anchors.centerIn: parent
+        clip: true
     }
 
 

@@ -1,7 +1,7 @@
 /****************************************************************************************
 **
 ** Copyright (C) 2013 Lucien Xu <sfietkonstantin@free.fr>
-** Copyright (C) 2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+** Copyright (C) 2023-2025 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -35,9 +35,6 @@ import Nemo
 
 Item {
     id: container
-    width: (Theme.itemHeightExtraSmall + Theme.itemSpacingMedium)*2
-    height: (Theme.itemHeightExtraSmall + Theme.itemSpacingMedium)*2
-
     clip: true
 
     function stop() {
@@ -100,51 +97,51 @@ Item {
     Item {
         id: innerRect
         anchors.centerIn: parent
-        width: Theme.itemHeightExtraSmall + Theme.itemSpacingMedium
-        height: Theme.itemHeightExtraSmall + Theme.itemSpacingMedium
+        width: container.width < container.height ? container.width : container.height
+        height: innerRect.width
     }
 
     Rectangle {
         id: circle0
         opacity: 0
-        anchors.horizontalCenter: innerRect.left
-        anchors.verticalCenter: innerRect.top
-        width: Theme.itemHeightExtraSmall
-        height: Theme.itemHeightExtraSmall
-        radius: Theme.itemHeightExtraSmall / 2
+        anchors.left: innerRect.left
+        anchors.top: innerRect.top
+        width: innerRect.width/5*2
+        height: width
+        radius: width / 2
         color: Theme.backgroundAccentColor
     }
 
     Rectangle {
         id: circle1
         opacity: 0
-        anchors.horizontalCenter: innerRect.right
-        anchors.verticalCenter: innerRect.top
-        width: Theme.itemHeightExtraSmall
-        height: Theme.itemHeightExtraSmall
-        radius: Theme.itemHeightExtraSmall / 2
+        anchors.right: innerRect.right
+        anchors.top: innerRect.top
+        width: innerRect.width/5*2
+        height: width
+        radius: width / 2
         color: Theme.backgroundAccentColor
     }
 
     Rectangle {
         id: circle2
         opacity: 0
-        anchors.horizontalCenter: innerRect.right
-        anchors.verticalCenter: innerRect.bottom
-        width: Theme.itemHeightExtraSmall
-        height: Theme.itemHeightExtraSmall
-        radius: Theme.itemHeightExtraSmall / 2
+        anchors.right: innerRect.right
+        anchors.bottom: innerRect.bottom
+        width: innerRect.width/5*2
+        height: width
+        radius: width / 2
         color: Theme.backgroundAccentColor
     }
 
     Rectangle {
         id: circle3
         opacity: 0
-        anchors.horizontalCenter: innerRect.left
-        anchors.verticalCenter: innerRect.bottom
-        width: Theme.itemHeightExtraSmall
-        height: Theme.itemHeightExtraSmall
-        radius: Theme.itemHeightExtraSmall / 2
+        anchors.left: innerRect.left
+        anchors.bottom: innerRect.bottom
+        width: innerRect.width/5*2
+        height: width
+        radius: width / 2
         color: Theme.backgroundAccentColor
     }
 
