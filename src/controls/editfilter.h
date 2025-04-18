@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2017 Eetu Kahelin
- * Copyright (C) 2023 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2023-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -31,6 +31,7 @@ public:
 
 signals:
     void touchEvent(QEvent* event);
+    void backEvent();
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event);

@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2017 Eetu Kahelin
- * Copyright (C) 2023 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2023-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -19,7 +19,7 @@
  */
 
 #include <QVariant>
-
+#include <QKeyEvent>
 #include "editfilter.h"
 #include "nemofocussingleton.h"
 
@@ -30,6 +30,16 @@ EditFilter::EditFilter(QObject* parent)
 
 bool EditFilter::eventFilter(QObject* obj, QEvent* event)
 {
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        int key = keyEvent->key();
+        if(key == Qt::Key_Backspace
+            || key == Qt::Key_Return
+            || key == Qt::Key_Escape) {
+            emit backEvent();
+        }
+    }
+
     if (event->type() == QEvent::TouchBegin || event->type() == QEvent::TouchEnd) {
         emit touchEvent(event);
     }

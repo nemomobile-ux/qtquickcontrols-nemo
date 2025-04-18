@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2013 Andrea Bernabei <and.bernabei@gmail.com>
- * Copyright (C) 2021-2023 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -38,6 +38,7 @@ NemoWindow::NemoWindow(QWindow* parent)
     installEventFilter(m_filter);
     connect(m_screen, &QScreen::orientationChanged, this, &NemoWindow::orientationChanged);
     connect(m_filter, &EditFilter::touchEvent, this, &NemoWindow::touchEventHandler);
+    connect(m_filter, &EditFilter::backEvent, this, &NemoWindow::goBack);
 }
 
 Qt::ScreenOrientation NemoWindow::primaryOrientation() const
@@ -46,19 +47,6 @@ Qt::ScreenOrientation NemoWindow::primaryOrientation() const
     return m_screen->primaryOrientation();
 }
 
-void NemoWindow::keyPressEvent(QKeyEvent* event)
-{
-    switch (event->key()) {
-    case Qt::Key_Escape:
-    case Qt::Key_Return:
-    case Qt::Key_Backspace:
-    case Qt::Key_Left:
-        if (allowExtendedEvents()) {
-            emit goBack();
-        }
-        break;
-    }
-}
 
 void NemoWindow::mousePressEvent(QMouseEvent*)
 {
@@ -125,3 +113,4 @@ void NemoWindow::setAllowExtendedEvents(bool newAllowExtendedEvents)
     m_allowExtendedEvents = newAllowExtendedEvents;
     emit allowExtendedEventsChanged();
 }
+
