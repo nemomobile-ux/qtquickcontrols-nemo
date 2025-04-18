@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2021-2025 Chupligin Sergey <neochapay@gmail.com>
 **
 ** This file is part of the Qt Quick Controls module of the Qt Toolkit.
 **
@@ -37,9 +37,10 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.6
+import QtQuick
 import QtQuick.Controls
 
+import Nemo
 import Nemo.Controls
 
 Page {

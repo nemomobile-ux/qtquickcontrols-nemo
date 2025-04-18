@@ -1,7 +1,7 @@
 /****************************************************************************************
 **
 ** Copyright (C) 2017 Eetu Kahelin
-** Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2021-2025 Chupligin Sergey <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -33,6 +33,7 @@
 import QtQuick
 import QtQuick.Controls
 
+import Nemo
 import Nemo.Controls
 
 Page {

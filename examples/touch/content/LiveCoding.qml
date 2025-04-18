@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2013 Andrea Bernabei <and.bernabei@gmail.com>
- * Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -18,7 +18,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-import QtQuick 2.6
+import QtQuick
 import QtQuick.Controls
 
 import Nemo.Controls
