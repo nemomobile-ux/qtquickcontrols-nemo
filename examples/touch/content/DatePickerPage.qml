@@ -1,6 +1,6 @@
 /****************************************************************************************
 **
-** Copyright (C) 2017-2021 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2017-2025 Chupligin Sergey <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -43,16 +43,11 @@ Page {
         title: qsTr("Date Picker")
     }
 
-    Column {
-        spacing: Theme.itemSpacingSmall
+    DatePicker{
+        id: datePicker
         anchors.fill: parent
-
-        DatePicker{
-            id: datePicker
-            anchors.fill: parent
-            onDateSelect: {
-                currentDate = date
-            }
+        onDateSelect: {
+            currentDate = date
         }
     }
 }

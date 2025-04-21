@@ -38,9 +38,6 @@ import Nemo.Models
 Item {
     id: datePicker
 
-    width: parent.width
-    height: childrenRect.height
-
     property date currentDate: new Date()
     property bool showForwardButton: true
     property bool showBackButton: true
@@ -201,8 +198,8 @@ Item {
         delegate: Item{
             id: dayCell
 
-            width: parent.width/7
-            height: parent.height/6
+            width: daysGrid.width/7
+            height: daysGrid.height/6
 
             property bool isOtherMonthDay: false
             property bool isCurrentDay: false
