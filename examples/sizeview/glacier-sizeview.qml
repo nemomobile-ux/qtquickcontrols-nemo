@@ -34,6 +34,7 @@ ApplicationWindow {
         }
 
         Component.onCompleted: {
+            console.log("Theme.itemWidthExtraLarge: "+Theme.itemWidthExtraLarge)
             console.log("Theme.itemWidthLarge: "+Theme.itemWidthLarge)
             console.log("Theme.itemWidthMedium: "+Theme.itemWidthMedium)
             console.log("Theme.itemWidthSmall: "+Theme.itemWidthSmall)
@@ -105,6 +106,16 @@ ApplicationWindow {
                     Label{
                         anchors.centerIn: parent
                         text: "1 cm"
+                    }
+                }
+
+                Rectangle{
+                    color: Theme.accentColor
+                    width: Theme.itemWidthExtraLarge
+                    height: Theme.itemHeightMedium
+
+                    Label{
+                        text: "Theme.itemWidthExtraLarge"
                     }
                 }
 
