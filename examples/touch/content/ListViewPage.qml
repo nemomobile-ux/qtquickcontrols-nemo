@@ -77,7 +77,7 @@ Page {
             icon: (image !== undefined) ? image : ""
             iconVisible: (image !== undefined) && (image !== "")
 
-            width: parent.width !== null ? parent.width : 200
+            width: parent !== null ? parent.width : 200
             height: Theme.itemHeightLarge
 
             actions:[
