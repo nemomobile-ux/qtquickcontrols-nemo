@@ -47,7 +47,6 @@ Qt::ScreenOrientation NemoWindow::primaryOrientation() const
     return m_screen->primaryOrientation();
 }
 
-
 void NemoWindow::mousePressEvent(QMouseEvent*)
 {
     m_mousePressed = true;
@@ -113,4 +112,3 @@ void NemoWindow::setAllowExtendedEvents(bool newAllowExtendedEvents)
     m_allowExtendedEvents = newAllowExtendedEvents;
     emit allowExtendedEventsChanged();
 }
-
