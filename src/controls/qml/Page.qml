@@ -1,7 +1,7 @@
 /****************************************************************************************
 **
 ** Copyright (C) 2013 Andrea Bernabei <and.bernabei@gmail.com>
-** Copyright (C) 2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+** Copyright (C) 2023-2025 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -43,7 +43,6 @@ NemoPage {
 
     property int status: pageStack ? StackView.status : StackView.Inactive
     property variant headerTools
-    property StackView pageStack
 
     //Children of "page" will be automatically reparented to "content"
     default  property alias __content: content.data
