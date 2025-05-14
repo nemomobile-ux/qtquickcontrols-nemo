@@ -78,31 +78,32 @@ public:
     Q_INVOKABLE float dp(float value);
     Q_INVOKABLE float mm(float value);
 
-    qreal itemWidthLarge() const { return m_itemWidthLarge; }
-    qreal itemWidthMedium() const { return m_itemWidthMedium; }
-    qreal itemWidthSmall() const { return m_itemWidthSmall; }
-    qreal itemWidthExtraSmall() const { return m_itemWidthExtraSmall; }
+    qreal itemWidthExtraLarge() const { return m_itemWidthExtraLarge * m_dpScaleFactor; }
+    qreal itemWidthLarge() const { return m_itemWidthLarge * m_dpScaleFactor; }
+    qreal itemWidthMedium() const { return m_itemWidthMedium * m_dpScaleFactor; }
+    qreal itemWidthSmall() const { return m_itemWidthSmall * m_dpScaleFactor; }
+    qreal itemWidthExtraSmall() const { return m_itemWidthExtraSmall * m_dpScaleFactor; }
 
-    qreal itemHeightHuge() const { return m_itemHeightHuge; }
-    qreal itemHeightExtraLarge() const { return m_itemHeightExtraLarge; }
-    qreal itemHeightLarge() const { return m_itemHeightLarge; }
-    qreal itemHeightMedium() const { return m_itemHeightMedium; }
-    qreal itemHeightSmall() const { return m_itemHeightSmall; }
-    qreal itemHeightExtraSmall() const { return m_itemHeightExtraSmall; }
+    qreal itemHeightHuge() const { return m_itemHeightHuge * m_dpScaleFactor; }
+    qreal itemHeightExtraLarge() const { return m_itemHeightExtraLarge * m_dpScaleFactor; }
+    qreal itemHeightLarge() const { return m_itemHeightLarge * m_dpScaleFactor; }
+    qreal itemHeightMedium() const { return m_itemHeightMedium * m_dpScaleFactor; }
+    qreal itemHeightSmall() const { return m_itemHeightSmall * m_dpScaleFactor; }
+    qreal itemHeightExtraSmall() const { return m_itemHeightExtraSmall * m_dpScaleFactor; }
 
-    qreal itemSpacingHuge() const { return m_itemSpacingHuge; }
-    qreal itemSpacingLarge() const { return m_itemSpacingLarge; }
-    qreal itemSpacingMedium() const { return m_itemSpacingMedium; }
-    qreal itemSpacingSmall() const { return m_itemSpacingSmall; }
-    qreal itemSpacingExtraSmall() const { return m_itemSpacingExtraSmall; }
+    qreal itemSpacingHuge() const { return m_itemSpacingHuge * m_dpScaleFactor; }
+    qreal itemSpacingLarge() const { return m_itemSpacingLarge * m_dpScaleFactor; }
+    qreal itemSpacingMedium() const { return m_itemSpacingMedium * m_dpScaleFactor; }
+    qreal itemSpacingSmall() const { return m_itemSpacingSmall * m_dpScaleFactor; }
+    qreal itemSpacingExtraSmall() const { return m_itemSpacingExtraSmall * m_dpScaleFactor; }
 
-    int fontSizeExtraLarge() const { return m_fontSizeExtraLarge; }
-    int fontSizeLarge() const { return m_fontSizeLarge; }
-    int fontSizeMedium() const { return m_fontSizeMedium; }
-    int fontSizeSmall() const { return m_fontSizeSmall; }
-    int fontSizeTiny() const { return m_fontSizeTiny; }
-    int fontWeightLarge() const { return m_fontWeightLarge; }
-    int fontWeightMedium() const { return m_fontWeightMedium; }
+    int fontSizeExtraLarge() const { return m_fontSizeExtraLarge * m_dpScaleFactor; }
+    int fontSizeLarge() const { return m_fontSizeLarge * m_dpScaleFactor; }
+    int fontSizeMedium() const { return m_fontSizeMedium * m_dpScaleFactor; }
+    int fontSizeSmall() const { return m_fontSizeSmall * m_dpScaleFactor; }
+    int fontSizeTiny() const { return m_fontSizeTiny * m_dpScaleFactor; }
+    int fontWeightLarge() const { return m_fontWeightLarge * m_dpScaleFactor; }
+    int fontWeightMedium() const { return m_fontWeightMedium * m_dpScaleFactor; }
 
     QString fontPath() const { return m_fontPath; }
 
@@ -114,7 +115,6 @@ public:
     QString backgroundAccentColor() const { return m_backgroundAccentColor; }
     qreal iconSizeLauncher() const { return m_iconSizeLauncher; }
     QString themePath() const { return m_theme; }
-    qreal itemWidthExtraLarge() const { return m_itemWidthExtraLarge; }
 
     float mmScaleFactor() const;
     float dpScaleFactor() const;
@@ -171,6 +171,7 @@ private:
     void loadDefaultValue();
     void setThemeValues();
 
+    MDConfItem* m_dpScaleFactorValue;
     MDConfItem* m_themeValue;
     float m_mmScaleFactor;
     float m_dpScaleFactor;
