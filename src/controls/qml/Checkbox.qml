@@ -19,27 +19,53 @@ CheckBox {
         Rectangle {
             id: bgArea
             implicitWidth: Theme.itemWidthExtraSmall
-            implicitHeight: Theme.itemHeightExtraSmall - Theme.itemSpacingExtraSmall
+            implicitHeight: Theme.itemHeightExtraSmall
             color: control.checked ? Theme.accentColor : Theme.fillDarkColor
             anchors.centerIn: parent
+            radius: width/2
+
+            Rectangle {
+                id: checkedIndicator
+                width: Theme.itemSpacingExtraSmall*0.2
+                height: Theme.itemHeightExtraSmall/2
+                color: Theme.textColor
+                anchors.verticalCenter: parent.verticalCenter
+                x: Theme.itemWidthExtraSmall*0.2 - width/2 + ball.padding
+                radius: width/2
+            }
+
+            Rectangle {
+                id: uncheckedIndicator
+                width: 2 * Math.round(Theme.itemHeightExtraSmall/5)
+                height: width
+                color: Theme.textColor
+                anchors.verticalCenter: parent.verticalCenter
+                x: Theme.itemWidthExtraSmall*0.8 - width/2 - ball.padding
+                radius: width/2
+
+                Rectangle {
+                    width: 2 * Math.round((parent.width*0.6)/2)
+                    height: width
+                    anchors.centerIn: parent
+                    radius: width/2
+                    color: Theme.fillDarkColor
+                }
+            }
         }
 
 
         Rectangle {
             id: ball
-            width: Theme.itemHeightExtraSmall
-            height: Theme.itemHeightExtraSmall
+            width: 2 * Math.round((Theme.itemHeightExtraSmall*0.8)/2)
+            height: 2 * Math.round((Theme.itemHeightExtraSmall*0.8)/2)
             radius: width/2
             anchors.verticalCenter: parent.verticalCenter
-
             clip: true
-
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: Theme.textColor }
-                GradientStop { position: 1.0; color: Theme.fillDarkColor }
-            }
-
-            x: control.checked ? background.width - ball.width : 0
+            property int padding: (bgArea.height - ball.height)/2
+            property int checkedX: background.width - ball.width - padding
+            property int uncheckedX: padding
+            x: control.checked ? checkedX : uncheckedX
+            color: Theme.backgroundColor
         }
 
         Connections {
@@ -77,14 +103,18 @@ CheckBox {
             NumberAnimation {
                 target: ball
                 property: "x"
-                to: background.width - ball.width
-                duration: 400
+                from: ball.uncheckedX
+                to: ball.checkedX
+                duration: 250
+                easing.type: Easing.InCubic
             }
             PropertyAnimation {
                 target: bgArea
                 property: "color"
+                from: Theme.fillDarkColor
                 to: Theme.accentColor
-                duration: 400
+                duration: 250
+                easing.type: Easing.InCubic
             }
         }
 
@@ -94,14 +124,18 @@ CheckBox {
             NumberAnimation {
                 target: ball
                 property: "x"
-                to: 0
-                duration: 400
+                from: ball.checkedX
+                to: ball.uncheckedX
+                duration: 250
+                easing.type: Easing.InCubic
             }
             PropertyAnimation {
                 target: bgArea
                 property: "color"
+                from: Theme.accentColor
                 to: Theme.fillDarkColor
-                duration: 400
+                duration: 250
+                easing.type: Easing.InCubic
             }
         }
 
