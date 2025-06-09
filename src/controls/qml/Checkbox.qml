@@ -28,7 +28,7 @@ CheckBox {
                 id: checkedIndicator
                 width: Theme.itemSpacingExtraSmall*0.2
                 height: Theme.itemHeightExtraSmall/2
-                color: "white"
+                color: Theme.textColor
                 anchors.verticalCenter: parent.verticalCenter
                 x: Theme.itemWidthExtraSmall*0.2 - width/2 + ball.padding
                 radius: width/2
@@ -38,7 +38,7 @@ CheckBox {
                 id: uncheckedIndicator
                 width: 2 * Math.round(Theme.itemHeightExtraSmall/5)
                 height: width
-                color: "#c9c9c9"
+                color: Theme.textColor
                 anchors.verticalCenter: parent.verticalCenter
                 x: Theme.itemWidthExtraSmall*0.8 - width/2 - ball.padding
                 radius: width/2
