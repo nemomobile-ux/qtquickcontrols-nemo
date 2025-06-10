@@ -56,9 +56,9 @@ Theme::Theme(QObject* parent)
     connect(dpi, &MDConfItem::valueChanged, this, &Theme::setThemeValues);
     connect(physicalDotsPerInchConf, &MDConfItem::valueChanged, this, &Theme::setThemeValues);
 
-    connect(m_dpScaleFactorValue, &MDConfItem::valueChanged, [=](){
+    connect(m_dpScaleFactorValue, &MDConfItem::valueChanged, [=]() {
         float newDpScaleFactor = m_dpScaleFactorValue->value("0").toFloat();
-        if(newDpScaleFactor != m_dpScaleFactor) {
+        if (newDpScaleFactor != m_dpScaleFactor) {
             m_dpScaleFactor = newDpScaleFactor;
             emit dpScaleFactorChanged();
             emit themeUpdated();
@@ -177,7 +177,7 @@ void Theme::setThemeValues()
 void Theme::themeValueChanged()
 {
     QString themePath = m_themeValue->value().toString();
-    if(!themePath.isEmpty() && QFile::exists(themePath)) {
+    if (!themePath.isEmpty() && QFile::exists(themePath)) {
         m_theme = themePath;
         setThemeValues();
     }
