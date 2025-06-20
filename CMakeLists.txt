@@ -23,7 +23,9 @@ if(POLICY CMP0071)
     cmake_policy(SET CMP0071 NEW)
 endif()
 
-find_package(Qt6 COMPONENTS Core Gui Qml Quick ShaderTools REQUIRED)
+enable_testing()
+
+find_package(Qt6 COMPONENTS Core Gui Qml Quick ShaderTools Test REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(MLITE mlite6 IMPORTED_TARGET)
 pkg_check_modules(GLACIER glacierapp6 IMPORTED_TARGET)
@@ -50,6 +52,7 @@ FindQtInstallQml()
 
 option(BUILD_CONTROLS "Build the controls" ON)
 option(BUILD_EXAMPLES "Build the example projects" OFF)
+option(BUILD_TESTS "Build tests" OFF)
 
 if(BUILD_EXAMPLES)
     add_subdirectory(examples)
@@ -58,5 +61,7 @@ endif()
 if(BUILD_CONTROLS)
     add_subdirectory(src)
 endif()
+
+add_subdirectory(tests)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

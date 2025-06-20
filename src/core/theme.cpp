@@ -33,22 +33,32 @@ static Theme* themeInstance = 0;
 Theme::Theme(QObject* parent)
     : QObject(parent)
 {
-    // All sizes we get from LipstickSettings::exportScreenProperties()
+#ifndef UNIT_TEST
+  // All sizes we get from LipstickSettings::exportScreenProperties()
     MDConfItem* physicalDotsPerInchConf = new MDConfItem("/lipstick/screen/primary/physicalDotsPerInch");
     if (physicalDotsPerInchConf->value().isNull()) {
         QScreen* primaryScreen = QGuiApplication::primaryScreen();
         physicalDotsPerInchConf->set(primaryScreen->physicalDotsPerInch());
         physicalDotsPerInchConf->sync();
     }
+#endif
 
+#ifndef UNIT_TEST
     m_dpScaleFactorValue = new MDConfItem(QStringLiteral("/nemo/apps/libglacier/dpScaleFactor"));
     m_dpScaleFactor = m_dpScaleFactorValue->value("1").toFloat();
+#else
+    m_dpScaleFactor = 1;
+#endif
 
+#ifndef UNIT_TEST
     MDConfItem* dpi = new MDConfItem("/lipstick/screen/primary/physicalDotsPerInch");
     m_mmScaleFactor = dpi->value("1").toReal() / 2.45 / 10;
-
+#else
+    m_mmScaleFactor = 1;
+#endif
     loadDefaultValue();
 
+#ifndef UNIT_TEST
     m_themeValue = new MDConfItem(QStringLiteral("/nemo/apps/libglacier/themePath"));
     m_theme = m_themeValue->value("/usr/share/themes/nemo.json").toString();
 
@@ -64,7 +74,7 @@ Theme::Theme(QObject* parent)
             emit themeUpdated();
         }
     });
-
+#endif
     if (!m_theme.isEmpty()) {
         loadTheme(m_theme);
     } else {
@@ -85,6 +95,10 @@ QObject* Theme::qmlInstance(QQmlEngine* engine, QJSEngine* scriptEngine)
 bool Theme::loadTheme(QString fileName)
 {
     QFile themeFile(fileName);
+    if(fileName.isEmpty()) {
+        qCWarning(lcNemoControlsCoreLog) << "Theme file is empty";
+        return false;
+    }
 
     if (!themeFile.exists()) {
         qCDebug(lcNemoControlsCoreLog) << "Theme file " << fileName << " not found";
@@ -95,9 +109,11 @@ bool Theme::loadTheme(QString fileName)
         qCDebug(lcNemoControlsCoreLog) << "Theme file " << fileName << " is empty";
         return false;
     }
-
-    if (fileName != m_theme) {
+    if(fileName != m_theme) {
+#ifndef UNIT_TEST
         m_themeValue->set(fileName);
+#endif
+        m_theme = fileName;
         setThemeValues();
     }
     return true;
@@ -115,9 +131,6 @@ float Theme::mm(float value)
 
 void Theme::setThemeValues()
 {
-    qreal dpi = MDConfItem("/lipstick/screen/primary/physicalDotsPerInch").value().toReal();
-    m_mmScaleFactor = dpi / 2.45 / 10;
-
     QString themeJsonString;
 
     bool updated = false;
@@ -131,23 +144,23 @@ void Theme::setThemeValues()
     QJsonDocument t = QJsonDocument::fromJson(themeJsonString.toUtf8());
     QJsonObject theme = t.object();
 
-    m_iconSizeLauncher = theme.value("iconSizeLauncher").toString().toFloat();
-    m_itemWidthExtraLarge = floor(theme.value("itemWidthExtraLarge").toString().toFloat());
-    m_itemWidthLarge = floor(theme.value("itemWidthLarge").toString().toFloat());
-    m_itemWidthMedium = floor(theme.value("itemWidthMedium").toString().toFloat());
-    m_itemWidthSmall = floor(theme.value("itemWidthSmall").toString().toFloat());
-    m_itemWidthExtraSmall = floor(theme.value("itemWidthExtraSmall").toString().toFloat());
-    m_itemHeightHuge = floor(theme.value("itemHeightHuge").toString().toFloat());
-    m_itemHeightExtraLarge = floor(theme.value("itemHeightExtraLarge").toString().toFloat());
-    m_itemHeightLarge = floor(theme.value("itemHeightLarge").toString().toFloat());
-    m_itemHeightMedium = floor(theme.value("itemHeightMedium").toString().toFloat());
-    m_itemHeightSmall = floor(theme.value("itemHeightSmall").toString().toFloat());
-    m_itemHeightExtraSmall = floor(theme.value("itemHeightExtraSmall").toString().toFloat());
-    m_itemSpacingHuge = floor(theme.value("itemSpacingHuge").toString().toFloat());
-    m_itemSpacingLarge = floor(theme.value("itemSpacingLarge").toString().toFloat());
-    m_itemSpacingMedium = floor(theme.value("itemSpacingMedium").toString().toFloat());
-    m_itemSpacingSmall = floor(theme.value("itemSpacingSmall").toString().toFloat());
-    m_itemSpacingExtraSmall = floor(theme.value("itemSpacingExtraSmall").toString().toFloat());
+    m_iconSizeLauncher = theme.value("iconSizeLauncher").toDouble();
+    m_itemWidthExtraLarge = floor(theme.value("itemWidthExtraLarge").toDouble());
+    m_itemWidthLarge = floor(theme.value("itemWidthLarge").toDouble());
+    m_itemWidthMedium = floor(theme.value("itemWidthMedium").toDouble());
+    m_itemWidthSmall = floor(theme.value("itemWidthSmall").toDouble());
+    m_itemWidthExtraSmall = floor(theme.value("itemWidthExtraSmall").toDouble());
+    m_itemHeightHuge = floor(theme.value("itemHeightHuge").toDouble());
+    m_itemHeightExtraLarge = floor(theme.value("itemHeightExtraLarge").toDouble());
+    m_itemHeightLarge = floor(theme.value("itemHeightLarge").toDouble());
+    m_itemHeightMedium = floor(theme.value("itemHeightMedium").toDouble());
+    m_itemHeightSmall = floor(theme.value("itemHeightSmall").toDouble());
+    m_itemHeightExtraSmall = floor(theme.value("itemHeightExtraSmall").toDouble());
+    m_itemSpacingHuge = floor(theme.value("itemSpacingHuge").toDouble());
+    m_itemSpacingLarge = floor(theme.value("itemSpacingLarge").toDouble());
+    m_itemSpacingMedium = floor(theme.value("itemSpacingMedium").toDouble());
+    m_itemSpacingSmall = floor(theme.value("itemSpacingSmall").toDouble());
+    m_itemSpacingExtraSmall = floor(theme.value("itemSpacingExtraSmall").toDouble());
     m_fontSizeExtraLarge = floor(theme.value("fontSizeExtraLarge").toInt());
     m_fontSizeLarge = floor(theme.value("fontSizeLarge").toInt());
     m_fontSizeMedium = floor(theme.value("fontSizeMedium").toInt());
