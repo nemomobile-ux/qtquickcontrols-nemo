@@ -34,7 +34,7 @@ Theme::Theme(QObject* parent)
     : QObject(parent)
 {
 #ifndef UNIT_TEST
-  // All sizes we get from LipstickSettings::exportScreenProperties()
+    // All sizes we get from LipstickSettings::exportScreenProperties()
     MDConfItem* physicalDotsPerInchConf = new MDConfItem("/lipstick/screen/primary/physicalDotsPerInch");
     if (physicalDotsPerInchConf->value().isNull()) {
         QScreen* primaryScreen = QGuiApplication::primaryScreen();
@@ -95,7 +95,7 @@ QObject* Theme::qmlInstance(QQmlEngine* engine, QJSEngine* scriptEngine)
 bool Theme::loadTheme(QString fileName)
 {
     QFile themeFile(fileName);
-    if(fileName.isEmpty()) {
+    if (fileName.isEmpty()) {
         qCWarning(lcNemoControlsCoreLog) << "Theme file is empty";
         return false;
     }
@@ -109,7 +109,7 @@ bool Theme::loadTheme(QString fileName)
         qCDebug(lcNemoControlsCoreLog) << "Theme file " << fileName << " is empty";
         return false;
     }
-    if(fileName != m_theme) {
+    if (fileName != m_theme) {
 #ifndef UNIT_TEST
         m_themeValue->set(fileName);
 #endif

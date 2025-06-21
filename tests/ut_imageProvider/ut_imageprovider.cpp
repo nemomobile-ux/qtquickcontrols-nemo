@@ -17,8 +17,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include <QtTest/QtTest>
 #include "ut_imageprovider.h"
+#include <QtTest/QtTest>
 #include <nemoimageprovider.h>
 
 void Ut_ImageProvider::init()
@@ -32,7 +32,7 @@ void Ut_ImageProvider::cleanup()
 void Ut_ImageProvider::getImage()
 {
     NemoImageProvider* imageProvider = new NemoImageProvider();
-    QImage providerImage = imageProvider->requestImage(QString("file"), nullptr, QSize(100,100));
+    QImage providerImage = imageProvider->requestImage(QString("file"), nullptr, QSize(100, 100));
 
     QCOMPARE(providerImage.isNull(), false);
 }
@@ -40,7 +40,7 @@ void Ut_ImageProvider::getImage()
 void Ut_ImageProvider::getWrongImage()
 {
     NemoImageProvider* imageProvider = new NemoImageProvider();
-    QImage providerImage = imageProvider->requestImage(QString("wrong"), nullptr, QSize(100,100));
+    QImage providerImage = imageProvider->requestImage(QString("wrong"), nullptr, QSize(100, 100));
 
     QCOMPARE(providerImage.isNull(), true);
 }
@@ -48,7 +48,7 @@ void Ut_ImageProvider::getWrongImage()
 void Ut_ImageProvider::getImageBySize()
 {
     NemoImageProvider* imageProvider = new NemoImageProvider();
-    QImage providerImage = imageProvider->requestImage(QString("file"), nullptr, QSize(100,150));
+    QImage providerImage = imageProvider->requestImage(QString("file"), nullptr, QSize(100, 150));
 
     QCOMPARE(providerImage.width(), 100);
     QCOMPARE(providerImage.height(), 150);
@@ -57,7 +57,7 @@ void Ut_ImageProvider::getImageBySize()
 void Ut_ImageProvider::getPximap()
 {
     NemoImageProvider* imageProvider = new NemoImageProvider();
-    QPixmap providerPixmap = imageProvider->requestPixmap(QString("file"), nullptr, QSize(100,100));
+    QPixmap providerPixmap = imageProvider->requestPixmap(QString("file"), nullptr, QSize(100, 100));
 
     QCOMPARE(providerPixmap.isNull(), false);
 }
@@ -65,7 +65,7 @@ void Ut_ImageProvider::getPximap()
 void Ut_ImageProvider::getWrongPximap()
 {
     NemoImageProvider* imageProvider = new NemoImageProvider();
-    QPixmap providerPixmap = imageProvider->requestPixmap(QString("wrong"), nullptr, QSize(100,100));
+    QPixmap providerPixmap = imageProvider->requestPixmap(QString("wrong"), nullptr, QSize(100, 100));
 
     QCOMPARE(providerPixmap.isNull(), true);
 }
@@ -73,7 +73,7 @@ void Ut_ImageProvider::getWrongPximap()
 void Ut_ImageProvider::getPximapBySize()
 {
     NemoImageProvider* imageProvider = new NemoImageProvider();
-    QPixmap providerPixmap = imageProvider->requestPixmap(QString("file"), nullptr, QSize(95,105));
+    QPixmap providerPixmap = imageProvider->requestPixmap(QString("file"), nullptr, QSize(95, 105));
 
     QCOMPARE(providerPixmap.width(), 95);
     QCOMPARE(providerPixmap.height(), 105);

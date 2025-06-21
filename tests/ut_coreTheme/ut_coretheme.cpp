@@ -17,8 +17,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include <QtTest/QtTest>
 #include "ut_coretheme.h"
+#include <QtTest/QtTest>
 #include <theme.h>
 
 void Ut_CoreTheme::init()
@@ -35,7 +35,7 @@ void Ut_CoreTheme::loadTheme()
 
     bool loadTheme = theme->loadTheme(QString(SOURCE_DIR) + "/tests/ut_coreTheme/testTheme.json");
     QCOMPARE(true, loadTheme);
-    delete(theme);
+    delete (theme);
 }
 
 void Ut_CoreTheme::loadThemeFail()
@@ -44,7 +44,7 @@ void Ut_CoreTheme::loadThemeFail()
 
     bool loadTheme = theme->loadTheme(QString(SOURCE_DIR) + "/tests/ut_coreTheme/missingTheme.json");
     QCOMPARE(false, loadTheme);
-    delete(theme);
+    delete (theme);
 }
 
 void Ut_CoreTheme::checkThemeValues()
@@ -84,7 +84,7 @@ void Ut_CoreTheme::checkThemeValues()
     QCOMPARE("#555555", theme->backgroundAccentColor());
     QCOMPARE(1, theme->dpScaleFactor());
     QCOMPARE(1, theme->mmScaleFactor());
-    delete(theme);
+    delete (theme);
 }
 
 QTEST_MAIN(Ut_CoreTheme)
