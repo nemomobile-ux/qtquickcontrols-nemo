@@ -17,24 +17,30 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef UT_IMAGEPROVIDER_H
-#define UT_IMAGEPROVIDER_H
+#include "ut_nemopage.h"
+#include "qtestcase.h"
+#include <QtTest/QtTest>
+#include <nemopage.h>
 
-#include <QObject>
+void Ut_NemoPage::init()
+{
+}
 
-class Ut_ImageProvider : public QObject {
-    Q_OBJECT
-private slots:
-    void init();
-    void cleanup();
+void Ut_NemoPage::cleanup()
+{
+}
 
-    void getImage();
-    void getWrongImage();
-    void getImageBySize();
+void Ut_NemoPage::getDefaultAllowedOrientation()
+{
+    NemoPage *page = new NemoPage();
+    QCOMPARE(page->allowedOrientations(), Qt::PrimaryOrientation);
+}
 
-    void getPximap();
-    void getWrongPximap();
-    void getPximapBySize();
-};
+void Ut_NemoPage::setAllowedOrientation()
+{
+    NemoPage *page = new NemoPage();
+    page->setAllowedOrientations(Qt::PortraitOrientation);
+    QCOMPARE(page->allowedOrientations(), Qt::PortraitOrientation);
+}
 
-#endif // UT_IMAGEPROVIDER_H
+QTEST_MAIN(Ut_NemoPage)

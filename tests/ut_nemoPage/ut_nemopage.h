@@ -17,24 +17,19 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef UT_IMAGEPROVIDER_H
-#define UT_IMAGEPROVIDER_H
+#ifndef UT_NEMOPAGE_H
+#define UT_NEMOPAGE_H
 
 #include <QObject>
 
-class Ut_ImageProvider : public QObject {
+class Ut_NemoPage : public QObject {
     Q_OBJECT
 private slots:
     void init();
     void cleanup();
 
-    void getImage();
-    void getWrongImage();
-    void getImageBySize();
-
-    void getPximap();
-    void getWrongPximap();
-    void getPximapBySize();
+    void getDefaultAllowedOrientation();
+    void setAllowedOrientation();
 };
 
-#endif // UT_IMAGEPROVIDER_H
+#endif // UT_NEMOPAGE_H
