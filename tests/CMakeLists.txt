@@ -1,5 +1,7 @@
+set(xvfbParam -a -s "-screen 0 1280x1024x24")
 add_definitions(-DUNIT_TEST=1)
 add_definitions(-DSOURCE_DIR="${CMAKE_SOURCE_DIR}")
 add_subdirectory(ut_coreTheme)
 add_subdirectory(ut_imageProvider)
 add_subdirectory(ut_nemoPage)
+add_subdirectory(ut_qmlActionButton)

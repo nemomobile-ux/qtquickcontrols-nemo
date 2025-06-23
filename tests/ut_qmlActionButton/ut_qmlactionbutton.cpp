@@ -17,30 +17,22 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "ut_nemopage.h"
-#include "qtestcase.h"
+#include "ut_qmlactionbutton.h"
 #include <QtTest/QtTest>
-#include <nemopage.h>
+#include <qmltest.h>
 
-void Ut_NemoPage::init()
+void Ut_QmlActionButton::init()
 {
 }
 
-void Ut_NemoPage::cleanup()
+void Ut_QmlActionButton::cleanup()
 {
 }
 
-void Ut_NemoPage::getDefaultAllowedOrientation()
+void Ut_QmlActionButton::checkWarning()
 {
-    NemoPage* page = new NemoPage();
-    QCOMPARE(page->allowedOrientations(), Qt::PrimaryOrientation);
+    QmlTest* test = new QmlTest(QString(SOURCE_DIR) + "/tests/ut_qmlActionButton/test.qml");
+    QCOMPARE(test->warnings(), 0);
 }
 
-void Ut_NemoPage::setAllowedOrientation()
-{
-    NemoPage* page = new NemoPage();
-    page->setAllowedOrientations(Qt::PortraitOrientation);
-    QCOMPARE(page->allowedOrientations(), Qt::PortraitOrientation);
-}
-
-QTEST_MAIN(Ut_NemoPage)
+QTEST_MAIN(Ut_QmlActionButton)
