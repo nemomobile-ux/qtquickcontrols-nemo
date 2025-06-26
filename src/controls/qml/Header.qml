@@ -363,9 +363,11 @@ Item {
                 }
             }
 
-            children: if (toolBarLayout) {
-                          toolBarLayout.drawerLevels
-                      }
+            Component.onCompleted: {
+                if (toolBarLayout && toolBarLayout.drawerLevels) {
+                    drawerContainer.children = toolBarLayout.drawerLevels
+                }
+            }
         }
     }
 }
