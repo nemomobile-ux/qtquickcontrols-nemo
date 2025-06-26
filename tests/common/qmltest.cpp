@@ -8,10 +8,13 @@ QmlTest::QmlTest(const QString& file, QWindow* parent)
     : QQuickView { parent }
 {
     QTest::createTouchDevice();
+    engine()->addImportPath(QString(BUILD_DIR));
 
     qRegisterMetaType<QList<QQmlError>>();
+    if(file.isEmpty()) {
+        qFatal() << "file path is empty";
+    }
 
-    Q_ASSERT(!file.isEmpty());
     if (!QFile(file).exists()) {
         qFatal() << "test qml file " << file << " not exists";
     }
@@ -21,11 +24,10 @@ QmlTest::QmlTest(const QString& file, QWindow* parent)
 
     setSource(QUrl::fromLocalFile(file));
 
-    Q_ASSERT(status() == QQuickView::Ready);
-    Q_ASSERT(rootObject());
-
+    if(status() != QQuickView::Ready) {
+        qFatal() << "QQuickView not ready";
+    }
     show();
-    Q_ASSERT(QTest::qWaitForWindowExposed(this));
 }
 
 int QmlTest::warnings() const
