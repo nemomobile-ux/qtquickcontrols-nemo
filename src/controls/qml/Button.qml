@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2013 Andrea Bernabei <and.bernabei@gmail.com>
+ * Copyright (C) 2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -42,7 +43,7 @@ Button {
             id: disabledImg
             anchors.fill: parent
             visible: !control.enabled
-            source: "images/disabled-overlay.png"
+            source: "file://../images/disabled-overlay.png"
             fillMode: Image.Tile
         }
 
@@ -98,7 +99,7 @@ Button {
     contentItem: Text {
         FontLoader {
             id: localFont
-            source: Theme.fontPath
+            source: "file://"+Theme.fontPath
         }
 
         verticalAlignment: Text.AlignVCenter
