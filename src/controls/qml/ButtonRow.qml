@@ -1,7 +1,7 @@
 /****************************************************************************************
 **
 ** Copyright (C) 2014 Aleksi Suomalainen <suomalainen.aleksi@gmail.com>
-** Copyright (C) 2017 Sergey Chupligin <neochapay@gmail.com>
+** Copyright (C) 2017-2025 Sergey Chupligin <neochapay@gmail.com>
 ** Copyright (C) 2017 Eetu Kahelin
 ** All rights reserved.
 **
@@ -55,7 +55,7 @@ Rectangle {
     Image {
         anchors.fill: parent
         visible: !main.enabled
-        source: "images/disabled-overlay.png"
+        source: "file://../images/disabled-overlay.png"
         fillMode: Image.Tile
     }
     Rectangle{

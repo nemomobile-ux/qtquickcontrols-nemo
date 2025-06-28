@@ -9,3 +9,4 @@ add_subdirectory(ut_qmlActionButton)
 #QQuickView does not support using a window as a root item.
 #add_subdirectory(ut_qmlApplicationWindow)
 add_subdirectory(ut_qmlButton)
+add_subdirectory(ut_qmlButtonRow)
