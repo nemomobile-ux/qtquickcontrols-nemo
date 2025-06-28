@@ -1,7 +1,7 @@
 /****************************************************************************************
 **
 ** Copyright (C) 2013 Aleksi Suomalainen <suomalainen.aleksi@gmail.com>
-** Copyright (C) 2023 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2023-2025 Chupligin Sergey <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -35,7 +35,7 @@ import Nemo
 Text {
     FontLoader {
         id: localFont
-        source: Theme.fontPath
+        source: "file://"+Theme.fontPath
     }
     color: Theme.textColor
     font.pixelSize: Theme.fontSizeMedium
