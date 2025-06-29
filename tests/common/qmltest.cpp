@@ -11,7 +11,7 @@ QmlTest::QmlTest(const QString& file, QWindow* parent)
     engine()->addImportPath(QString(BUILD_DIR));
 
     qRegisterMetaType<QList<QQmlError>>();
-    if(file.isEmpty()) {
+    if (file.isEmpty()) {
         qFatal() << "file path is empty";
     }
 
@@ -24,7 +24,7 @@ QmlTest::QmlTest(const QString& file, QWindow* parent)
 
     setSource(QUrl::fromLocalFile(file));
 
-    if(status() != QQuickView::Ready) {
+    if (status() != QQuickView::Ready) {
         qFatal() << "QQuickView not ready";
     }
     show();
