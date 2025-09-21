@@ -21,14 +21,6 @@
 #include <QtTest/QtTest>
 #include <nemoimageprovider.h>
 
-void Ut_ImageProvider::init()
-{
-}
-
-void Ut_ImageProvider::cleanup()
-{
-}
-
 void Ut_ImageProvider::getImage()
 {
     NemoImageProvider* imageProvider = new NemoImageProvider();

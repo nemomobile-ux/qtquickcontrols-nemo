@@ -9,6 +9,7 @@ QmlTest::QmlTest(const QString& file, QWindow* parent)
 {
     QTest::createTouchDevice();
     engine()->addImportPath(QString(BUILD_DIR));
+    engine()->addPluginPath(QString(BUILD_DIR) + "/Nemo");
 
     qRegisterMetaType<QList<QQmlError>>();
     if (file.isEmpty()) {

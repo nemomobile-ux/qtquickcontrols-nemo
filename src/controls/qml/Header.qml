@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2023 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2018-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -77,7 +77,7 @@ Item {
             //having width/height as PropertyChanges avoids creating binding loops
             PropertyChanges {
                 target: header
-                width: parent.width
+                width: parent ? parent.width : 0
                 //the height of the drawer in portrait is limited by the size of the shorter edge of the screen
                 height: toolBarRect.height + drawer.height
             }
@@ -112,7 +112,7 @@ Item {
             PropertyChanges {
                 target: header
                 width: toolBarRect.width + drawer.width
-                height: parent.height
+                height: parent ? parent.height : 0
             }
             PropertyChanges {
                 target: toolBarRect
@@ -331,6 +331,13 @@ Item {
             height: Theme.itemHeightExtraSmall/8
             anchors.top: parent.top
             visible: drawerContainer.height > 0 && -header.y == drawerContainer.height
+        }
+
+        Connections{
+            target: appWindow.pageStack
+            function onDepthChanged() {
+                toolsIndicator.started = false
+            }
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2023 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -52,7 +52,7 @@ Slider {
             id: disabledImg
             anchors.fill: parent
             visible: !control.enabled
-            source: "images/disabled-overlay.png"
+            source: "qrc://images/disabled-overlay.png"
             fillMode: Image.Tile
         }
     }

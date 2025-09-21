@@ -6,9 +6,6 @@
 class Ut_QmlButtonRow : public QObject {
     Q_OBJECT
 private slots:
-    void init();
-    void cleanup();
-
     void checkWarning();
 };
 

@@ -21,14 +21,6 @@
 #include <QtTest/QtTest>
 #include <qmltest.h>
 
-void Ut_QmlCheckbox::init()
-{
-}
-
-void Ut_QmlCheckbox::cleanup()
-{
-}
-
 void Ut_QmlCheckbox::checkWarning()
 {
     QmlTest* test = new QmlTest(QString(SOURCE_DIR) + "/tests/ut_qmlCheckbox/test.qml");

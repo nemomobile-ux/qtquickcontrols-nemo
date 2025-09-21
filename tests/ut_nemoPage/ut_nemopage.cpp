@@ -22,14 +22,6 @@
 #include <QtTest/QtTest>
 #include <nemopage.h>
 
-void Ut_NemoPage::init()
-{
-}
-
-void Ut_NemoPage::cleanup()
-{
-}
-
 void Ut_NemoPage::getDefaultAllowedOrientation()
 {
     NemoPage* page = new NemoPage();

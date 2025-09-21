@@ -29,7 +29,7 @@
 **
 ****************************************************************************************/
 
-import QtQuick 2.6
+import QtQuick
 import QtQuick.Controls
 
 import Nemo
@@ -40,15 +40,15 @@ Rectangle{
 
     property var flickable
 
-    visible: (flickable.contentHeight > flickable.height)
+    visible: flickable ? (flickable.contentHeight > flickable.height) : false
     color: Theme.accentColor
 
     width: Theme.itemSpacingExtraSmall
-    height: flickable.height*flickable.height/flickable.contentHeight
-    y: (flickable.height)/flickable.contentHeight*flickable.contentY
+    height: visible ? flickable.height*flickable.height/flickable.contentHeight : 0
+    y: visible ? (flickable.height)/flickable.contentHeight*flickable.contentY : 0
 
     anchors{
-        right: flickable.right
+        right: visible ? flickable.right : undefined
         rightMargin: Theme.itemSpacingExtraSmall / 2
     }
 }

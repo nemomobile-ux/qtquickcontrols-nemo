@@ -25,9 +25,6 @@
 class Ut_NemoPage : public QObject {
     Q_OBJECT
 private slots:
-    void init();
-    void cleanup();
-
     void getDefaultAllowedOrientation();
     void setAllowedOrientation();
 };

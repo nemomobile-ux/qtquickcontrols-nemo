@@ -3,7 +3,7 @@ set(TESTNAME qmlapplicationwindow)
 set(SRC
     ut_${TESTNAME}.cpp
     ut_${TESTNAME}.h
-    ${CMAKE_SOURCE_DIR}/tests/common/qmltest.cpp
+    ${COMMON_SRC}
 )
 
 add_definitions(-DQT_QML_DEBUG=1)

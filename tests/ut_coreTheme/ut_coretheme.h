@@ -25,9 +25,6 @@
 class Ut_CoreTheme : public QObject {
     Q_OBJECT
 private slots:
-    void init();
-    void cleanup();
-
     void loadTheme();
     void loadThemeFail();
     void checkThemeValues();

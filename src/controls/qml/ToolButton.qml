@@ -29,7 +29,7 @@
 **
 ****************************************************************************************/
 
-import QtQuick 2.6
+import QtQuick
 import QtQuick.Controls
 
 import Nemo
@@ -37,7 +37,7 @@ import Nemo.Controls
 
 Item {
     id: toolButton
-    property string iconSource
+    property string iconSource: "images/no-icon.png"
     property bool showCounter: false
     property bool showZeroCounter: false
     property bool active: false
@@ -46,7 +46,7 @@ Item {
     signal clicked()
 
     width: height
-    height: parent.height
+    height: parent ? parent.height : 0
 
     Image {
         id: iconImage
@@ -55,7 +55,7 @@ Item {
         anchors.centerIn: parent
         fillMode: Image.PreserveAspectFit
         anchors.margins: Theme.itemSpacingExtraSmall
-        source: toolButton.iconSource + "?" + ( active ? Theme.accentColor : Theme.textColor)
+        source: "qrc://" + toolButton.iconSource + "?" + ( active ? Theme.accentColor : Theme.textColor)
     }
 
     Rectangle{
@@ -80,7 +80,7 @@ Item {
             id: counterText
             FontLoader {
                 id: localFont
-                source: Theme.fontPath
+                source: "file://"+Theme.fontPath
             }
             font.family: localFont.font.family
             font.styleName: localFont.font.styleName

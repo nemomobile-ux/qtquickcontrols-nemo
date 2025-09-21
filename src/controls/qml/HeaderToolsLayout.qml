@@ -79,7 +79,7 @@ Item {
         id: titleTxt
         FontLoader {
             id: localFont
-            source: Theme.fontPath
+            source: "file://"+Theme.fontPath
         }
         anchors{
             right: toolButtonsContainer.left

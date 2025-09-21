@@ -25,9 +25,6 @@
 class Ut_ImageProvider : public QObject {
     Q_OBJECT
 private slots:
-    void init();
-    void cleanup();
-
     void getImage();
     void getWrongImage();
     void getImageBySize();
