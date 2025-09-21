@@ -21,14 +21,6 @@
 #include <QtTest/QtTest>
 #include <theme.h>
 
-void Ut_CoreTheme::init()
-{
-}
-
-void Ut_CoreTheme::cleanup()
-{
-}
-
 void Ut_CoreTheme::loadTheme()
 {
     Theme* theme = new Theme();

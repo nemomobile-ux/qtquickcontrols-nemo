@@ -3,13 +3,11 @@ set(TESTNAME qmldatepicker)
 set(SRC
     ut_${TESTNAME}.cpp
     ut_${TESTNAME}.h
-    ${CMAKE_SOURCE_DIR}/tests/common/qmltest.cpp
+    ${COMMON_SRC}
 )
 
 add_executable(ut_${TESTNAME} ${SRC}
     test.qml)
-
-include_directories(${CMAKE_SOURCE_DIR}/tests/common)
 
 target_link_libraries(ut_${TESTNAME}
     Qt6::Core

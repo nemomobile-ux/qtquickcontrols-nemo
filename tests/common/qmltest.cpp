@@ -9,9 +9,10 @@ QmlTest::QmlTest(const QString& file, QWindow* parent)
 {
     QTest::createTouchDevice();
     engine()->addImportPath(QString(BUILD_DIR));
+    engine()->addPluginPath(QString(BUILD_DIR) + "/Nemo");
 
     qRegisterMetaType<QList<QQmlError>>();
-    if(file.isEmpty()) {
+    if (file.isEmpty()) {
         qFatal() << "file path is empty";
     }
 
@@ -24,7 +25,7 @@ QmlTest::QmlTest(const QString& file, QWindow* parent)
 
     setSource(QUrl::fromLocalFile(file));
 
-    if(status() != QQuickView::Ready) {
+    if (status() != QQuickView::Ready) {
         qFatal() << "QQuickView not ready";
     }
     show();

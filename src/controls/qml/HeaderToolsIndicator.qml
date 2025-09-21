@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2022 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2018-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -17,8 +17,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-import QtQuick 2.6
-import QtQuick.Window 2.0
+import QtQuick
+import QtQuick.Window
 import QtQuick.Controls
 
 import Nemo
@@ -62,13 +62,6 @@ Rectangle{
     onVisibleChanged: {
         if(visible && !started) {
             indicateToolsAnimation.start()
-        }
-    }
-
-    Connections{
-        target: pageStack
-        function onDepthChanged() {
-            toolsIndicator.started = false
         }
     }
 }

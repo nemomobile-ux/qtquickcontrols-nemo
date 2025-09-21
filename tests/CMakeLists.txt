@@ -1,4 +1,10 @@
 set(xvfbParam -a -s "-screen 0 1280x1024x24")
+
+set(COMMON_SRC
+    ${CMAKE_SOURCE_DIR}/tests/common/qmltest.cpp)
+
+include_directories(${CMAKE_SOURCE_DIR}/tests/common)
+
 add_definitions(-DUNIT_TEST=1)
 add_definitions(-DSOURCE_DIR="${CMAKE_SOURCE_DIR}")
 add_definitions(-DBUILD_DIR="${CMAKE_BINARY_DIR}")
@@ -12,3 +18,25 @@ add_subdirectory(ut_qmlButton)
 add_subdirectory(ut_qmlButtonRow)
 add_subdirectory(ut_qmlCheckbox)
 add_subdirectory(ut_qmlDatePicker)
+# Realy neeeded ?
+#add_subdirectory(ut_qmlErrorStackOage)
+# Cant load InverseMouseArea
+#add_subdirectory(ut_qmlGlacierRoller)
+add_subdirectory(ut_qmlGlacierRollerItem)
+add_subdirectory(ut_qmlHeader)
+add_subdirectory(ut_qmlHeaderToolsIndicator)
+add_subdirectory(ut_qmlHeaderToolsLayout)
+add_subdirectory(ut_qmlIconButton)
+add_subdirectory(ut_qmlLabel)
+add_subdirectory(ut_qmlListView)
+add_subdirectory(ut_qmlListViewItemWithActions)
+add_subdirectory(ut_qmlNemoIcon)
+add_subdirectory(ut_qmlPage)
+add_subdirectory(ut_qmlProgressBar)
+add_subdirectory(ut_qmlScrollDecorator)
+add_subdirectory(ut_qmlSlider)
+add_subdirectory(ut_qmlSpinner)
+add_subdirectory(ut_qmlTabButton)
+add_subdirectory(ut_qmlTextField)
+add_subdirectory(ut_qmlTimePicker)
+add_subdirectory(ut_qmlToolButton)

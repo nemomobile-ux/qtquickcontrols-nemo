@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2023 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2018-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -17,7 +17,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-import QtQuick 2.6
+import QtQuick
 
 Rectangle{
     id: glacierRollerItem
@@ -38,12 +38,12 @@ Rectangle{
 
     Image{
         id: arrowDown
-        source: "images/glacierroller-icon-arrow-down.svg"
+        source: "qrc://images/glacierroller-icon-arrow-down.svg"
         height: parent.height / 3
         sourceSize.width: width
         sourceSize.height: height
 
-        visible: glacierRollerItem.parent.showRow
+        visible: glacierRollerItem.parent.showRow == undefined ? false : glacierRollerItem.parent.showRow
         fillMode: Image.PreserveAspectFit
         anchors{
             verticalCenter: glacierRollerItem.verticalCenter

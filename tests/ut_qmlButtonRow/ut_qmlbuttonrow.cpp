@@ -21,14 +21,6 @@
 #include <QtTest/QtTest>
 #include <qmltest.h>
 
-void Ut_QmlButtonRow::init()
-{
-}
-
-void Ut_QmlButtonRow::cleanup()
-{
-}
-
 void Ut_QmlButtonRow::checkWarning()
 {
     QmlTest* test = new QmlTest(QString(SOURCE_DIR) + "/tests/ut_qmlButtonRow/test.qml");
