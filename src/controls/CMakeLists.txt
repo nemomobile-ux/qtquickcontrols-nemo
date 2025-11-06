@@ -32,7 +32,7 @@ set(QML
     qml/GlacierRollerItem.qml
     qml/GlacierRoller.qml
     qml/Header.qml
-    qml/HeaderToolsIndicator.qml
+
     qml/HeaderToolsLayout.qml
     qml/IconButton.qml
     qml/Label.qml
