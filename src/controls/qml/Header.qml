@@ -24,7 +24,6 @@ import Nemo
 Item {
     id: header
     width: toolBarRect.width
-    height: parent.height
 
     //make sure the header is aligned properly
     Binding on y {
