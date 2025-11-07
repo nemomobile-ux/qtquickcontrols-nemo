@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2023 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2018-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,9 +23,6 @@ import QtQuick.Shapes 1.5
 import Nemo
 import Nemo.Controls
 
-//This item handles the UI representation for the toolbar
-//The UI representation of the drawerLevels is inside the header
-//(we may consider having a DrawerLayout element in the future)
 Item {
     id: toolsLayoutItem
 
@@ -36,9 +33,12 @@ Item {
     property Header header
     property list<Item> tools
     property list<Item> drawerLevels
-
     //we'll get rid of this once we'll have the appWindow accessible everywhere
     property bool isUiPortrait: header && header.appWindow.isUiPortrait
+
+    onDrawerLevelsChanged: {
+        console.warn("WARNING! drawerLevels disabled and removed!")
+    }
 
     property bool showBackButton: false
     property int toolMeasure: Theme.itemHeightSmall
@@ -96,7 +96,7 @@ Item {
     Item {
         id: toolButtonsContainer
         anchors{
-            right: dots.visible ? dots.left : parent.right
+            right: parent.right
             verticalCenter: parent.verticalCenter
         }
 
@@ -111,19 +111,5 @@ Item {
             height: toolButtonsContainer.height
             children: tools
         }
-    }
-
-    Image {
-        id: dots
-        anchors{
-            right: parent.right
-            verticalCenter: parent.verticalCenter
-        }
-        height: toolsLayoutItem.height/2
-        width: height
-        visible: drawerLevels && drawerLevels.length > 1
-
-        source: "image://theme/ellipsis-v?" + Theme.textColor
-        rotation: isUiPortrait ? 0 : 90
     }
 }

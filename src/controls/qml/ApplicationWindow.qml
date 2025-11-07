@@ -2,7 +2,7 @@
  * Copyright (C) 2013 Andrea Bernabei <and.bernabei@gmail.com>
  * Copyright (C) 2013 Jolla Ltd.
  * Copyright (C) 2017 Eetu Kahelin
- * Copyright (C) 2021-2023 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+ * Copyright (C) 2021-2025 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -54,11 +54,7 @@ NemoWindow {
         }
         var component = Qt.createComponent(url)
         if (component.status === Component.Ready) {
-            if(mainMenuArea.width != applicationWindow.width && mainMenuArea.width != 0) {
-                pageStack.replace(component.createObject(pageStack, params))
-            } else {
-                pageStack.push(component.createObject(pageStack, params))
-            }
+            pageStack.push(component.createObject(pageStack, params))
         } else {
             console.warn("Error loading component", url, component.errorString())
             pageStack.push(Qt.resolvedUrl("ErrorStackPage.qml"), {error: component.errorString()})
@@ -184,22 +180,32 @@ NemoWindow {
                     height: parent.height
                     clip: true
                     visible: width != 0
-                    width: if(sourceComponent === null) {
-                               return 0
-                           } else if (applicationWindow.isUiPortrait) {
-                               if(stackView.depth == 1) {
-                                   return parent.width
-                               } else {
-                                   return 0
-                               }
-
-                           } else {
-                               return applicationWindow.mainMenuWidth
-                           }
+                    width: recalcMainMenuWidth()
 
                     anchors{
                         top: applicationWindow.isUiPortrait ? toolBar.bottom : parent.top
                         left: applicationWindow.isUiPortrait ? parent.left : toolBar.right
+                    }
+
+                    function recalcMainMenuWidth() {
+                        if(sourceComponent === null) {
+                            return 0
+                        } else if (applicationWindow.isUiPortrait) {
+                            if(stackView.depth <= 1) {
+                                return parent.width
+                            } else {
+                                return 0
+                            }
+                        } else {
+                            return Theme.itemWidthExtraLarge
+                        }
+                    }
+
+                    Connections{
+                        target: applicationWindow
+                        function onIsUiPortraitChanged() {
+                            mainMenuArea.recalcMainMenuWidth()
+                        }
                     }
                 }
 
@@ -214,9 +220,9 @@ NemoWindow {
                     property real panelSize: 0
                     property real previousImSize: 0
                     property real imSize: !Qt.application.active ? 0 : (isUiPortrait ? (applicationWindow._transpose ? Qt.inputMethod.keyboardRectangle.width
-                                                                                                        : Qt.inputMethod.keyboardRectangle.height)
+                                                                                                                     : Qt.inputMethod.keyboardRectangle.height)
                                                                                      : (applicationWindow._transpose ? Qt.inputMethod.keyboardRectangle.height
-                                                                                                        : Qt.inputMethod.keyboardRectangle.width))
+                                                                                                                     : Qt.inputMethod.keyboardRectangle.width))
 
 
                     //  TODO: fix on landscape and inverted landscape

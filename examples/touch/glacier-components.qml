@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
-** Copyright (C) 2017-2023 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2017-2025 Chupligin Sergey <neochapay@gmail.com>
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the Qt Quick Controls module of the Qt Toolkit.
@@ -181,120 +181,6 @@ ApplicationWindow {
                     showCounter: true
                     showZeroCounter: true
                 }
-            ]
-
-            //The parent of these items is null when this ToolsLayout is not used
-            //(i.e. you're on a different page) so we need to check the parent,
-            //just like in MeeGo's ToolbarLayout (when you don't use the automatic layout)
-
-            //TODO: Add automatic layout logic (see ToolbarLayout in MeeGo)
-            drawerLevels: [
-                Button {
-                    anchors.horizontalCenter: (parent==undefined) ? undefined : parent.horizontalCenter;
-                    text: qsTr("Black theme")
-                    primary: Theme.themePath == "/usr/lib/qt/qml/QtQuick/Controls/Styles/Nemo/themes/glacier_black.json"
-                    onClicked: {
-                        Theme.loadTheme("/usr/lib/qt/qml/QtQuick/Controls/Styles/Nemo/themes/glacier_black.json")
-                    }
-                },
-                Button {
-                    anchors.horizontalCenter: (parent==undefined) ? undefined : parent.horizontalCenter;
-                    text: qsTr("White theme")
-                    primary: Theme.themePath == "/usr/lib/qt/qml/QtQuick/Controls/Styles/Nemo/themes/glacier_white.json"
-                    onClicked: {
-                        Theme.loadTheme("/usr/lib/qt/qml/QtQuick/Controls/Styles/Nemo/themes/glacier_white.json")
-                    }
-                },
-                Row {
-                    id: drawerTestRow
-                    width: appWindow.width
-                    height: Theme.itemHeightMedium
-
-                    anchors{
-                        left: (parent==undefined) ? undefined : parent.left
-                        right: (parent==undefined) ? undefined : parent.right
-                        margins: Theme.itemSpacingLarge
-                    }
-
-                    Label {
-                        id: drawerTestLabel
-                        text: qsTr("Drawer Test")
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-
-                    Rectangle{
-                        id: spacer1
-                        width: parent.width-drawerTestLabel.width-drawerTestCheckBox.width
-                        color: "transparent"
-                        height: 1
-                    }
-
-                    CheckBox {
-                        id: drawerTestCheckBox
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                },
-                Row{
-                    id: drawerTest2Row
-                    width: appWindow.width
-                    height: Theme.itemHeightMedium
-
-                    anchors{
-                        left: (parent==undefined) ? undefined : parent.left
-                        right: (parent==undefined) ? undefined : parent.right
-                        margins: Theme.itemSpacingLarge
-                    }
-
-                    Label {
-                        id: drawerTest2Label
-                        text: qsTr("Drawer Test 2")
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-
-                    Rectangle{
-                        id: spacer2
-                        width: parent.width-drawerTest2Label.width-tool1.width-tool2.width-tool3.width
-                        color: "transparent"
-                        height: 1
-                    }
-
-                    ToolButton {
-                        id: tool1
-                        iconSource: "image://theme/cog"
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                    ToolButton {
-                        id: tool2
-                        iconSource: "image://theme/edit"
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                    ToolButton {
-                        id: tool3
-                        iconSource: "image://theme/refresh"
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                },
-                ButtonRow {
-                    id: buttonRowExample
-                    model: ListModel {
-                        ListElement {
-                            name: "swim"
-                        }
-                        ListElement {
-                            name: "cruise"
-                        }
-                        ListElement {
-                            name: "row"
-                        }
-                        ListElement {
-                            name: "fish"
-                        }
-                        ListElement {
-                            name: "dive"
-                        }
-                    }
-                }
-
             ]
         }
     }
