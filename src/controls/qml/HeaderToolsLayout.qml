@@ -32,8 +32,13 @@ Item {
     //these have to be initialized when the HeaderToolsLayout is instantiated
     property Header header
     property list<Item> tools
+    property list<Item> drawerLevels
     //we'll get rid of this once we'll have the appWindow accessible everywhere
     property bool isUiPortrait: header && header.appWindow.isUiPortrait
+
+    onDrawerLevelsChanged: {
+        console.warn("WARNING! drawerLevels disabled and removed!")
+    }
 
     property bool showBackButton: false
     property int toolMeasure: Theme.itemHeightSmall
