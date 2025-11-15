@@ -28,7 +28,7 @@ enable_testing()
 find_package(Qt6 COMPONENTS Core Gui Qml Quick ShaderTools Test REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(MLITE mlite6 IMPORTED_TARGET)
-pkg_check_modules(GLACIER glacierapp6 IMPORTED_TARGET)
+pkg_check_modules(GLACIER glacierapp IMPORTED_TARGET)
 
 if(MLITE_FOUND)
     add_definitions(-DHAVE_MLITE=1)
