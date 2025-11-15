@@ -21,7 +21,6 @@ QmlTest::QmlTest(const QString& file, QWindow* parent)
     }
 
     m_signalSpy = new QSignalSpy(engine(), SIGNAL(warnings(QList<QQmlError>)));
-    m_signalSpy->setParent(this);
 
     setSource(QUrl::fromLocalFile(file));
 
