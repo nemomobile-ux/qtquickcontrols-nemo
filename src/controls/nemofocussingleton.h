@@ -24,17 +24,17 @@
 
 class NemoFocusSingleton : public QObject {
     Q_OBJECT
-    Q_DISABLE_COPY(NemoFocusSingleton)
+    Q_DISABLE_COPY(NemoFocusSingleton)    
 
 public:
+    NemoFocusSingleton(QObject* parent = nullptr);
     Q_INVOKABLE void nemoregister(QObject* edit);
-    QObject* edit() const;
+    std::shared_ptr<QObject> edit() const;
 
-    static NemoFocusSingleton* instance();
+    static std::shared_ptr<NemoFocusSingleton> instance();
 
 private:
-    QObject* m_edit = nullptr;
-    NemoFocusSingleton(QObject* parent = nullptr) { Q_UNUSED(parent) }
+    std::shared_ptr<QObject> m_edit;
 };
 
 #endif // NEMOFOCUSSINGLETON_H

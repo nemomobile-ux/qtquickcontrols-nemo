@@ -45,7 +45,7 @@ bool EditFilter::eventFilter(QObject* obj, QEvent* event)
     }
 
     if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::TouchBegin) {
-        NemoFocusSingleton* nemoFocus = NemoFocusSingleton::instance();
+        std::shared_ptr<NemoFocusSingleton> nemoFocus = NemoFocusSingleton::instance();
         if (nemoFocus->edit() != NULL) {
             nemoFocus->edit()->setProperty("focus", QVariant(false));
             return false;

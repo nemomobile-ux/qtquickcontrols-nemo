@@ -27,6 +27,7 @@
 class NemoWindow : public QQuickWindow {
     Q_OBJECT
     Q_PROPERTY(bool allowExtendedEvents READ allowExtendedEvents WRITE setAllowExtendedEvents NOTIFY allowExtendedEventsChanged)
+    Q_PROPERTY(bool hideStatusBar READ hideStatusBar WRITE setHideStatusBar NOTIFY hideStatusBarChanged FINAL)
 
 public:
     explicit NemoWindow(QWindow* parent = 0);
@@ -34,6 +35,9 @@ public:
 
     bool allowExtendedEvents() const;
     void setAllowExtendedEvents(bool newAllowExtendedEvents);
+
+    bool hideStatusBar() const;
+    void setHideStatusBar(bool newHideStatusBar);
 
 protected:
     void mousePressEvent(QMouseEvent*) override;
@@ -45,6 +49,7 @@ signals:
     void goBack();
 
     void allowExtendedEventsChanged();
+    void hideStatusBarChanged();
 
 private slots:
     void touchEventHandler(QEvent* event);
@@ -57,6 +62,7 @@ private:
     bool m_mouseEventTriggered;
     QPointF m_firstPoint;
     bool m_allowExtendedEvents;
+    bool m_hideStatusBar;
 };
 
 #endif // NEMOWINDOW_H

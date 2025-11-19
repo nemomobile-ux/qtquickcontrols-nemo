@@ -29,7 +29,7 @@ public:
     QPixmap requestPixmap(const QString& id, QSize* size, const QSize& requestedSize);
 
 private:
-    MLocalThemeDaemonClient* m_client;
+    std::shared_ptr<MLocalThemeDaemonClient> m_client;
 };
 
 #endif // NEMOIMAGEPROVIDER_H

@@ -171,8 +171,8 @@ private:
     void loadDefaultValue();
     void setThemeValues();
 
-    MDConfItem* m_dpScaleFactorValue;
-    MDConfItem* m_themeValue;
+    std::shared_ptr<MDConfItem> m_dpScaleFactorValue;
+    std::shared_ptr<MDConfItem> m_themeValue;
     float m_mmScaleFactor;
     float m_dpScaleFactor;
 };

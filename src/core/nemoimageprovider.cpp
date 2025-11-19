@@ -21,7 +21,7 @@
 
 NemoImageProvider::NemoImageProvider()
     : QQuickImageProvider(QQuickImageProvider::Image)
-    , m_client(new MLocalThemeDaemonClient())
+    , m_client(std::make_shared<MLocalThemeDaemonClient>())
 {
 }
 

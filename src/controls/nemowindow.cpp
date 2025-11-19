@@ -28,6 +28,7 @@ NemoWindow::NemoWindow(QWindow* parent)
     , m_mousePressed(false)
     , m_mouseEventTriggered(false)
     , m_firstPoint(QPointF())
+    , m_hideStatusBar(false)
 {
     if (qEnvironmentVariableIsSet("NEMO_DISABLE_EXTENDED_EVENTS")) {
         m_allowExtendedEvents = false;
@@ -111,4 +112,17 @@ void NemoWindow::setAllowExtendedEvents(bool newAllowExtendedEvents)
     }
     m_allowExtendedEvents = newAllowExtendedEvents;
     emit allowExtendedEventsChanged();
+}
+
+bool NemoWindow::hideStatusBar() const
+{
+    return m_hideStatusBar;
+}
+
+void NemoWindow::setHideStatusBar(bool newHideStatusBar)
+{
+    if (m_hideStatusBar == newHideStatusBar)
+        return;
+    m_hideStatusBar = newHideStatusBar;
+    emit hideStatusBarChanged();
 }

@@ -35,38 +35,38 @@ Theme::Theme(QObject* parent)
 {
 #ifndef UNIT_TEST
     // All sizes we get from LipstickSettings::exportScreenProperties()
-    MDConfItem* physicalDotsPerInchConf = new MDConfItem("/lipstick/screen/primary/physicalDotsPerInch");
-    if (physicalDotsPerInchConf->value().isNull()) {
+    MDConfItem physicalDotsPerInchConf("/lipstick/screen/primary/physicalDotsPerInch");
+    if (physicalDotsPerInchConf.value().isNull()) {
         QScreen* primaryScreen = QGuiApplication::primaryScreen();
-        physicalDotsPerInchConf->set(primaryScreen->physicalDotsPerInch());
-        physicalDotsPerInchConf->sync();
+        physicalDotsPerInchConf.set(primaryScreen->physicalDotsPerInch());
+        physicalDotsPerInchConf.sync();
     }
 #endif
 
 #ifndef UNIT_TEST
-    m_dpScaleFactorValue = new MDConfItem(QStringLiteral("/nemo/apps/libglacier/dpScaleFactor"));
+    m_dpScaleFactorValue = std::make_shared<MDConfItem>(QStringLiteral("/nemo/apps/libglacier/dpScaleFactor"));
     m_dpScaleFactor = m_dpScaleFactorValue->value("1").toFloat();
 #else
     m_dpScaleFactor = 1;
 #endif
 
 #ifndef UNIT_TEST
-    MDConfItem* dpi = new MDConfItem("/lipstick/screen/primary/physicalDotsPerInch");
-    m_mmScaleFactor = dpi->value("1").toReal() / 2.45 / 10;
+    MDConfItem dpi("/lipstick/screen/primary/physicalDotsPerInch");
+    m_mmScaleFactor = dpi.value("1").toReal() / 2.45 / 10;
 #else
     m_mmScaleFactor = 1;
 #endif
     loadDefaultValue();
 
 #ifndef UNIT_TEST
-    m_themeValue = new MDConfItem(QStringLiteral("/nemo/apps/libglacier/themePath"));
+    m_themeValue = std::make_shared<MDConfItem>(QStringLiteral("/nemo/apps/libglacier/themePath"));
     m_theme = m_themeValue->value("/usr/share/themes/nemo.json").toString();
 
-    connect(m_themeValue, &MDConfItem::valueChanged, this, &Theme::themeValueChanged);
-    connect(dpi, &MDConfItem::valueChanged, this, &Theme::setThemeValues);
-    connect(physicalDotsPerInchConf, &MDConfItem::valueChanged, this, &Theme::setThemeValues);
+    connect(m_themeValue.get(), &MDConfItem::valueChanged, this, &Theme::themeValueChanged);
+    connect(&dpi, &MDConfItem::valueChanged, this, &Theme::setThemeValues);
+    connect(&physicalDotsPerInchConf, &MDConfItem::valueChanged, this, &Theme::setThemeValues);
 
-    connect(m_dpScaleFactorValue, &MDConfItem::valueChanged, [=]() {
+    connect(m_dpScaleFactorValue.get(), &MDConfItem::valueChanged, [=]() {
         float newDpScaleFactor = m_dpScaleFactorValue->value("0").toFloat();
         if (newDpScaleFactor != m_dpScaleFactor) {
             m_dpScaleFactor = newDpScaleFactor;

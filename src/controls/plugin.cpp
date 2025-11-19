@@ -34,7 +34,7 @@ QObject* getNemoFocus(QQmlEngine* engine, QJSEngine* scriptEngine)
     Q_UNUSED(engine)
     Q_UNUSED(scriptEngine)
 
-    return NemoFocusSingleton::instance();
+    return NemoFocusSingleton::instance().get();
 }
 
 void QQuickNemoControlsExtensionPlugin::registerTypes(const char* uri)
