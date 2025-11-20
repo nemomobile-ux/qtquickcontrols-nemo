@@ -1,3 +1,5 @@
+set(PROJECT nemocontrolsplugin)
+
 set(SRC
     ringindicator.cpp
     filteringmousearea.cpp
@@ -32,7 +34,6 @@ set(QML
     qml/GlacierRollerItem.qml
     qml/GlacierRoller.qml
     qml/Header.qml
-
     qml/HeaderToolsLayout.qml
     qml/IconButton.qml
     qml/Label.qml
@@ -49,12 +50,12 @@ set(QML
     qml/TimePicker.qml
     qml/ToolButton.qml)
 
-add_library(nemocontrolsplugin SHARED ${SRC} ${MLITE})
+add_library(${PROJECT} SHARED ${SRC} ${MLITE})
 
-qt6_add_qml_module(nemocontrolsplugin
+qt6_add_qml_module(${PROJECT}
     URI Nemo.Controls
     VERSION 2.0
-    PLUGIN_TARGET nemocontrolsplugin
+    PLUGIN_TARGET ${PROJECT}
     NO_GENERATE_PLUGIN_SOURCE
     SOURCES
         ${SOURCES}
@@ -65,7 +66,18 @@ qt6_add_qml_module(nemocontrolsplugin
         ${CMAKE_BINARY_DIR}/Nemo/Controls
 )
 
-qt6_add_shaders(nemocontrolsplugin "shaders"
+qt6_add_resources(${PROJECT}
+    PREFIX "images"
+    FILES
+        images/disabled-overlay-inverse.png
+        images/disabled-overlay.png
+        images/glacierroller-icon-arrow-down.svg
+        images/listview-icon-arrow.svg
+        images/listview-icon-template-s.svg
+        images/no-icon.png
+)
+
+qt6_add_shaders(${PROJECT} "shaders"
     BATCHABLE
     PRECOMPILE
     OPTIMIZED
@@ -75,13 +87,13 @@ qt6_add_shaders(nemocontrolsplugin "shaders"
         "qml/shaders/NemoIcon.frag"
     )
 
-target_link_libraries(nemocontrolsplugin PUBLIC
+target_link_libraries(${PROJECT} PUBLIC
     Qt6::Core
     Qt6::Qml
     Qt6::Quick
     PkgConfig::MLITE)
 
-install(TARGETS nemocontrolsplugin
+install(TARGETS ${PROJECT}
     RUNTIME DESTINATION "${QT_INSTALL_QML}/Nemo/Controls"
     BUNDLE DESTINATION "${QT_INSTALL_QML}/Nemo/Controls"
     LIBRARY DESTINATION "${QT_INSTALL_QML}/Nemo/Controls"

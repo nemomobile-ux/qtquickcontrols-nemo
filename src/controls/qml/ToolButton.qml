@@ -37,7 +37,7 @@ import Nemo.Controls
 
 Item {
     id: toolButton
-    property string iconSource: "images/no-icon.png"
+    property string iconSource: "qrc://images/no-icon.png"
     property bool showCounter: false
     property bool showZeroCounter: false
     property bool active: false
@@ -55,7 +55,7 @@ Item {
         anchors.centerIn: parent
         fillMode: Image.PreserveAspectFit
         anchors.margins: Theme.itemSpacingExtraSmall
-        source: "qrc://" + toolButton.iconSource + "?" + ( active ? Theme.accentColor : Theme.textColor)
+        source: toolButton.iconSource + "?" + ( active ? Theme.accentColor : Theme.textColor)
     }
 
     Rectangle{
