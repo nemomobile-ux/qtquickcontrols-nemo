@@ -52,7 +52,7 @@ Item {
 
         sourceSize.width: width
         sourceSize.height: height
-        source: (icon != "") ? icon : iconVisible ? "images/listview-icon-template-s.svg" : ""
+        source: (icon != "") ? icon : iconVisible ? "qrc://images/listview-icon-template-s.svg" : ""
         fillMode: Image.PreserveAspectFit
     }
 
@@ -242,7 +242,7 @@ Item {
             sourceSize.width: width
             sourceSize.height: height
 
-            source: "images/listview-icon-arrow.svg?" + Theme.textColor
+            source: "qrc://images/listview-icon-arrow.svg?" + Theme.textColor
             visible: showNext
         }
 
