@@ -60,7 +60,8 @@ class Theme : public QObject {
     Q_PROPERTY(int fontWeightLarge READ fontWeightLarge NOTIFY themeUpdated)
     Q_PROPERTY(int fontWeightMedium READ fontWeightMedium NOTIFY themeUpdated)
 
-    Q_PROPERTY(QString fontPath READ fontPath NOTIFY themeUpdated)
+    Q_PROPERTY(QString fontFamily READ fontFamily NOTIFY themeUpdated)
+    Q_PROPERTY(QString fontStyleName READ fontStyleName NOTIFY themeUpdated)
 
     Q_PROPERTY(QString accentColor READ accentColor NOTIFY themeUpdated)
     Q_PROPERTY(QString fillColor READ fillColor NOTIFY themeUpdated)
@@ -105,7 +106,8 @@ public:
     int fontWeightLarge() const { return m_fontWeightLarge * m_dpScaleFactor; }
     int fontWeightMedium() const { return m_fontWeightMedium * m_dpScaleFactor; }
 
-    QString fontPath() const { return m_fontPath; }
+    QString fontFamily() const { return m_fontFamily; }
+    QString fontStyleName() const { return m_fontStyleName; }
 
     QString accentColor() const { return m_accentColor; }
     QString fillColor() const { return m_fillColor; }
@@ -157,7 +159,8 @@ private:
     int m_fontSizeTiny; // 16
     int m_fontWeightLarge; // 63
     int m_fontWeightMedium; // 25
-    QString m_fontPath; //???
+    QString m_fontFamily; // OpenSans
+    QString m_fontStyleName; // Regular
 
     QString m_accentColor; // #0091e5
     QString m_fillColor; // #474747

@@ -77,10 +77,8 @@ Item {
 
     Label {
         id: titleTxt
-        FontLoader {
-            id: localFont
-            source: "file://"+Theme.fontPath
-        }
+        font.family: Theme.fontFamily
+        font.styleName: Theme.fontStyleName
         anchors{
             right: toolButtonsContainer.left
             left: backButton.visible ? backButton.right : parent.left

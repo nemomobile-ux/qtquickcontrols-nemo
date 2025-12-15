@@ -78,12 +78,8 @@ Item {
 
         Text {
             id: counterText
-            FontLoader {
-                id: localFont
-                source: "file://"+Theme.fontPath
-            }
-            font.family: localFont.font.family
-            font.styleName: localFont.font.styleName
+            font.family: Theme.fontFamily
+            font.styleName: Theme.fontStyleName
 
             text: toolButton.counterValue >= 100 ? "99+" : toolButton.counterValue
             color: Theme.textColor

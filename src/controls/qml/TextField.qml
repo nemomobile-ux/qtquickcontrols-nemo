@@ -41,14 +41,9 @@ TextField {
     selectedTextColor: Theme.textColor
     selectionColor: Theme.accentColor
     font.pixelSize: Theme.fontSizeMedium
-    font.family: localFont.font.family
-    font.styleName: localFont.font.styleName
+    font.family: Theme.fontFamily
+    font.styleName: Theme.fontStyleName
     placeholderTextColor: Theme.fillColor
-
-    FontLoader {
-        id: localFont
-        source: "file://"+Theme.fontPath
-    }
 
     onActiveFocusChanged: {
         if(activeFocus) {

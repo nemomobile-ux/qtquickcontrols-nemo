@@ -97,19 +97,14 @@ Button {
 
     // The label of the button.
     contentItem: Text {
-        FontLoader {
-            id: localFont
-            source: "file://"+Theme.fontPath
-        }
-
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         text: control.text
         color: Theme.textColor
         font.pixelSize: Theme.fontSizeMedium
         font.weight: control.primary ? Theme.fontWeightLarge : Theme.fontWeightMedium
-        font.family: localFont.font.family
-        font.styleName: localFont.font.styleName
+        font.family: Theme.fontFamily
+        font.styleName: Theme.fontStyleName
         opacity: control.enabled ? 1.0 : 0.7
     }
 }

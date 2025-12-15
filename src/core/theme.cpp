@@ -168,15 +168,8 @@ void Theme::setThemeValues()
     m_fontSizeTiny = floor(theme.value("fontSizeTiny").toInt());
     m_fontWeightLarge = theme.value("fontWeightLarge").toInt();
     m_fontWeightMedium = theme.value("fontWeightMedium").toInt();
-
-    QFile fontFile;
-    fontFile.setFileName(theme.value("fontPath").toString());
-    if (!themeFile.exists()) {
-        qCWarning(lcNemoControlsCoreLog) << "Font file " << fontFile.fileName() << " not found";
-    } else {
-        m_fontPath = theme.value("fontPath").toString();
-        updated = true;
-    }
+    m_fontFamily = theme.value("fontFamily").toString();
+    m_fontStyleName = theme.value("fontStyleName").toString();
     m_accentColor = theme.value("accentColor").toString();
     m_fillColor = theme.value("fillColor").toString();
     m_fillDarkColor = theme.value("fillDarkColor").toString();
@@ -225,7 +218,8 @@ void Theme::loadDefaultValue()
     m_fontSizeTiny = 14;
     m_fontWeightLarge = 63;
     m_fontWeightMedium = 25;
-    m_fontPath = "/usr/share/fonts/google-opensans/OpenSans-Regular.ttf";
+    m_fontFamily = "OpenSans";
+    m_fontStyleName = "Regular";
 
     m_accentColor = "#0091e5";
     m_fillColor = "#474747";

@@ -67,7 +67,8 @@ void Ut_CoreTheme::checkThemeValues()
     QCOMPARE(21, theme->fontSizeTiny());
     QCOMPARE(22, theme->fontWeightLarge());
     QCOMPARE(23, theme->fontWeightMedium());
-    QCOMPARE("AwesomeFont", theme->fontPath());
+    QCOMPARE("AwesomeFont", theme->fontFamily());
+    QCOMPARE("AwesomeStyle", theme->fontStyleName());
     QCOMPARE("#000000", theme->accentColor());
     QCOMPARE("#111111", theme->fillColor());
     QCOMPARE("#222222", theme->fillDarkColor());

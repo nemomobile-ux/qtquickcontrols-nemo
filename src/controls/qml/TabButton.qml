@@ -54,12 +54,8 @@ TabButton {
     }
 
     contentItem: Text {
-        FontLoader {
-            id: localFont
-            source: "file://"+Theme.fontPath
-        }
-        font.family: localFont.font.family
-        font.styleName: localFont.font.styleName
+        font.family: Theme.fontFamily
+        font.styleName: Theme.fontStyleName
         anchors.fill: parent
         color: (control.checked) ? Theme.accentColor : Theme.textColor
         text: control.text.toUpperCase()

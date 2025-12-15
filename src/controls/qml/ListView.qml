@@ -52,12 +52,8 @@ ListView {
             Text {
                 id: sectionText
                 text: section
-                FontLoader {
-                    id: localFont
-                    source: Theme.fontPath
-                }
-                font.family: localFont.font.family
-                font.styleName: localFont.font.styleName
+                font.family: Theme.fontFamily
+                font.styleName: Theme.fontStyleName
                 font.capitalization: Font.AllUppercase
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.textColor
