@@ -24,7 +24,7 @@
 
 class NemoFocusSingleton : public QObject {
     Q_OBJECT
-    Q_DISABLE_COPY(NemoFocusSingleton)    
+    Q_DISABLE_COPY(NemoFocusSingleton)
 
 public:
     NemoFocusSingleton(QObject* parent = nullptr);

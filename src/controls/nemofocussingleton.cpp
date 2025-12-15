@@ -21,14 +21,14 @@
 
 static std::shared_ptr<NemoFocusSingleton> _instance = nullptr;
 
-NemoFocusSingleton::NemoFocusSingleton(QObject *parent)
-    :m_edit(nullptr)
+NemoFocusSingleton::NemoFocusSingleton(QObject* parent)
+    : m_edit(nullptr)
 {
 }
 
 void NemoFocusSingleton::nemoregister(QObject* edit)
 {
-    if(edit != nullptr) {
+    if (edit != nullptr) {
         m_edit = std::make_shared<QObject>(edit);
     }
 }
