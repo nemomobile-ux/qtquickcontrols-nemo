@@ -62,6 +62,8 @@ if(BUILD_CONTROLS)
     add_subdirectory(src)
 endif()
 
-add_subdirectory(tests)
+if(BUILD_TESTS)
+    add_subdirectory(tests)
+endif()
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
