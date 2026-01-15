@@ -65,7 +65,7 @@ TextField {
         Image {
             anchors.fill: parent
             visible: !control.enabled
-            source: "qrc://images/disabled-overlay-inverse.png"
+            source: "qrc:///images/disabled-overlay-inverse.png"
             fillMode: Image.Tile
         }
         Rectangle {

@@ -37,7 +37,7 @@ import Nemo.Controls
 
 Item {
     id: toolButton
-    property string iconSource: "qrc://images/no-icon.png"
+    property string iconSource: "qrc:///images/no-icon.png"
     property bool showCounter: false
     property bool showZeroCounter: false
     property bool active: false

@@ -38,7 +38,7 @@ Rectangle{
 
     Image{
         id: arrowDown
-        source: "qrc://images/glacierroller-icon-arrow-down.svg"
+        source: "qrc:///images/glacierroller-icon-arrow-down.svg"
         height: parent.height / 3
         sourceSize.width: width
         sourceSize.height: height

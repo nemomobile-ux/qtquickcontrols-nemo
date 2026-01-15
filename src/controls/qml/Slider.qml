@@ -52,7 +52,7 @@ Slider {
             id: disabledImg
             anchors.fill: parent
             visible: !control.enabled
-            source: "qrc://images/disabled-overlay.png"
+            source: "qrc:///images/disabled-overlay.png"
             fillMode: Image.Tile
         }
     }
