@@ -1,6 +1,6 @@
 /****************************************************************************************
 **
-** Copyright (C) 2019-2026 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2026 Chupligin Sergey <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -30,19 +30,34 @@
 ****************************************************************************************/
 
 import QtQuick
-import QtQuick.Effects
+import QtQuick.Controls
 
 import Nemo
+import Nemo.Controls
 
-Image {
-    id: nemoIcon
-    property bool colorized: true
-    property color color: Theme.textColor
+Page {
+    id: root
 
-    MultiEffect {
-        source: nemoIcon
-        anchors.fill: parent
-        colorization: 1
-        colorizationColor: nemoIcon.color
+    headerTools: HeaderToolsLayout {
+        showBackButton: true;
+        title: qsTr("Nemo Icons")
+    }
+    allowedOrientations: Qt.PortraitOrientation | Qt.LandscapeOrientation | Qt.InvertedLandscapeOrientation | Qt.InvertedPortraitOrientation
+
+    Column {
+        spacing: Theme.itemSpacingMedium
+        anchors.centerIn: parent
+        //fontawesome
+        NemoIcon {
+            source: "image://theme/compass"
+            color: "blue"
+        }
+        //fontawesome
+        NemoIcon {
+            width: height
+            height: Theme.itemHeightExtraLarge
+            source: "image://theme/bell"
+            color: "red"
+        }
     }
 }

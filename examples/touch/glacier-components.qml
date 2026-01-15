@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
-** Copyright (C) 2017-2025 Chupligin Sergey <neochapay@gmail.com>
+** Copyright (C) 2017-2026 Chupligin Sergey <neochapay@gmail.com>
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the Qt Quick Controls module of the Qt Toolkit.
@@ -134,8 +134,12 @@ ApplicationWindow {
             page: "content/DialogsPage.qml"
         }
         ListElement {
-            title: qsTr("Icons")
+            title: qsTr("Icon button")
             page: "content/IconPage.qml"
+        }
+        ListElement {
+            title: qsTr("Nemo colorized icon")
+            page: "content/NemoIconPage.qml"
         }
         ListElement {
             title: qsTr("Notifications")

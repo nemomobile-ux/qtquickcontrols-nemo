@@ -77,16 +77,6 @@ qt6_add_resources(${PROJECT}
         images/no-icon.png
 )
 
-qt6_add_shaders(${PROJECT} "shaders"
-    BATCHABLE
-    PRECOMPILE
-    OPTIMIZED
-    PREFIX
-        "/"
-    FILES
-        "qml/shaders/NemoIcon.frag"
-    )
-
 target_link_libraries(${PROJECT} PUBLIC
     Qt6::Core
     Qt6::Qml

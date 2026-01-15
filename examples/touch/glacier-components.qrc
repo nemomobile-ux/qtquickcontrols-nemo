@@ -23,5 +23,6 @@
         <file>content/RingIndicatorPage.qml</file>
         <file>images/example.jpg</file>
         <file>images/textinput.png</file>
+        <file>content/NemoIconPage.qml</file>
     </qresource>
 </RCC>
