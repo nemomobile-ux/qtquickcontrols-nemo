@@ -1,7 +1,7 @@
 /****************************************************************************************
 **
 ** Copyright (C) 2013 Lucien Xu <sfietkonstantin@free.fr>
-** Copyright (C) 2023-2025 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
+** Copyright (C) 2023-2026 Chupligin Sergey (NeoChapay) <neochapay@gmail.com>
 ** All rights reserved.
 **
 ** You may use this file under the terms of BSD license as follows:
@@ -72,6 +72,7 @@ Item {
             to: ""
 
             SequentialAnimation {
+                id: animation
                 PropertyAction { target: animations; property: "running"; value: false }
                 PropertyAnimation {
                     targets: [circle0, circle1, circle2, circle3]
