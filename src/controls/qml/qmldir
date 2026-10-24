@@ -6,7 +6,7 @@ ApplicationWindow 2.0 ApplicationWindow.qml
 Page 2.0 Page.qml
 Spinner 2.0 Spinner.qml
 Label 2.0 Label.qml
-CheckBox 2.0 Checkbox.qml
+CheckBox 2.0 CheckBox.qml
 ButtonRow 2.0 ButtonRow.qml
 Header 2.0 Header.qml
 HeaderToolsLayout 2.0 HeaderToolsLayout.qml

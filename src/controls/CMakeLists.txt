@@ -28,7 +28,7 @@ set(QML
     qml/ApplicationWindow.qml
     qml/Button.qml
     qml/ButtonRow.qml
-    qml/Checkbox.qml
+    qml/CheckBox.qml
     qml/DatePicker.qml
     qml/ErrorStackPage.qml
     qml/GlacierRollerItem.qml
