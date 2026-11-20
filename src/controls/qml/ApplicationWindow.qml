@@ -48,14 +48,13 @@ NemoWindow {
 
     function _isSideBySideMainMenuVisible() {
         // When the main menu is shown as a persistent side panel (visible but not full-screen),
-        // navigation replaces the current content page instead of pushing a new stack entry.
-        // This keeps the side menu and content area consistent in split-view layouts.
+        // navigation switches the content page while keeping the side menu visible.
         return mainMenuArea.width > 0 && mainMenuArea.width < applicationWindow.width
     }
 
     // Safe wrappers for StackView navigation:
     // - load/create failures show ErrorStackPage instead of passing an invalid item to the stack
-    // - push() behaves like replace() while a side-by-side main menu is visible
+    // - while a side-by-side main menu is visible, push() switches content (push from root, replace thereafter) so the root item remains available for back/up navigation in portrait
     function push(url, params) {
         if (!params) {
             params = {}
@@ -69,7 +68,15 @@ NemoWindow {
                     console.warn("Error creating object from component", url, component.errorString())
                     pageStack.push(Qt.resolvedUrl("ErrorStackPage.qml"), {error: component.errorString()})
                 } else if (_isSideBySideMainMenuVisible()) {
-                    pageStack.replace(page)
+                    // In side-by-side mode the menu stays visible as a panel, so navigation
+                    // switches the content view. Keep the root item below the selected content
+                    // (push from depth 1, replace thereafter) to preserve back/up navigation
+                    // when switching to portrait.
+                    if (pageStack.depth <= 1) {
+                        pageStack.push(page)
+                    } else {
+                        pageStack.replace(page)
+                    }
                 } else {
                     pageStack.push(page)
                 }
