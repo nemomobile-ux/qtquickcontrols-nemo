@@ -38,6 +38,11 @@ import Nemo.Models
 Item {
     id: datePicker
 
+    width: parent ? parent.width : implicitWidth
+    implicitWidth: Theme.itemWidthLarge + Theme.itemWidthSmall
+    implicitHeight: header.height + Theme.itemSpacingSmall + weekDays.height + Theme.itemSpacingSmall + daysGrid.height
+    height: implicitHeight
+
     property date currentDate: new Date()
     property bool showForwardButton: true
     property bool showBackButton: true
@@ -45,7 +50,7 @@ Item {
     property alias weekDaysDelegate: weekendListView.delegate
     property alias selectedDate: calendarModel.selectedDate
 
-    property var monthNames: [qsTr("January"), qsTr("February"), qsTr("March"), qsTr("April"), qsTr("May"), qsTr("June"),qsTr("July"), qsTr("August"), qsTr("September"), qsTr("October"), qsTr("November"), qsTr("December")];
+    property var monthNames: [qsTr("January"), qsTr("February"), qsTr("March"), qsTr("April"), qsTr("May"), qsTr("June"), qsTr("July"), qsTr("August"), qsTr("September"), qsTr("October"), qsTr("November"), qsTr("December")]
 
     signal monthChanged()
     signal dateSelect(var date)

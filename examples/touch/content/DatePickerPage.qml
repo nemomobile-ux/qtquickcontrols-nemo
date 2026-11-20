@@ -45,7 +45,10 @@ Page {
 
     DatePicker{
         id: datePicker
-        anchors.fill: parent
+        anchors {
+            fill: parent
+            margins: Theme.itemSpacingSmall
+        }
         onDateSelect: {
             currentDate = date
         }
