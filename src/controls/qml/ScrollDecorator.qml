@@ -38,17 +38,17 @@ import Nemo.Controls
 Rectangle{
     id: scroolDecorator
 
-    property var flickable
+    property var flickable: null
 
     visible: flickable ? (flickable.contentHeight > flickable.height) : false
     color: Theme.accentColor
 
     width: Theme.itemSpacingExtraSmall
-    height: visible ? flickable.height*flickable.height/flickable.contentHeight : 0
-    y: visible ? (flickable.height)/flickable.contentHeight*flickable.contentY : 0
+    height: flickable && flickable.contentHeight > 0 ? (flickable.height * flickable.height / flickable.contentHeight) : 0
+    y: flickable && flickable.contentHeight > 0 ? ((flickable.height) / flickable.contentHeight * flickable.contentY) : 0
 
     anchors{
-        right: visible ? flickable.right : undefined
+        right: flickable ? flickable.right : undefined
         rightMargin: Theme.itemSpacingExtraSmall / 2
     }
 }
