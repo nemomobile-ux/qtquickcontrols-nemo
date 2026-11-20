@@ -5,6 +5,7 @@ import Nemo.Controls
 Item {
     id: shell
     anchors.fill: parent
+    visible: false
     signal accepted()
     signal canceled()
 
