@@ -102,13 +102,12 @@ void InverseMouseArea::resetFilterOnWindowUpdate(QQuickWindow* win)
 
 bool InverseMouseArea::contains(const QPointF& point) const
 {
-    if (!m_active) {
+    if (!m_active || !parentItem()) {
         return false;
     }
 
-    QPointF scenePos = mapToItem(parentItem(), point);
-    QPointF global = parentItem()->mapToScene(QPointF(0, 0));
+    const QPointF scenePos = mapToScene(point);
+    const QPointF parentTopLeft = parentItem()->mapToScene(QPointF(0, 0));
 
-    bool cont = QRectF(global.x(), global.y(), parentItem()->width(), parentItem()->height()).contains(scenePos);
-    return cont;
+    return QRectF(parentTopLeft, QSizeF(parentItem()->width(), parentItem()->height())).contains(scenePos);
 }
