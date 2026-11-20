@@ -141,7 +141,7 @@ Item {
         else
         {
             deActivateAnimations.start()
-            view.positionViewAtIndex(currentIndex,ListView.SnapPosition)
+            view.positionViewAtIndex(currentIndex, PathView.Center)
         }
     }
 
