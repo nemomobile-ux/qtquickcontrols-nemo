@@ -21,14 +21,16 @@ Item {
     property alias model: selectionListView.model
     property int selectedIndex: -1
 
-    property Component delegate: ListViewItemWithActions{
-        label: name
-        showNext: false
-        iconVisible: false
-        selected: selectedIndex == index
+    property Component delegate: Component {
+        ListViewItemWithActions {
+            label: name
+            showNext: false
+            iconVisible: false
+            selected: shell.selectedIndex == index
 
-        onClicked: {
-            shell.selectedIndex = index
+            onClicked: {
+                shell.selectedIndex = index
+            }
         }
     }
 
