@@ -121,7 +121,7 @@ Rectangle {
                 Label {
                     id: text
                     text: name
-                    height: parent.heigh
+                    height: parent.height
                     elide:Text.ElideNone
                     anchors.centerIn: parent
 
