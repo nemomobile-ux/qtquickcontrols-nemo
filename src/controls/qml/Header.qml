@@ -146,15 +146,167 @@ Item {
         id: toolBarRect
         anchors.bottom: parent.bottom
         anchors.right: parent.right
-        //This is item which holds the toolbar and rotates with the UI
-        Item {
-            id: toolBarContainer
-            //no anchors here, as we're using the rotation to change between portrait/landscape modes
-            width: appWindow.isUiPortrait ? parent.width : parent.height
-            height: appWindow.isUiPortrait ? parent.height : parent.width
-            anchors.centerIn: parent
-            data: toolBarLayout ? toolBarLayout : null
-            rotation: appWindow.isUiPortrait ? 0 : -90
+
+        //TODO: Check if changing this FilteringMouseArea->MouseArea has any side effects
+        MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            property bool swiping: false
+            property int swipeThreshold: 10
+            property int gestureThreshold: drawer.width / 3 //this is only used in landscape
+            //container coordinate (x OR y, depending on UI orientation) relative to the parent
+            //of the header
+            property int startCoord: 0
+            //mouse coordinate (x OR y, depending on UI orientation) relative to the parent
+            //of the header
+            property int startMouseCoord: 0
+            property int deltaCoord: 0
+
+            //This is item which holds the toolbar and rotates with the UI
+            Item {
+                id: toolBarContainer
+                //no anchors here, as we're using the rotation to change between portrait/landscape modes
+                width: appWindow.isUiPortrait ? parent.width : parent.height
+                height: appWindow.isUiPortrait ? parent.height : parent.width
+                anchors.centerIn: parent
+                data: toolBarLayout ? toolBarLayout : null
+                rotation: appWindow.isUiPortrait ? 0 : -90
+            }
+
+            onPressed: {
+                if (swiping) {
+                    console.log("[HEADER] Swiping enabled in onPressed, report this.")
+                    swiping = false
+                }
+
+                if (appWindow.isUiPortrait) {
+                    startMouseCoord = (mouseY + header.y)
+                    startCoord = header.y
+                } else { //assuming that otherwise we're in landscape...is this safe?
+                    startMouseCoord = (mouseX + header.x)
+                    startCoord = header.x
+                }
+            }
+
+            onPositionChanged: {
+                if (appWindow.isUiPortrait) {
+                    deltaCoord = (mouseY + header.y) - startMouseCoord
+                    if (Math.abs(deltaCoord) > swipeThreshold && !swiping) { swiping = true; }
+
+                    if (swiping) {
+                        var swipingY = startCoord + deltaCoord
+                        if ( swipingY > 0) {
+                            header.y = Math.sqrt(swipingY)
+                        } else {
+                            if (swipingY < header.closedY) header.y = header.closedY
+                            else header.y = swipingY
+                        }
+                    }
+                } else {
+                    deltaCoord = (mouseX + header.x) - startMouseCoord
+                    if (Math.abs(deltaCoord) > swipeThreshold && !swiping) { swiping = true; }
+                    if (swiping) {
+                        //this is the coord that the drawer would be at if it were following our finger
+                        var swipingX = startCoord + deltaCoord
+                        //if the left/top side of the drawer is entering the screen, pull the breaks!
+                        //quadratic slowdown effect
+                        if ( swipingX > 0) {
+                            header.x = Math.sqrt(swipingX)
+                        } else {
+                            //don't let the toolbar go out of screen
+                            if (swipingX < header.closedX) header.x = header.closedX
+                            else header.x = swipingX
+                        }
+                    }
+                }
+            }
+
+            onReleased: {
+                if (appWindow.isUiPortrait) {
+                    if (!swiping) {
+                        //Fully Close/Open the drawer
+                        header.slideDrawerTo((header.y == header.closedY) ? 0 : header.closedY)
+                    } else {
+                        //this is the y at the top of the screen, relative to the header dock (header)
+                        var topY = -header.y
+
+                        //We cannot use QML's childAt because it requires both x and y
+                        //and we don't have an x to provide (and it wouldn't make sense to have one,
+                        //given the current specced behaviour of the header)
+                        var item = drawer.getItemAt(topY)
+
+                        //item is undefined when there's no item at the y of the top edge of the screen
+                        //(this happens for example when you pull down the drawer so that its y is > 0)
+                        if (item == undefined) {
+                            //if the drawer is closed or half open, we open it totally.
+                            //if it was opened already, we close it ("pull down to close" feature)
+                            header.slideDrawerTo(startCoord == 0 ? header.closedY : 0)
+                        } else {
+                            header.slideDrawerTo(((topY - item.y) <= (speedBumpThreshold * item.height)) ? -item.y : -(item.y + item.height))
+                        }
+                    }
+                } else {
+                    if (!swiping) {
+                        //Fully Close/Open the drawer
+                        header.slideDrawerTo((header.x == header.closedX) ? 0 : header.closedX)
+                    } else {
+                        deltaCoord = (mouseX + header.x) - startMouseCoord
+                        if (deltaCoord > gestureThreshold) {
+                            header.slideDrawerTo(startCoord < 0 ? 0 : closedX)
+                        } else if (deltaCoord < -gestureThreshold){
+                            header.slideDrawerTo(closedX)
+                        } else { //i.e (-gestureThreshold <= deltaCoord <= gestureThreshold)
+                            header.slideDrawerTo((startCoord === header.closedX) ? header.closedX : 0)
+                        }
+                    }
+
+                }
+                swiping = false
+            }
+        }
+
+        HeaderToolsIndicator{
+            id: toolsIndicator
+            width: parent.width
+            height: Theme.itemHeightExtraSmall/8
+            anchors.top: parent.top
+            visible: drawerContainer.height > 0 && -header.y == drawerContainer.height
+            stackView: header.stackView
+        }
+    }
+
+    Item {
+        id: drawerContainer
+
+        Binding on width {
+            restoreMode: Binding.RestoreBinding
+            value: drawer.width
+            when: !appWindow.isUiPortrait
+        }
+        Binding on height {
+            restoreMode: Binding.RestoreBinding
+            value: drawer.height
+            when: appWindow.isUiPortrait
+        }
+
+        Column {
+            id: drawer
+
+            //NOTE: if you set the spacing to something != 0 then you have to rewrite the logic which handles drawer speedbumps,
+            //which currently relies on "spacing" being 0
+            spacing: 0
+
+            function getItemAt(y) {
+                //skip the first child, which is the toolbar
+                for (var i=0; i < children.length; i++) {
+                    if (y >=children[i].y && y <= (children[i].y + children[i].height))
+                        return children[i]
+                }
+            }
+
+            children: if (toolBarLayout) {
+                          toolBarLayout.drawerLevels
+                      }
         }
     }
 }
