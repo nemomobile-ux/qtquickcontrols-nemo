@@ -117,6 +117,7 @@ public:
     QString backgroundAccentColor() const { return m_backgroundAccentColor; }
     qreal iconSizeLauncher() const { return m_iconSizeLauncher; }
     QString themePath() const { return m_theme; }
+    qreal itemWidthExtraLarge() const { return m_itemWidthExtraLarge; }
 
     float mmScaleFactor() const;
     float dpScaleFactor() const;
