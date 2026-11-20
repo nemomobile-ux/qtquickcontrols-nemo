@@ -21,6 +21,7 @@
 #define NEMOFOCUSSINGLETON_H
 
 #include <QObject>
+#include <QPointer>
 
 class NemoFocusSingleton : public QObject {
     Q_OBJECT
@@ -34,7 +35,8 @@ public:
     static std::shared_ptr<NemoFocusSingleton> instance();
 
 private:
-    std::shared_ptr<QObject> m_edit;
+    QPointer<QObject> m_edit;
+    NemoFocusSingleton(QObject* parent = nullptr) { Q_UNUSED(parent) }
 };
 
 #endif // NEMOFOCUSSINGLETON_H
