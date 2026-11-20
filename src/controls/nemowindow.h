@@ -22,26 +22,32 @@
 #define NEMOWINDOW_H
 
 #include "editfilter.h"
+#include <QPointF>
 #include <QQuickWindow>
 
 class NemoWindow : public QQuickWindow {
     Q_OBJECT
     Q_PROPERTY(bool allowExtendedEvents READ allowExtendedEvents WRITE setAllowExtendedEvents NOTIFY allowExtendedEventsChanged)
-    Q_PROPERTY(bool hideStatusBar READ hideStatusBar WRITE setHideStatusBar NOTIFY hideStatusBarChanged FINAL)
+    Q_PROPERTY(qreal backGestureThreshold READ backGestureThreshold WRITE setBackGestureThreshold NOTIFY backGestureThresholdChanged)
+    Q_PROPERTY(Qt::Edge backGestureEdge READ backGestureEdge WRITE setBackGestureEdge NOTIFY backGestureEdgeChanged)
 
 public:
-    explicit NemoWindow(QWindow* parent = 0);
+    explicit NemoWindow(QWindow* parent = nullptr);
     Qt::ScreenOrientation primaryOrientation() const;
 
     bool allowExtendedEvents() const;
     void setAllowExtendedEvents(bool newAllowExtendedEvents);
 
-    bool hideStatusBar() const;
-    void setHideStatusBar(bool newHideStatusBar);
+    qreal backGestureThreshold() const;
+    void setBackGestureThreshold(qreal threshold);
+
+    Qt::Edge backGestureEdge() const;
+    void setBackGestureEdge(Qt::Edge edge);
 
 protected:
-    void mousePressEvent(QMouseEvent*) override;
-    void mouseReleaseEvent(QMouseEvent*) override;
+    void keyPressEvent(QKeyEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
 
 signals:
@@ -49,20 +55,35 @@ signals:
     void goBack();
 
     void allowExtendedEventsChanged();
-    void hideStatusBarChanged();
+    void backGestureThresholdChanged();
+    void backGestureEdgeChanged();
 
 private slots:
     void touchEventHandler(QEvent* event);
 
 private:
+    enum class GestureInput {
+        None,
+        Mouse,
+        Touch
+    };
+
+    void beginBackGesture(GestureInput input, const QPointF& pos);
+    void updateBackGesture(const QPointF& pos);
+    void finishBackGesture(const QPointF& pos);
+    void cancelBackGesture();
+    bool isWithinBackGestureEdge(const QPointF& pos) const;
+    bool hasReachedBackGestureDistance(const QPointF& pos) const;
+
     EditFilter* m_filter;
     QScreen* m_screen;
 
-    bool m_mousePressed;
-    bool m_mouseEventTriggered;
-    QPointF m_firstPoint;
+    GestureInput m_gestureInput;
+    bool m_gestureTriggered;
+    QPointF m_gestureStartPos;
     bool m_allowExtendedEvents;
-    bool m_hideStatusBar;
+    qreal m_backGestureThreshold;
+    Qt::Edge m_backGestureEdge;
 };
 
 #endif // NEMOWINDOW_H

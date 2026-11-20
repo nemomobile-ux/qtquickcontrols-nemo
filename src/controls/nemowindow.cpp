@@ -19,23 +19,41 @@
  */
 
 #include "nemowindow.h"
+
+#include <QMouseEvent>
 #include <QScreen>
+#include <QTouchEvent>
+
+#include <QtGlobal>
+
+namespace {
+
+qreal clampedGestureThreshold(qreal threshold)
+{
+    if (threshold <= 0.0) {
+        return 0.25;
+    }
+    return qMin(threshold, 1.0);
+}
+
+bool isValidBackGestureEdge(Qt::Edge edge)
+{
+    return edge == Qt::LeftEdge || edge == Qt::RightEdge;
+}
+
+}
 
 NemoWindow::NemoWindow(QWindow* parent)
     : QQuickWindow(parent)
     , m_filter(new EditFilter(this))
     , m_screen(nullptr)
-    , m_mousePressed(false)
-    , m_mouseEventTriggered(false)
-    , m_firstPoint(QPointF())
-    , m_hideStatusBar(false)
+    , m_gestureInput(GestureInput::None)
+    , m_gestureTriggered(false)
+    , m_gestureStartPos()
+    , m_allowExtendedEvents(!qEnvironmentVariableIsSet("NEMO_DISABLE_EXTENDED_EVENTS"))
+    , m_backGestureThreshold(0.25)
+    , m_backGestureEdge(Qt::LeftEdge)
 {
-    if (qEnvironmentVariableIsSet("NEMO_DISABLE_EXTENDED_EVENTS")) {
-        m_allowExtendedEvents = false;
-    } else {
-        m_allowExtendedEvents = true;
-    }
-
     installEventFilter(m_filter);
 
     auto attachScreen = [this](QScreen* newScreen) {
@@ -82,63 +100,67 @@ void NemoWindow::keyPressEvent(QKeyEvent* event)
     QQuickWindow::keyPressEvent(event);
 }
 
-void NemoWindow::mousePressEvent(QMouseEvent*)
+void NemoWindow::mousePressEvent(QMouseEvent* event)
 {
-    m_mousePressed = true;
-    m_mouseEventTriggered = false;
-    m_firstPoint = QPointF();
+    if (!event || event->source() != Qt::MouseEventNotSynthesized) {
+        cancelBackGesture();
+        return;
+    }
+
+    beginBackGesture(GestureInput::Mouse, event->position());
 }
 
-void NemoWindow::mouseReleaseEvent(QMouseEvent*)
+void NemoWindow::mouseReleaseEvent(QMouseEvent* event)
 {
-    m_mousePressed = false;
-    if (m_mouseEventTriggered && allowExtendedEvents()) {
-        emit goBack();
+    if (!event || m_gestureInput != GestureInput::Mouse) {
+        if (event && event->source() != Qt::MouseEventNotSynthesized) {
+            cancelBackGesture();
+        }
+        return;
     }
-    m_mouseEventTriggered = false;
-    m_firstPoint = QPointF();
+
+    finishBackGesture(event->position());
 }
 
 void NemoWindow::mouseMoveEvent(QMouseEvent* event)
 {
-    if (!m_mousePressed || event->points().isEmpty()) {
+    if (!event || m_gestureInput != GestureInput::Mouse) {
         return;
     }
 
-    if (m_firstPoint.isNull()) {
-        m_firstPoint = event->points().first().position();
-    }
-
-    const QPointF currentPos = event->points().first().position();
-    if (currentPos.x() - m_firstPoint.x() > width() / 4
-        && m_firstPoint.x() < width() / 4) {
-        m_mouseEventTriggered = true;
-    } else {
-        m_mouseEventTriggered = false;
-    }
+    updateBackGesture(event->position());
 }
 
 void NemoWindow::touchEventHandler(QEvent* event)
 {
-    QTouchEvent* tEvent = static_cast<QTouchEvent*>(event);
-    if (tEvent->points().isEmpty()) {
+    auto* tEvent = static_cast<QTouchEvent*>(event);
+    if (!tEvent || tEvent->points().isEmpty()) {
         return;
     }
 
-    if (event->type() == QEvent::TouchBegin) {
-        m_mousePressed = true;
-        m_mouseEventTriggered = false;
-        m_firstPoint = tEvent->points().first().position();
-    } else if (event->type() == QEvent::TouchEnd) {
-        const QPointF endPos = tEvent->points().first().position();
-        if (endPos.x() - m_firstPoint.x() > width() / 4
-            && m_firstPoint.x() < width() / 4
-            && allowExtendedEvents()) {
-            emit goBack();
+    const QPointF pos = tEvent->points().first().position();
+
+    switch (event->type()) {
+    case QEvent::TouchBegin:
+        beginBackGesture(GestureInput::Touch, pos);
+        break;
+    case QEvent::TouchUpdate:
+        if (m_gestureInput == GestureInput::Touch) {
+            updateBackGesture(pos);
         }
-        m_mousePressed = false;
-        m_mouseEventTriggered = false;
-        m_firstPoint = QPointF();
+        break;
+    case QEvent::TouchEnd:
+        if (m_gestureInput == GestureInput::Touch) {
+            finishBackGesture(pos);
+        }
+        break;
+    case QEvent::TouchCancel:
+        if (m_gestureInput == GestureInput::Touch) {
+            cancelBackGesture();
+        }
+        break;
+    default:
+        break;
     }
 }
 
@@ -164,15 +186,119 @@ void NemoWindow::setAllowExtendedEvents(bool newAllowExtendedEvents)
     emit allowExtendedEventsChanged();
 }
 
-bool NemoWindow::hideStatusBar() const
+qreal NemoWindow::backGestureThreshold() const
 {
-    return m_hideStatusBar;
+    return m_backGestureThreshold;
 }
 
-void NemoWindow::setHideStatusBar(bool newHideStatusBar)
+void NemoWindow::setBackGestureThreshold(qreal threshold)
 {
-    if (m_hideStatusBar == newHideStatusBar)
+    const qreal normalized = clampedGestureThreshold(threshold);
+    if (qFuzzyCompare(m_backGestureThreshold, normalized)) {
         return;
-    m_hideStatusBar = newHideStatusBar;
-    emit hideStatusBarChanged();
+    }
+    m_backGestureThreshold = normalized;
+    emit backGestureThresholdChanged();
+}
+
+Qt::Edge NemoWindow::backGestureEdge() const
+{
+    return m_backGestureEdge;
+}
+
+void NemoWindow::setBackGestureEdge(Qt::Edge edge)
+{
+    if (!isValidBackGestureEdge(edge)) {
+        qWarning() << "Unsupported back gesture edge, falling back to Qt::LeftEdge";
+        edge = Qt::LeftEdge;
+    }
+
+    if (m_backGestureEdge == edge) {
+        return;
+    }
+
+    m_backGestureEdge = edge;
+    emit backGestureEdgeChanged();
+}
+
+void NemoWindow::beginBackGesture(GestureInput input, const QPointF& pos)
+{
+    if (input == GestureInput::None) {
+        return;
+    }
+
+    if (m_gestureInput != GestureInput::None && m_gestureInput != input) {
+        return;
+    }
+
+    m_gestureInput = input;
+    m_gestureStartPos = pos;
+    m_gestureTriggered = false;
+
+    if (!allowExtendedEvents() || !isWithinBackGestureEdge(pos)) {
+        cancelBackGesture();
+    }
+}
+
+void NemoWindow::updateBackGesture(const QPointF& pos)
+{
+    if (m_gestureInput == GestureInput::None) {
+        return;
+    }
+
+    if (!allowExtendedEvents() || !isWithinBackGestureEdge(m_gestureStartPos)) {
+        cancelBackGesture();
+        return;
+    }
+
+    m_gestureTriggered = hasReachedBackGestureDistance(pos);
+}
+
+void NemoWindow::finishBackGesture(const QPointF& pos)
+{
+    if (m_gestureInput == GestureInput::None) {
+        return;
+    }
+
+    updateBackGesture(pos);
+    if (m_gestureTriggered && allowExtendedEvents()) {
+        emit goBack();
+    }
+
+    cancelBackGesture();
+}
+
+void NemoWindow::cancelBackGesture()
+{
+    m_gestureInput = GestureInput::None;
+    m_gestureTriggered = false;
+    m_gestureStartPos = QPointF();
+}
+
+bool NemoWindow::isWithinBackGestureEdge(const QPointF& pos) const
+{
+    const qreal edgeArea = qMax<qreal>(0.0, width() * m_backGestureThreshold);
+
+    switch (m_backGestureEdge) {
+    case Qt::LeftEdge:
+        return pos.x() <= edgeArea;
+    case Qt::RightEdge:
+        return pos.x() >= (width() - edgeArea);
+    default:
+        return false;
+    }
+}
+
+bool NemoWindow::hasReachedBackGestureDistance(const QPointF& pos) const
+{
+    const qreal distanceThreshold = qMax<qreal>(0.0, width() * m_backGestureThreshold);
+
+    switch (m_backGestureEdge) {
+    case Qt::LeftEdge:
+        return (pos.x() - m_gestureStartPos.x()) >= distanceThreshold;
+    case Qt::RightEdge:
+        return (m_gestureStartPos.x() - pos.x()) >= distanceThreshold;
+    default:
+        return false;
+    }
 }
