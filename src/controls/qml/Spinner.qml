@@ -92,7 +92,7 @@ Item {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: animation.start()
+        onClicked: animations.start()
     }
 
     Item {
