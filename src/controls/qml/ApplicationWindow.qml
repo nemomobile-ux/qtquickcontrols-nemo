@@ -72,7 +72,7 @@ NemoWindow {
 
         var component = Qt.createComponent(url)
         if (component.status === Component.Ready) {
-            pageStack.push(component.createObject(pageStack, params))
+            pageStack.replace(component.createObject(pageStack, params))
         } else {
             console.warn("Error loading component", url, component.errorString())
             pageStack.push(Qt.resolvedUrl("ErrorStackPage.qml"), {error: component.errorString()})
