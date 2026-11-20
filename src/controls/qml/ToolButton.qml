@@ -55,7 +55,7 @@ Item {
         anchors.centerIn: parent
         fillMode: Image.PreserveAspectFit
         anchors.margins: Theme.itemSpacingExtraSmall
-        source: toolButton.iconSource + "?" + ( active ? Theme.accentColor : Theme.textColor)
+        source: toolButton.iconSource + "?" + ((bMouseArea.pressed || toolButton.active) ? Theme.accentColor : Theme.textColor)
     }
 
     Rectangle{
@@ -92,7 +92,5 @@ Item {
         id: bMouseArea
         anchors.fill: parent
         onClicked: toolButton.clicked()
-        onPressed: iconImage.source = toolButton.iconSource + "?" + Theme.accentColor
-        onReleased: iconImage.source = toolButton.iconSource + "?" + ( active ? Theme.accentColor : Theme.textColor)
     }
 }
