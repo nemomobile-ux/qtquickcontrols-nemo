@@ -23,7 +23,7 @@
 
 NemoWindow::NemoWindow(QWindow* parent)
     : QQuickWindow(parent)
-    , m_filter(new EditFilter())
+    , m_filter(new EditFilter(this))
     , m_screen(screen())
     , m_mousePressed(false)
     , m_mouseEventTriggered(false)
