@@ -230,7 +230,13 @@ NemoWindow {
                     height: parent.height
                     clip: true
                     visible: width != 0
-                    width: recalcMainMenuWidth()
+                    width: if(sourceComponent === null) {
+                               return 0
+                           } else if (applicationWindow.isUiPortrait) {
+                               return 0
+                           } else {
+                               return applicationWindow.mainMenuWidth
+                           }
 
                     anchors{
                         top: applicationWindow.isUiPortrait ? toolBar.bottom : parent.top
