@@ -99,6 +99,9 @@ NemoWindow {
         }
 
         function onCurrentItemChanged(currentItem) {
+            if (!pageStack.currentItem) {
+                return
+            }
             var qmltype = pageStack.currentItem.toString()
             if (qmltype.slice(0, 10) === "QQuickText") {
                 _errorTimer.errorString = pageStack.currentItem.text
