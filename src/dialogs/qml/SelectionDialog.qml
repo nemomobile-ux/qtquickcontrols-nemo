@@ -85,8 +85,6 @@ Item {
     ListView{
         id: selectionListView
         width: parent.width
-        height: (subLabel.text != "") ? parent.height-heading.height-subLabel.height-cancel.height-Theme.itemSpacingLarge
-                                      : parent.height-heading.height-cancel.height-Theme.itemSpacingLarge
         delegate: shell.delegate
 
         anchors.top: subLabel.bottom
