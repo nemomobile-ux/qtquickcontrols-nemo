@@ -140,8 +140,10 @@ void Theme::setThemeValues()
     bool updated = false;
 
     QFile themeFile(m_theme);
-
-    themeFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    if (!themeFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qCWarning(lcNemoControlsCoreLog) << "Can't open theme file" << m_theme;
+        return;
+    }
     themeJsonString = themeFile.readAll();
     themeFile.close();
 
