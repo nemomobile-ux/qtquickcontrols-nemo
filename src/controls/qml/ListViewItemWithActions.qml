@@ -45,15 +45,17 @@ Item {
     property string description: ""
     property string subdescription: ""
     property string icon: ""
-    property Component iconDelegate: Image{
-        id: itemIcon
-        width: parent.width
-        height: parent.height
+    property Component iconDelegate: Component {
+        Image {
+            id: itemIcon
+            width: parent.width
+            height: parent.height
 
-        sourceSize.width: width
-        sourceSize.height: height
-        source: (icon != "") ? icon : iconVisible ? "qrc:///images/listview-icon-template-s.svg" : ""
-        fillMode: Image.PreserveAspectFit
+            sourceSize.width: width
+            sourceSize.height: height
+            source: (listViewItemWithActions.icon != "") ? listViewItemWithActions.icon : (listViewItemWithActions.iconVisible ? "images/listview-icon-template-s.svg" : "")
+            fillMode: Image.PreserveAspectFit
+        }
     }
 
 
