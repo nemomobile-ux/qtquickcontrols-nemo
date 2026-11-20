@@ -31,6 +31,8 @@
 
 #include "ringindicator.h"
 
+#include <cmath>
+
 RingIndicator::RingIndicator(QQuickItem* parent)
     : QQuickPaintedItem(parent)
     , m_startAngle(0)
@@ -123,5 +125,5 @@ float RingIndicator::normalizeAngile(float ang)
         ang = ang + 360 * circles;
     }
 
-    return abs(ang);
+    return std::fabs(ang);
 }
