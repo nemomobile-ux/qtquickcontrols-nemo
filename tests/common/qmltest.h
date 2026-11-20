@@ -9,6 +9,7 @@ class QmlTest : public QQuickView {
     Q_OBJECT
 public:
     explicit QmlTest(const QString& file, QWindow* parent = nullptr);
+    ~QmlTest() override;
     int warnings() const;
 
 private:

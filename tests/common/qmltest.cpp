@@ -6,6 +6,7 @@ Q_DECLARE_METATYPE(QList<QQmlError>)
 
 QmlTest::QmlTest(const QString& file, QWindow* parent)
     : QQuickView { parent }
+    , m_signalSpy(nullptr)
 {
     QTest::createTouchDevice();
     engine()->addImportPath(QString(BUILD_DIR));
@@ -21,7 +22,6 @@ QmlTest::QmlTest(const QString& file, QWindow* parent)
     }
 
     m_signalSpy = new QSignalSpy(engine(), SIGNAL(warnings(QList<QQmlError>)));
-    m_signalSpy->setParent(this);
 
     setSource(QUrl::fromLocalFile(file));
 
@@ -29,6 +29,11 @@ QmlTest::QmlTest(const QString& file, QWindow* parent)
         qFatal() << "QQuickView not ready";
     }
     show();
+}
+
+QmlTest::~QmlTest()
+{
+    delete m_signalSpy;
 }
 
 int QmlTest::warnings() const
