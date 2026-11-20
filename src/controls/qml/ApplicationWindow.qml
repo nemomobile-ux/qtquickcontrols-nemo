@@ -233,7 +233,13 @@ NemoWindow {
                     width: if(sourceComponent === null) {
                                return 0
                            } else if (applicationWindow.isUiPortrait) {
-                               return stackView.depth <= 1 ? parent.width : 0
+                               if (stackView.depth > 1) {
+                                   return 0
+                               }
+                               if (stackView.currentItem && stackView.initialItem && stackView.currentItem !== stackView.initialItem) {
+                                   return 0
+                               }
+                               return parent.width
                            } else {
                                return applicationWindow.mainMenuWidth
                            }
