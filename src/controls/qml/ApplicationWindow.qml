@@ -36,6 +36,7 @@ NemoWindow {
     property alias initialPage: stackView.initialItem
     property bool isUiPortrait: applicationWindow.width < applicationWindow.height
 
+    property Item _rootItem: null
     property alias mainMenu: mainMenuArea.sourceComponent
     property int mainMenuWidth: Theme.itemWidthExtraLarge
 
@@ -236,7 +237,7 @@ NemoWindow {
                                if (stackView.depth > 1) {
                                    return 0
                                }
-                               if (stackView.currentItem && stackView.initialItem && stackView.currentItem !== stackView.initialItem) {
+                               if (applicationWindow._rootItem && stackView.currentItem && stackView.currentItem !== applicationWindow._rootItem) {
                                    return 0
                                }
                                return parent.width
@@ -314,6 +315,9 @@ NemoWindow {
                     //TODO: find a cleaner way to do it (if there's any)
                     property bool stackInitialized: false
                     onStackInitializedChanged: if (stackInitialized) {
+                                                   if (!applicationWindow._rootItem) {
+                                                       applicationWindow._rootItem = stackView.currentItem
+                                                   }
                                                    //set Screen.orientation as default, if allowed
                                                    if (applicationWindow.isOrientationAllowed(applicationWindow.orientation)) {
                                                        contentArea.filteredOrientation = applicationWindow.orientation
