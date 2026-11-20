@@ -89,17 +89,6 @@ Item {
         anchors.fill: parent
         color: "transparent"
         clip: true
-
-        RadialGradient {
-            GradientStop {
-                position: 0.29
-                color: Theme.accentColor
-            }
-            GradientStop {
-                position: 0.5;
-                color: "transparent"
-            }
-        }
     }
 
     Rectangle{
