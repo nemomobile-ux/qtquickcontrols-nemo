@@ -20,6 +20,7 @@
 #ifndef QQUICKNEMOCONTROLSEXTENSIONPLUGIN_H
 #define QQUICKNEMOCONTROLSEXTENSIONPLUGIN_H
 
+#include <QQmlEngine>
 #include <QQmlExtensionPlugin>
 
 class QQuickNemoControlsExtensionPlugin : public QQmlExtensionPlugin {
@@ -27,8 +28,8 @@ public:
     Q_OBJECT
     Q_PLUGIN_METADATA(IID QQmlEngineExtensionInterface_iid FILE "nemo.json")
 public:
-    void registerTypes(const char* uri);
-    void initializeEngine(QQmlEngine* engine, const char* uri);
+    void initializeEngine(QQmlEngine* engine, const char* uri) override;
+    void registerTypes(const char* uri) override;
 };
 
 #endif // QQUICKNEMOCONTROLSEXTENSIONPLUGIN_H

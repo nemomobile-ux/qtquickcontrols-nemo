@@ -22,6 +22,13 @@
 #include "theme.h"
 #include <QtQml>
 
+void QQuickNemoControlsExtensionPlugin::initializeEngine(QQmlEngine* engine, const char* uri)
+{
+    Q_ASSERT(uri == QLatin1String("Nemo"));
+    QQmlExtensionPlugin::initializeEngine(engine, uri);
+    engine->addImageProvider(QStringLiteral("theme"), new NemoImageProvider());
+}
+
 void QQuickNemoControlsExtensionPlugin::registerTypes(const char* uri)
 {
     Q_ASSERT(uri == QLatin1String("Nemo"));
