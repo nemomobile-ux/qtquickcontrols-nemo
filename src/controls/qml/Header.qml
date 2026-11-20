@@ -112,7 +112,7 @@ Item {
 
     function propagateHeaderReference() {
         if (toolBarLayout && toolBarLayout.hasOwnProperty("header")) {
-            toolBarLayout.header = toolBar
+            toolBarLayout.header = header
         }
     }
 
