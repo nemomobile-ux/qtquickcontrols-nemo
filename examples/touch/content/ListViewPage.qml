@@ -77,7 +77,7 @@ Page {
             icon: (image !== undefined) ? image : ""
             iconVisible: (image !== undefined) && (image !== "")
 
-            width: parent !== null ? parent.width : 200
+            width: ListView.view ? ListView.view.width : 0
             height: Theme.itemHeightLarge
 
             actions:[
