@@ -181,7 +181,141 @@ void Theme::setThemeValues()
     m_backgroundColor = theme.value("backgroundColor").toString();
     m_backgroundAccentColor = theme.value("backgroundAccentColor").toString();
 
-    emit themeUpdated();
+    if (theme.value("itemWidthExtraLarge").toString().toFloat() != 0 && floor(theme.value("itemWidthExtraLarge").toString().toFloat()) != m_itemWidthExtraLarge) {
+        m_itemWidthExtraLarge = floor(theme.value("itemWidthExtraLarge").toString().toFloat() * m_dpScaleFactor);
+        updated = true;
+    }
+
+    if (theme.value("itemWidthLarge").toString().toFloat() != 0 && floor(theme.value("itemWidthLarge").toString().toFloat()) != m_itemWidthLarge) {
+        m_itemWidthLarge = floor(theme.value("itemWidthLarge").toString().toFloat() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("itemWidthMedium").toString().toFloat() != 0 && floor(theme.value("itemWidthMedium").toString().toFloat()) != m_itemWidthMedium) {
+        m_itemWidthMedium = floor(theme.value("itemWidthMedium").toString().toFloat() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("itemWidthSmall").toString().toFloat() != 0 && floor(theme.value("itemWidthSmall").toString().toFloat()) != m_itemWidthSmall) {
+        m_itemWidthSmall = floor(theme.value("itemWidthSmall").toString().toFloat() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("itemWidthExtraSmall").toString().toFloat() != 0 && floor(theme.value("itemWidthExtraSmall").toString().toFloat()) != m_itemWidthExtraSmall) {
+        m_itemWidthExtraSmall = floor(theme.value("itemWidthExtraSmall").toString().toFloat() * m_dpScaleFactor);
+        updated = true;
+    }
+
+    if (theme.value("itemHeightHuge").toString().toFloat() != 0 && floor(theme.value("itemHeightHuge").toString().toFloat()) != m_itemHeightHuge) {
+        m_itemHeightHuge = floor(theme.value("itemHeightHuge").toString().toFloat() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("itemHeightExtraLarge").toString().toFloat() != 0 && floor(theme.value("itemHeightExtraLarge").toString().toFloat()) != m_itemHeightExtraLarge) {
+        m_itemHeightExtraLarge = floor(theme.value("itemHeightExtraLarge").toString().toFloat() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("itemHeightLarge").toString().toFloat() != 0 && floor(theme.value("itemHeightLarge").toString().toFloat()) != m_itemHeightLarge) {
+        m_itemHeightLarge = floor(theme.value("itemHeightLarge").toString().toFloat() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("itemHeightMedium").toString().toFloat() != 0 && floor(theme.value("itemHeightMedium").toString().toFloat()) != m_itemHeightMedium) {
+        m_itemHeightMedium = floor(theme.value("itemHeightMedium").toString().toFloat() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("itemHeightSmall").toString().toFloat() != 0 && floor(theme.value("itemHeightSmall").toString().toFloat()) != m_itemHeightSmall) {
+        m_itemHeightSmall = floor(theme.value("itemHeightSmall").toString().toFloat() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("itemHeightExtraSmall").toString().toFloat() != 0 && floor(theme.value("itemHeightExtraSmall").toString().toFloat()) != m_itemHeightExtraSmall) {
+        m_itemHeightExtraSmall = floor(theme.value("itemHeightExtraSmall").toString().toFloat() * m_dpScaleFactor);
+        updated = true;
+    }
+
+    if (theme.value("itemSpacingHuge").toString().toFloat() != 0 && floor(theme.value("itemSpacingHuge").toString().toFloat()) != m_itemSpacingHuge) {
+        m_itemSpacingHuge = floor(theme.value("itemSpacingHuge").toString().toFloat() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("itemSpacingLarge").toString().toFloat() != 0 && floor(theme.value("itemSpacingLarge").toString().toFloat()) != m_itemSpacingLarge) {
+        m_itemSpacingLarge = floor(theme.value("itemSpacingLarge").toString().toFloat() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("itemSpacingMedium").toString().toFloat() != 0 && floor(theme.value("itemSpacingMedium").toString().toFloat()) != m_itemSpacingMedium) {
+        m_itemSpacingMedium = floor(theme.value("itemSpacingMedium").toString().toFloat() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("itemSpacingSmall").toString().toFloat() != 0 && floor(theme.value("itemSpacingSmall").toString().toFloat()) != m_itemSpacingSmall) {
+        m_itemSpacingSmall = floor(theme.value("itemSpacingSmall").toString().toFloat() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("itemSpacingExtraSmall").toString().toFloat() != 0 && floor(theme.value("itemSpacingExtraSmall").toString().toFloat()) != m_itemSpacingExtraSmall) {
+        m_itemSpacingExtraSmall = floor(theme.value("itemSpacingExtraSmall").toString().toFloat() * m_dpScaleFactor);
+        updated = true;
+    }
+
+    if (theme.value("fontSizeExtraLarge").toInt() != 0 && floor(theme.value("fontSizeExtraLarge").toInt()) != m_fontSizeExtraLarge) {
+        m_fontSizeExtraLarge = floor(theme.value("fontSizeExtraLarge").toInt() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("fontSizeLarge").toInt() != 0 && floor(theme.value("fontSizeLarge").toInt()) != m_fontSizeLarge) {
+        m_fontSizeLarge = floor(theme.value("fontSizeLarge").toInt() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("fontSizeMedium").toInt() != 0 && floor(theme.value("fontSizeMedium").toInt()) != m_fontSizeMedium) {
+        m_fontSizeMedium = floor(theme.value("fontSizeMedium").toInt() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("fontSizeSmall").toInt() != 0 && floor(theme.value("fontSizeSmall").toInt()) != m_fontSizeSmall) {
+        m_fontSizeSmall = floor(theme.value("fontSizeSmall").toInt() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("fontSizeTiny").toInt() != 0 && floor(theme.value("fontSizeTiny").toInt()) != m_fontSizeTiny) {
+        m_fontSizeTiny = floor(theme.value("fontSizeTiny").toInt() * m_dpScaleFactor);
+        updated = true;
+    }
+    if (theme.value("fontWeightLarge").toInt() != 0 && theme.value("fontWeightLarge").toInt() != m_fontWeightLarge) {
+        m_fontWeightLarge = theme.value("fontWeightLarge").toInt() * m_dpScaleFactor;
+        updated = true;
+    }
+    if (theme.value("fontWeightMedium").toInt() != 0 && theme.value("fontWeightMedium").toInt() != m_fontWeightMedium) {
+        m_fontWeightMedium = theme.value("fontWeightMedium").toInt() * m_dpScaleFactor;
+        updated = true;
+    }
+
+    if (theme.value("fontPath").toString() != "" && theme.value("fontPath").toString() != m_fontPath) {
+        QFile fontFile(theme.value("fontPath").toString());
+        if (!fontFile.exists()) {
+            qCWarning(lcNemoControlsCoreLog) << "Font file " << fontFile.fileName() << " not found";
+        } else {
+            m_fontPath = theme.value("fontPath").toString();
+            updated = true;
+        }
+    }
+
+    if (theme.value("accentColor").toString() != "" && theme.value("accentColor").toString() != m_accentColor) {
+        m_accentColor = theme.value("accentColor").toString();
+        updated = true;
+    }
+    if (theme.value("fillColor").toString() != "" && theme.value("fillColor").toString() != m_fillColor) {
+        m_fillColor = theme.value("fillColor").toString();
+        updated = true;
+    }
+    if (theme.value("fillDarkColor").toString() != "" && theme.value("fillDarkColor").toString() != m_fillDarkColor) {
+        m_fillDarkColor = theme.value("fillDarkColor").toString();
+        updated = true;
+    }
+    if (theme.value("textColor").toString() != "" && theme.value("textColor").toString() != m_textColor) {
+        m_textColor = theme.value("textColor").toString();
+        updated = true;
+    }
+    if (theme.value("backgroundColor").toString() != "" && theme.value("backgroundColor").toString() != m_backgroundColor) {
+        m_backgroundColor = theme.value("backgroundColor").toString();
+        updated = true;
+    }
+    if (theme.value("backgroundAccentColor").toString() != "" && theme.value("backgroundAccentColor").toString() != m_backgroundAccentColor) {
+        m_backgroundAccentColor = theme.value("backgroundAccentColor").toString();
+        updated = true;
+    }
+
+    if (updated) {
+        emit themeUpdated();
+    }
 }
 
 void Theme::themeValueChanged()
