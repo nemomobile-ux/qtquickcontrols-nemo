@@ -130,6 +130,11 @@ float Theme::mm(float value)
 
 void Theme::setThemeValues()
 {
+    m_dpScaleFactor = m_dpScaleFactorValue->value("1").toFloat();
+
+    qreal dpi = MDConfItem("/lipstick/screen/primary/physicalDotsPerInch").value("1").toReal();
+    m_mmScaleFactor = dpi / 2.45 / 10;
+
     QString themeJsonString;
 
     bool updated = false;
