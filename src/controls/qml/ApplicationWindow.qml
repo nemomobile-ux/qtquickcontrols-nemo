@@ -53,11 +53,29 @@ NemoWindow {
             params = {}
         }
         var component = Qt.createComponent(url)
-        if (component.status === Component.Ready) {
-            pageStack.push(component.createObject(pageStack, params))
+
+        function finishPush() {
+            if (component.status === Component.Ready) {
+                var page = component.createObject(pageStack, params)
+                if(mainMenuArea.width != applicationWindow.width && mainMenuArea.width != 0) {
+                    pageStack.replace(page)
+                } else {
+                    pageStack.push(page)
+                }
+            } else if (component.status === Component.Error) {
+                console.warn("Error loading component", url, component.errorString())
+                pageStack.push(Qt.resolvedUrl("ErrorStackPage.qml"), {error: component.errorString()})
+            }
+
+            if (component.status !== Component.Loading) {
+                component.destroy()
+            }
+        }
+
+        if (component.status === Component.Loading) {
+            component.statusChanged.connect(finishPush)
         } else {
-            console.warn("Error loading component", url, component.errorString())
-            pageStack.push(Qt.resolvedUrl("ErrorStackPage.qml"), {error: component.errorString()})
+            finishPush()
         }
     }
 
@@ -69,13 +87,25 @@ NemoWindow {
         if(!params){
             params = {}
         }
-
         var component = Qt.createComponent(url)
-        if (component.status === Component.Ready) {
-            pageStack.replace(component.createObject(pageStack, params))
+
+        function finishReplace() {
+            if (component.status === Component.Ready) {
+                pageStack.replace(component.createObject(pageStack, params))
+            } else if (component.status === Component.Error) {
+                console.warn("Error loading component", url, component.errorString())
+                pageStack.push(Qt.resolvedUrl("ErrorStackPage.qml"), {error: component.errorString()})
+            }
+
+            if (component.status !== Component.Loading) {
+                component.destroy()
+            }
+        }
+
+        if (component.status === Component.Loading) {
+            component.statusChanged.connect(finishReplace)
         } else {
-            console.warn("Error loading component", url, component.errorString())
-            pageStack.push(Qt.resolvedUrl("ErrorStackPage.qml"), {error: component.errorString()})
+            finishReplace()
         }
     }
 
