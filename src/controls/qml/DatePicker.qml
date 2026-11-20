@@ -122,12 +122,14 @@ Item {
 
     Item{
         id: weekDays
-        width: parent.width
-        height: width/7
+        width: datePicker.width
+        height: Math.max(Theme.itemHeightSmall, width / 7)
 
         anchors{
             top: header.bottom
             topMargin: Theme.itemSpacingSmall
+            left: parent.left
+            right: parent.right
         }
 
         ListModel{
@@ -164,13 +166,14 @@ Item {
 
         ListView{
             id: weekendListView
-            width: parent.width
-            height: parent.height
+            width: weekDays.width
+            height: weekDays.height
             model: weekendModel
             orientation: ListView.Horizontal
+            interactive: false
             clip: true
             delegate: Item{
-                height: parent.height
+                height: ListView.view ? ListView.view.height : 0
                 width: height
                 clip: true
 
@@ -178,7 +181,7 @@ Item {
                     text: label
                     anchors.centerIn: parent
                     color: isWeekEnd ? Theme.accentColor : Theme.textColor
-                    font.pixelSize: (parent.height*0.45 < Theme.fontSizeLarge) ? parent.height*0.45 : Theme.fontSizeLarge
+                    font.pixelSize: (parent.height * 0.45 < Theme.fontSizeLarge) ? parent.height * 0.45 : Theme.fontSizeLarge
                 }
             }
         }
@@ -186,25 +189,28 @@ Item {
 
     GridView {
         id: daysGrid
-        width: parent.width
-        height: parent.height - weekDays.height - header.height - Theme.itemSpacingSmall * 2
+        width: datePicker.width
+        height: cellHeight * Math.max(1, Math.ceil(count / 7))
         clip: true
+        interactive: false
 
         anchors {
             top: weekDays.bottom
             topMargin: Theme.itemSpacingSmall
+            left: parent.left
+            right: parent.right
         }
 
-        cellWidth: width / 7 - 1
-        cellHeight: height / 5
+        cellWidth: width / 7
+        cellHeight: cellWidth
 
         model: calendarModel
 
         delegate: Item{
             id: dayCell
 
-            width: daysGrid.width/7
-            height: daysGrid.height/6
+            width: daysGrid.cellWidth
+            height: daysGrid.cellHeight
 
             property bool isOtherMonthDay: false
             property bool isCurrentDay: false
@@ -213,23 +219,23 @@ Item {
 
             property date dateOfDay
 
-            function setColor(model)
+            function setColor(modelData)
             {
                 var color = Theme.textColor;
                 /*If weekend*/
-                if(model.dateOfDay.getDay() === 0 || model.dateOfDay.getDay() === 6)
+                if (modelData.dateOfDay.getDay() === 0 || modelData.dateOfDay.getDay() === 6)
                 {
-                    if(model.isCurrentDay || Qt.formatDate(model.dateOfDay, "yyMMdd") == Qt.formatDate(currentDate, "yyMMdd"))
+                    if (modelData.isCurrentDay || Qt.formatDate(modelData.dateOfDay, "yyMMdd") == Qt.formatDate(datePicker.currentDate, "yyMMdd"))
                     {
                         color = Theme.textColor
                     }
                     else
                     {
-                        color = Theme.accentColor;
+                        color = Theme.accentColor
                     }
                 }
 
-                if(model.isOtherMonthDay)
+                if (modelData.isOtherMonthDay)
                 {
                     color = Theme.fillDarkColor
                 }
@@ -237,19 +243,17 @@ Item {
             }
 
             Rectangle{
-                width: parent.width
-                height: parent.height
+                anchors.fill: parent
                 color: Theme.accentColor
-                visible: Qt.formatDate(model.dateOfDay, "yyMMdd") == Qt.formatDate(currentDate, "yyMMdd")
+                visible: Qt.formatDate(model.dateOfDay, "yyMMdd") == Qt.formatDate(datePicker.currentDate, "yyMMdd")
             }
 
             Label{
                 text: model.dateOfDay.getDate()
                 anchors.centerIn: parent
-                color: setColor(model)
-                font.pixelSize: (parent.height*0.45 < Theme.fontSizeLarge) ? parent.height*0.45 : Theme.fontSizeLarge
+                color: dayCell.setColor(model)
+                font.pixelSize: (dayCell.height * 0.45 < Theme.fontSizeLarge) ? dayCell.height * 0.45 : Theme.fontSizeLarge
             }
-
 
             MouseArea{
                 anchors.fill: parent
@@ -262,6 +266,9 @@ Item {
 
     CalendarModel{
         id: calendarModel
+        onSelectedDateChanged: {
+            datePicker.monthChanged()
+        }
     }
 }
 
