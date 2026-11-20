@@ -51,44 +51,60 @@ Qt::ScreenOrientation NemoWindow::primaryOrientation() const
 void NemoWindow::mousePressEvent(QMouseEvent*)
 {
     m_mousePressed = true;
+    m_mouseEventTriggered = false;
+    m_firstPoint = QPointF();
 }
 
 void NemoWindow::mouseReleaseEvent(QMouseEvent*)
 {
     m_mousePressed = false;
-    m_firstPoint = QPointF();
     if (m_mouseEventTriggered && allowExtendedEvents()) {
         emit goBack();
     }
+    m_mouseEventTriggered = false;
+    m_firstPoint = QPointF();
 }
 
 void NemoWindow::mouseMoveEvent(QMouseEvent* event)
 {
-    if (m_mousePressed) {
-        if (m_firstPoint.isNull()) {
-            m_firstPoint = event->points().first().position();
-        }
+    if (!m_mousePressed || event->points().isEmpty()) {
+        return;
+    }
 
-        if (event->points().first().position().x() - m_firstPoint.x() > width() / 4
-            && m_firstPoint.x() < width() / 4) {
-            m_mouseEventTriggered = true;
-        } else {
-            m_mouseEventTriggered = false;
-        }
+    if (m_firstPoint.isNull()) {
+        m_firstPoint = event->points().first().position();
+    }
+
+    const QPointF currentPos = event->points().first().position();
+    if (currentPos.x() - m_firstPoint.x() > width() / 4
+        && m_firstPoint.x() < width() / 4) {
+        m_mouseEventTriggered = true;
+    } else {
+        m_mouseEventTriggered = false;
     }
 }
 
 void NemoWindow::touchEventHandler(QEvent* event)
 {
     QTouchEvent* tEvent = static_cast<QTouchEvent*>(event);
+    if (tEvent->points().isEmpty()) {
+        return;
+    }
+
     if (event->type() == QEvent::TouchBegin) {
         m_mousePressed = true;
+        m_mouseEventTriggered = false;
         m_firstPoint = tEvent->points().first().position();
-    } else if (event->type() == QEvent::TouchEnd
-        && tEvent->points().first().position().x() - m_firstPoint.x() > width() / 4
-        && m_firstPoint.x() < width() / 4
-        && allowExtendedEvents()) {
-        emit goBack();
+    } else if (event->type() == QEvent::TouchEnd) {
+        const QPointF endPos = tEvent->points().first().position();
+        if (endPos.x() - m_firstPoint.x() > width() / 4
+            && m_firstPoint.x() < width() / 4
+            && allowExtendedEvents()) {
+            emit goBack();
+        }
+        m_mousePressed = false;
+        m_mouseEventTriggered = false;
+        m_firstPoint = QPointF();
     }
 }
 
