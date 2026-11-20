@@ -111,33 +111,37 @@ void CalendarModel::setSelectedDate(QDate date)
 
 void CalendarModel::fill()
 {
+    beginResetModel();
     m_dateList.clear();
 
     QDate firstDayOfSelectedMonth = QDate(m_selectedDate.year(), m_selectedDate.month(), 1);
     int startWeekDay = firstDayOfSelectedMonth.dayOfWeek();
 
-    /*If first dayof moth not Monday add form preview month*/
+    /*If first day of month not Monday add from previous month*/
     if (startWeekDay != 1) {
         int needToAdd = 1 - startWeekDay;
         for (int n = needToAdd; n < 0; n++) {
-            m_dateList.append(createDateItem(firstDayOfSelectedMonth.addDays(n), true));
+            QDate date = firstDayOfSelectedMonth.addDays(n);
+            m_dateList.append(createDateItem(date, true, date == m_currentDate, date == m_selectedDate));
         }
     }
 
     for (int n = 0; n < firstDayOfSelectedMonth.daysInMonth(); n++) {
         QDate date = firstDayOfSelectedMonth.addDays(n);
-        m_dateList.append(createDateItem(date, false, date == m_currentDate));
+        m_dateList.append(createDateItem(date, false, date == m_currentDate, date == m_selectedDate));
     }
-    /*if last day of moth not Sunday add from next mont*/
+    /*if last day of month not Sunday add from next month*/
     QDate lastDayOfSelectedMonth = QDate(m_selectedDate.year(), m_selectedDate.month(), firstDayOfSelectedMonth.daysInMonth());
     int endWeekDay = lastDayOfSelectedMonth.dayOfWeek();
     if (endWeekDay != 7) {
         int needToAdd = 7 - endWeekDay;
         for (int n = 1; n <= needToAdd; n++) {
-            m_dateList.append(createDateItem(lastDayOfSelectedMonth.addDays(n), true));
+            QDate date = lastDayOfSelectedMonth.addDays(n);
+            m_dateList.append(createDateItem(date, true, date == m_currentDate, date == m_selectedDate));
         }
     }
-    dataChanged(createIndex(0, 0), createIndex(rowCount() - 1, 0));
+
+    endResetModel();
 }
 
 CalendarModel::DateItem CalendarModel::createDateItem(QDate dateOfDay, bool isOtherMonthDay, bool isCurrentDay, bool isSelectedDay, bool hasEventDay)
