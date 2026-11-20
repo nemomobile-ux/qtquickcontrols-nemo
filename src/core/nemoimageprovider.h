@@ -25,6 +25,7 @@
 class NemoImageProvider : public QQuickImageProvider {
 public:
     explicit NemoImageProvider();
+    ~NemoImageProvider();
     QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize);
     QPixmap requestPixmap(const QString& id, QSize* size, const QSize& requestedSize);
 
