@@ -32,13 +32,18 @@ NemoImageProvider::~NemoImageProvider()
 
 QImage NemoImageProvider::requestImage(const QString& id, QSize* size, const QSize& requestedSize)
 {
-    Q_UNUSED(size);
-    QPixmap image = m_client->requestPixmap(id, requestedSize);
-    return image.toImage();
+    const QImage image = m_client->requestImage(id, requestedSize);
+    if (size) {
+        *size = image.size();
+    }
+    return image;
 }
 
 QPixmap NemoImageProvider::requestPixmap(const QString& id, QSize* size, const QSize& requestedSize)
 {
-    Q_UNUSED(size);
-    return m_client->requestPixmap(id, requestedSize);
+    const QPixmap pixmap = m_client->requestPixmap(id, requestedSize);
+    if (size) {
+        *size = pixmap.size();
+    }
+    return pixmap;
 }

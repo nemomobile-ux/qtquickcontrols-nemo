@@ -52,7 +52,7 @@
 
 MLocalThemeDaemonClient::MLocalThemeDaemonClient(const QString& testPath, QObject* parent)
     : MAbstractThemeDaemonClient(parent)
-    , m_pixmapCache()
+    , m_imageCache()
     , m_imageDirNodes()
 #ifdef HAVE_MLITE
     , themeItem("/meegotouch/theme/name")
@@ -126,11 +126,9 @@ MLocalThemeDaemonClient::~MLocalThemeDaemonClient()
 {
 }
 
-QPixmap MLocalThemeDaemonClient::requestPixmap(const QString& id, const QSize& requestedSize)
+QImage MLocalThemeDaemonClient::requestImage(const QString& id, const QSize& requestedSize)
 {
-    QPixmap pixmap;
-
-    QStringList parts = id.split('?');
+    const QStringList parts = id.split(QLatin1Char('?'));
 
     QSize size = requestedSize;
     if (size.width() < 1) {
@@ -140,37 +138,47 @@ QPixmap MLocalThemeDaemonClient::requestPixmap(const QString& id, const QSize& r
         size.rheight() = 0;
     }
 
-    const PixmapIdentifier pixmapId(parts.at(0), size);
-    pixmap = m_pixmapCache.value(pixmapId);
-    if (pixmap.isNull()) {
-        // The pixmap is not cached yet. Decode the image and
-        // store it into the cache as pixmap.
-        const QImage image = readImage(parts.at(0));
-        if (!image.isNull()) {
-            pixmap = QPixmap::fromImage(image);
-        } else {
-            pixmap = QPixmap::fromImage(QImage(QString::fromUtf8(QT_INSTALL_QML) + "/Nemo/Controls/images/no-icon.png"));
-        }
-        if (parts.length() > 1)
+    const QString imageId = parts.value(0);
+    const PixmapIdentifier cacheId(imageId, size);
+    QImage image = m_imageCache.value(cacheId);
+    if (!image.isNull()) {
+        return image;
+    }
+
+    image = readImage(imageId);
+    if (image.isNull()) {
+        image = QImage(QString::fromUtf8(QT_INSTALL_QML) + QStringLiteral("/Nemo/Controls/images/no-icon.png"));
+    }
+
+    if (parts.size() > 1) {
+        const QString colorName = parts.at(1);
 #if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
-            if (parts.length() > 1 && QColor::isValidColorName(parts.at(1))) {
+        if (QColor::isValidColorName(colorName)) {
 #else
-            if (parts.length() > 1 && QColor::isValidColor(parts.at(1))) {
+        if (QColor::isValidColor(colorName)) {
 #endif
-                QPainter painter(&pixmap);
-                painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
-                painter.fillRect(pixmap.rect(), parts.at(1));
-                painter.end();
+            if (image.format() != QImage::Format_ARGB32 && image.format() != QImage::Format_ARGB32_Premultiplied) {
+                image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
             }
 
-        if (requestedSize.width() > 0 && requestedSize.height() > 0)
-            pixmap = pixmap.scaled(requestedSize.width(), requestedSize.height(), Qt::IgnoreAspectRatio);
-        else
-            pixmap = pixmap;
-
-        m_pixmapCache.insert(pixmapId, pixmap);
+            QPainter painter(&image);
+            painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+            painter.fillRect(image.rect(), QColor(colorName));
+            painter.end();
+        }
     }
-    return pixmap;
+
+    if (requestedSize.width() > 0 && requestedSize.height() > 0) {
+        image = image.scaled(requestedSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    }
+
+    m_imageCache.insert(cacheId, image);
+    return image;
+}
+
+QPixmap MLocalThemeDaemonClient::requestPixmap(const QString& id, const QSize& requestedSize)
+{
+    return QPixmap::fromImage(requestImage(id, requestedSize));
 }
 
 QImage MLocalThemeDaemonClient::readImage(const QString& id) const

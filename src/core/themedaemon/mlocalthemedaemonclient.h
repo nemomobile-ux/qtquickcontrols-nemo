@@ -44,6 +44,7 @@
 
 #include <QColor>
 #include <QHash>
+#include <QImage>
 #include <QPainter>
 #include <QPixmap>
 #include <QString>
@@ -54,10 +55,10 @@
 
 class QDir;
 /**
- * \brief Allows to request pixmaps from a local themedaemon server.
+ * \brief Allows to request pixmaps/images from a local themedaemon server.
  *
- * The requested pixmaps are cached so that multiple requests of the
- * same pixmap can be handled fast.
+ * The requested images are cached so that multiple requests of the
+ * same image can be handled fast.
  */
 class MLocalThemeDaemonClient : public MAbstractThemeDaemonClient {
     Q_OBJECT
@@ -78,6 +79,12 @@ public:
     virtual QPixmap requestPixmap(const QString& id, const QSize& requestedSize);
 
     /**
+     * Returns an image for the given id and requested size. Optional colorization
+     * is supported via "id?color" syntax.
+     */
+    QImage requestImage(const QString& id, const QSize& requestedSize);
+
+    /**
      * Reads the image \a id from the available directories specified
      * by m_imageDirNodes.
      */
@@ -87,7 +94,7 @@ private:
     void buildHash(const QDir& rootDir, const QStringList& nameFilter);
 
     /**
-     * Cache entry that identifies a pixmap by a string-ID and size.
+     * Cache entry that identifies an image by a string-ID and size.
      */
     struct PixmapIdentifier {
         PixmapIdentifier();
@@ -104,7 +111,7 @@ private:
         QStringList suffixList;
     };
 
-    QHash<PixmapIdentifier, QPixmap> m_pixmapCache;
+    QHash<PixmapIdentifier, QImage> m_imageCache;
     QList<ImageDirNode> m_imageDirNodes;
 
     QHash<QString, QString> m_filenameHash;
