@@ -45,11 +45,18 @@ NemoWindow {
         pageStack.pop()
     }
 
-    //Safety version of pageStack.push - if we can't load component - show error page page with
-    //error message and back button
+    function _isSideBySideMainMenuVisible() {
+        // When the main menu is shown as a persistent side panel (visible but not full-screen),
+        // navigation replaces the current content page instead of pushing a new stack entry.
+        // This keeps the side menu and content area consistent in split-view layouts.
+        return mainMenuArea.width > 0 && mainMenuArea.width < applicationWindow.width
+    }
 
+    // Safe wrappers for StackView navigation:
+    // - load/create failures show ErrorStackPage instead of passing an invalid item to the stack
+    // - push() behaves like replace() while a side-by-side main menu is visible
     function push(url, params) {
-        if(!params){
+        if (!params) {
             params = {}
         }
         var component = Qt.createComponent(url)
@@ -57,7 +64,10 @@ NemoWindow {
         function finishPush() {
             if (component.status === Component.Ready) {
                 var page = component.createObject(pageStack, params)
-                if(mainMenuArea.width != applicationWindow.width && mainMenuArea.width != 0) {
+                if (!page) {
+                    console.warn("Error creating object from component", url, component.errorString())
+                    pageStack.push(Qt.resolvedUrl("ErrorStackPage.qml"), {error: component.errorString()})
+                } else if (_isSideBySideMainMenuVisible()) {
                     pageStack.replace(page)
                 } else {
                     pageStack.push(page)
@@ -83,15 +93,22 @@ NemoWindow {
         pageStack.pop()
     }
 
+    // Replaces the current stack item with a newly created page (or shows ErrorStackPage on failure).
     function replace(url, params) {
-        if(!params){
+        if (!params) {
             params = {}
         }
         var component = Qt.createComponent(url)
 
         function finishReplace() {
             if (component.status === Component.Ready) {
-                pageStack.replace(component.createObject(pageStack, params))
+                var page = component.createObject(pageStack, params)
+                if (!page) {
+                    console.warn("Error creating object from component", url, component.errorString())
+                    pageStack.push(Qt.resolvedUrl("ErrorStackPage.qml"), {error: component.errorString()})
+                } else {
+                    pageStack.replace(page)
+                }
             } else if (component.status === Component.Error) {
                 console.warn("Error loading component", url, component.errorString())
                 pageStack.push(Qt.resolvedUrl("ErrorStackPage.qml"), {error: component.errorString()})
