@@ -48,6 +48,23 @@ Qt::ScreenOrientation NemoWindow::primaryOrientation() const
     return m_screen->primaryOrientation();
 }
 
+void NemoWindow::keyPressEvent(QKeyEvent* event)
+{
+    switch (event->key()) {
+    case Qt::Key_Escape:
+    case Qt::Key_Return:
+    case Qt::Key_Backspace:
+    case Qt::Key_Left:
+        if (allowExtendedEvents()) {
+            emit goBack();
+        }
+        break;
+    default:
+        break;
+    }
+    QQuickWindow::keyPressEvent(event);
+}
+
 void NemoWindow::mousePressEvent(QMouseEvent*)
 {
     m_mousePressed = true;
