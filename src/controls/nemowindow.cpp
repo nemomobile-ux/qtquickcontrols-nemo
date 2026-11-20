@@ -24,7 +24,7 @@
 NemoWindow::NemoWindow(QWindow* parent)
     : QQuickWindow(parent)
     , m_filter(new EditFilter(this))
-    , m_screen(screen())
+    , m_screen(nullptr)
     , m_mousePressed(false)
     , m_mouseEventTriggered(false)
     , m_firstPoint(QPointF())
@@ -37,14 +37,31 @@ NemoWindow::NemoWindow(QWindow* parent)
     }
 
     installEventFilter(m_filter);
-    connect(m_screen, &QScreen::orientationChanged, this, &NemoWindow::orientationChanged);
+
+    auto attachScreen = [this](QScreen* newScreen) {
+        if (m_screen == newScreen) {
+            return;
+        }
+        if (m_screen) {
+            disconnect(m_screen, &QScreen::orientationChanged, this, &NemoWindow::orientationChanged);
+        }
+        m_screen = newScreen;
+        if (m_screen) {
+            connect(m_screen, &QScreen::orientationChanged, this, &NemoWindow::orientationChanged);
+        }
+    };
+
+    attachScreen(screen());
+    connect(this, &QWindow::screenChanged, this, attachScreen);
     connect(m_filter, &EditFilter::touchEvent, this, &NemoWindow::touchEventHandler);
     connect(m_filter, &EditFilter::backEvent, this, &NemoWindow::goBack);
 }
 
 Qt::ScreenOrientation NemoWindow::primaryOrientation() const
 {
-
+    if (!m_screen) {
+        return Qt::PrimaryOrientation;
+    }
     return m_screen->primaryOrientation();
 }
 
