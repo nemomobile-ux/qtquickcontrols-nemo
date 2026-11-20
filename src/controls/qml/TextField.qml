@@ -47,8 +47,8 @@ TextField {
 
     onActiveFocusChanged: {
         if(activeFocus) {
-            NemoFocus.nemoregister(this)
-        } else {
+            NemoFocus.nemoregister(control)
+        } else if (NemoFocus.edit === control) {
             NemoFocus.nemoregister(null)
         }
     }
