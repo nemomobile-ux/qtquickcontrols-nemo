@@ -18,6 +18,8 @@
  */
 
 #include "inversemousearea.h"
+
+#include <QMouseEvent>
 #include <QQuickWindow>
 
 InverseMouseArea::InverseMouseArea(QQuickItem* parent)
@@ -26,8 +28,15 @@ InverseMouseArea::InverseMouseArea(QQuickItem* parent)
 {
     connect(this, &QQuickItem::windowChanged, this, &InverseMouseArea::resetFilterOnWindowUpdate);
 
-    connect(this, &QQuickItem::enabledChanged, this, &InverseMouseArea::update);
-    connect(this, &QQuickItem::visibleChanged, this, &InverseMouseArea::update);
+    connect(this, &QQuickItem::enabledChanged, this, &QQuickItem::update);
+    connect(this, &QQuickItem::visibleChanged, this, &QQuickItem::update);
+}
+
+InverseMouseArea::~InverseMouseArea()
+{
+    if (m_filteredWindow) {
+        m_filteredWindow->removeEventFilter(this);
+    }
 }
 
 bool InverseMouseArea::active() const
@@ -43,30 +52,51 @@ void InverseMouseArea::setActive(bool newActive)
 
     m_active = newActive;
 
+    if (m_filteredWindow) {
+        if (m_active) {
+            m_filteredWindow->installEventFilter(this);
+        } else {
+            m_filteredWindow->removeEventFilter(this);
+        }
+    }
+
     emit activeChanged();
 }
 
 bool InverseMouseArea::eventFilter(QObject* object, QEvent* event)
 {
     Q_UNUSED(object);
-    if (m_active && event->type() == QEvent::MouseButtonPress && !this->contains(static_cast<QMouseEvent*>(event)->pos())) {
-        emit pressed();
+    if (m_active && event->type() == QEvent::MouseButtonPress) {
+        auto* mouseEvent = static_cast<QMouseEvent*>(event);
+        if (!contains(mouseEvent->pos())) {
+            emit pressed();
+        }
     }
     return false;
 }
 
 void InverseMouseArea::itemChange(ItemChange change, const ItemChangeData value)
 {
-    Q_UNUSED(value);
-    if (m_active && change == ItemSceneChange && window()) {
-        window()->installEventFilter(this);
+    QQuickItem::itemChange(change, value);
+    if (change == ItemSceneChange) {
+        resetFilterOnWindowUpdate(value.window);
     }
 }
 
 void InverseMouseArea::resetFilterOnWindowUpdate(QQuickWindow* win)
 {
-    if (win) {
-        win->installEventFilter(this);
+    if (m_filteredWindow == win) {
+        return;
+    }
+
+    if (m_filteredWindow) {
+        m_filteredWindow->removeEventFilter(this);
+    }
+
+    m_filteredWindow = win;
+
+    if (m_filteredWindow && m_active) {
+        m_filteredWindow->installEventFilter(this);
     }
 }
 

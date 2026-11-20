@@ -20,15 +20,18 @@
 #ifndef INVERSEMOUSEAREA_H
 #define INVERSEMOUSEAREA_H
 
+#include <QPointer>
 #include <QQuickItem>
-class QGraphicsSceneMouseEvent;
+
+class QQuickWindow;
 
 class InverseMouseArea : public QQuickItem {
     Q_OBJECT
     Q_PROPERTY(bool active READ active WRITE setActive NOTIFY activeChanged)
 
 public:
-    InverseMouseArea(QQuickItem* parent = nullptr);
+    explicit InverseMouseArea(QQuickItem* parent = nullptr);
+    ~InverseMouseArea() override;
     bool active() const;
     void setActive(bool newActive);
 
@@ -37,18 +40,17 @@ signals:
     void pressed();
 
 protected:
-    bool eventFilter(QObject* object, QEvent* event);
-    void itemChange(ItemChange change, const ItemChangeData value);
-    bool contains(const QPointF& point) const;
+    bool eventFilter(QObject* object, QEvent* event) override;
+    void itemChange(ItemChange change, const ItemChangeData value) override;
+    bool contains(const QPointF& point) const override;
 
 private slots:
     void resetFilterOnWindowUpdate(QQuickWindow* win);
 
 private:
     bool m_active;
-    bool m_pressed;
-
-    QPointF mapToRootItem(QPointF pos);
+    bool m_pressed = false;
+    QPointer<QQuickWindow> m_filteredWindow;
 };
 
 #endif // INVERSEMOUSEAREA_H
