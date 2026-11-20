@@ -75,7 +75,7 @@ bool InverseMouseArea::eventFilter(QObject* object, QEvent* event)
     return false;
 }
 
-void InverseMouseArea::itemChange(ItemChange change, const ItemChangeData value)
+void InverseMouseArea::itemChange(ItemChange change, const ItemChangeData& value)
 {
     QQuickItem::itemChange(change, value);
     if (change == ItemSceneChange) {

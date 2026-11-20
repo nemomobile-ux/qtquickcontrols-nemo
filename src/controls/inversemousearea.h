@@ -41,7 +41,7 @@ signals:
 
 protected:
     bool eventFilter(QObject* object, QEvent* event) override;
-    void itemChange(ItemChange change, const ItemChangeData value) override;
+    void itemChange(ItemChange change, const ItemChangeData& value) override;
     bool contains(const QPointF& point) const override;
 
 private slots:
