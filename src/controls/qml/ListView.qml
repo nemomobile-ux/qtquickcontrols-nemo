@@ -86,5 +86,88 @@ ListView {
 
         visible: listView.contentHeight > listView.height
     }
+
+    activeFocusOnTab: true
+
+    Keys.onUpPressed: function(event) {
+        if (orientation === ListView.Vertical) {
+            if (currentIndex > 0) {
+                decrementCurrentIndex()
+                event.accepted = true
+            } else if (currentIndex < 0 && count > 0) {
+                currentIndex = 0
+                event.accepted = true
+            }
+        } else {
+            event.accepted = false
+        }
+    }
+
+    Keys.onDownPressed: function(event) {
+        if (orientation === ListView.Vertical) {
+            if (currentIndex < 0 && count > 0) {
+                currentIndex = 0
+                event.accepted = true
+            } else if (currentIndex < count - 1) {
+                incrementCurrentIndex()
+                event.accepted = true
+            }
+        } else {
+            event.accepted = false
+        }
+    }
+
+    Keys.onLeftPressed: function(event) {
+        if (orientation === ListView.Horizontal) {
+            if (currentIndex > 0) {
+                decrementCurrentIndex()
+                event.accepted = true
+            } else if (currentIndex < 0 && count > 0) {
+                currentIndex = 0
+                event.accepted = true
+            }
+        } else {
+            event.accepted = false
+        }
+    }
+
+    Keys.onRightPressed: function(event) {
+        if (orientation === ListView.Horizontal) {
+            if (currentIndex < 0 && count > 0) {
+                currentIndex = 0
+                event.accepted = true
+            } else if (currentIndex < count - 1) {
+                incrementCurrentIndex()
+                event.accepted = true
+            }
+        } else {
+            event.accepted = false
+        }
+    }
+
+    Keys.onReturnPressed: function(event) {
+        activateCurrentItem()
+        event.accepted = true
+    }
+
+    Keys.onEnterPressed: function(event) {
+        activateCurrentItem()
+        event.accepted = true
+    }
+
+    Keys.onSpacePressed: function(event) {
+        activateCurrentItem()
+        event.accepted = true
+    }
+
+    function activateCurrentItem() {
+        if (currentIndex < 0 || !currentItem) {
+            return
+        }
+
+        if (currentItem.clicked !== undefined) {
+            currentItem.clicked()
+        }
+    }
 }
 
