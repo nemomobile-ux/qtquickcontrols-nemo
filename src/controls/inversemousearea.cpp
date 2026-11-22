@@ -106,8 +106,7 @@ bool InverseMouseArea::contains(const QPointF& point) const
         return false;
     }
 
-    const QPointF scenePos = mapToScene(point);
     const QPointF parentTopLeft = parentItem()->mapToScene(QPointF(0, 0));
 
-    return QRectF(parentTopLeft, QSizeF(parentItem()->width(), parentItem()->height())).contains(scenePos);
+    return QRectF(parentTopLeft, QSizeF(parentItem()->width(), parentItem()->height())).contains(point);
 }
