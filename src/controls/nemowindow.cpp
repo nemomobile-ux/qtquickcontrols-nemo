@@ -19,7 +19,10 @@
  */
 
 #include "nemowindow.h"
+#include "nemofocussingleton.h"
 
+#include <QGuiApplication>
+#include <QInputMethod>
 #include <QMouseEvent>
 #include <QScreen>
 #include <QTouchEvent>
@@ -91,7 +94,20 @@ void NemoWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_Backspace:
     case Qt::Key_Left:
         if (allowExtendedEvents()) {
-            emit goBack();
+            QObject* focusObject = QGuiApplication::focusObject();
+            const bool textInputFocused = NemoFocusSingleton::instance()->edit() != nullptr
+                || (focusObject
+                    && (focusObject->inherits("QQuickTextInput")
+                        || focusObject->inherits("QQuickTextEdit")))
+                || (QGuiApplication::inputMethod()
+                    && QGuiApplication::inputMethod()->queryFocusObject(Qt::ImEnabled, QVariant()).toBool());
+
+            const bool isEditKey = event->key() == Qt::Key_Backspace
+                || event->key() == Qt::Key_Return
+                || event->key() == Qt::Key_Enter;
+            if (!(isEditKey && textInputFocused)) {
+                emit goBack();
+            }
         }
         break;
     default:

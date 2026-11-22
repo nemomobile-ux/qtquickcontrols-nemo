@@ -20,6 +20,8 @@
 
 #include "editfilter.h"
 #include "nemofocussingleton.h"
+#include <QGuiApplication>
+#include <QInputMethod>
 #include <QKeyEvent>
 #include <QVariant>
 
@@ -36,7 +38,20 @@ bool EditFilter::eventFilter(QObject* obj, QEvent* event)
         if (key == Qt::Key_Backspace
             || key == Qt::Key_Return
             || key == Qt::Key_Escape) {
-            emit backEvent();
+            QObject* focusObject = QGuiApplication::focusObject();
+            const bool textInputFocused = NemoFocusSingleton::instance()->edit() != nullptr
+                || (focusObject
+                    && (focusObject->inherits("QQuickTextInput")
+                        || focusObject->inherits("QQuickTextEdit")))
+                || (QGuiApplication::inputMethod()
+                    && QGuiApplication::inputMethod()->queryFocusObject(Qt::ImEnabled, QVariant()).toBool());
+
+            const bool isEditKey = key == Qt::Key_Backspace
+                || key == Qt::Key_Return
+                || key == Qt::Key_Enter;
+            if (!(isEditKey && textInputFocused)) {
+                emit backEvent();
+            }
         }
     }
 
