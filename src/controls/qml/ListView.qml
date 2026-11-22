@@ -89,6 +89,14 @@ ListView {
 
     activeFocusOnTab: true
 
+    highlight: Rectangle {
+        color: Theme.accentColor
+        opacity: listView.activeFocus ? 0.3 : 0.15
+        radius: Theme.dp(4)
+        border.color: Theme.accentColor
+        border.width: Theme.dp(1)
+    }
+    highlightFollowsCurrentItem: true
     Keys.onUpPressed: function(event) {
         if (orientation === ListView.Vertical) {
             if (currentIndex > 0) {
