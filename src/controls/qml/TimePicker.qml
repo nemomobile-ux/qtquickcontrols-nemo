@@ -29,7 +29,7 @@
 **
 ****************************************************************************************/
 
-import QtQuick 2.6
+import QtQuick
 
 import Nemo
 import Nemo.Controls

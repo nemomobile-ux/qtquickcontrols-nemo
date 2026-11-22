@@ -18,7 +18,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-import QtQuick 2.6
+import QtQuick
 import QtQuick.Controls
 
 import QtQuick.Shapes 1.5
