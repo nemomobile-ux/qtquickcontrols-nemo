@@ -56,6 +56,8 @@ ApplicationWindow {
         model: pageModel
         anchors.fill: parent
         clip: true
+        focus: true
+        Component.onCompleted: forceActiveFocus()
         delegate: ListViewItemWithActions {
             iconVisible: false
             label: title
