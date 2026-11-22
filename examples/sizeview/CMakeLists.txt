@@ -12,7 +12,7 @@ target_link_libraries(glacier-sizeview
         Qt6::Gui
         Qt6::Qml
         Qt6::Quick
-        PkgConfig::GLACIER
+        PkgConfig::GLACIERAPP
 )
 
 install(TARGETS glacier-sizeview RUNTIME

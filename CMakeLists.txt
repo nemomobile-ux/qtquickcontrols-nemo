@@ -28,7 +28,6 @@ enable_testing()
 find_package(Qt6 COMPONENTS Core Gui Qml Quick ShaderTools Test REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(MLITE mlite6 IMPORTED_TARGET)
-pkg_check_modules(GLACIER glacierapp IMPORTED_TARGET)
 
 if(MLITE_FOUND)
     add_definitions(-DHAVE_MLITE=1)
@@ -59,6 +58,7 @@ option(BUILD_EXAMPLES "Build the example projects" OFF)
 option(BUILD_TESTS "Build tests" OFF)
 
 if(BUILD_EXAMPLES)
+    pkg_search_module(GLACIERAPP REQUIRED glacierapp6 glacierapp IMPORTED_TARGET)
     add_subdirectory(examples)
 endif()
 
