@@ -43,19 +43,15 @@ Theme::Theme(QObject* parent)
             physicalDotsPerInchConf->sync();
         }
     }
+    m_mmScaleFactor = physicalDotsPerInchConf->value("1").toReal() / 2.45 / 10;
+    connect(physicalDotsPerInchConf, &MDConfItem::valueChanged, this, &Theme::setThemeValues);
+#else
+    m_mmScaleFactor = 1;
 #endif
 
     m_dpScaleFactorValue = new MDConfItem(QStringLiteral("/nemo/apps/libglacier/dpScaleFactor"), this);
     m_dpScaleFactor = m_dpScaleFactorValue->value("1").toFloat();
 
-    m_mmScaleFactor = physicalDotsPerInchConf->value("1").toReal() / 2.45 / 10;
-
-#ifndef UNIT_TEST
-    MDConfItem dpi("/lipstick/screen/primary/physicalDotsPerInch");
-    m_mmScaleFactor = dpi.value("1").toReal() / 2.45 / 10;
-#else
-    m_mmScaleFactor = 1;
-#endif
     loadDefaultValue();
 
     m_themeValue = new MDConfItem(QStringLiteral("/nemo/apps/libglacier/themePath"), this);
@@ -63,17 +59,7 @@ Theme::Theme(QObject* parent)
 
     connect(m_themeValue, &MDConfItem::valueChanged, this, &Theme::themeValueChanged);
     connect(m_dpScaleFactorValue, &MDConfItem::valueChanged, this, &Theme::setThemeValues);
-    connect(physicalDotsPerInchConf, &MDConfItem::valueChanged, this, &Theme::setThemeValues);
 
-    connect(m_dpScaleFactorValue.get(), &MDConfItem::valueChanged, [=]() {
-        float newDpScaleFactor = m_dpScaleFactorValue->value("0").toFloat();
-        if (newDpScaleFactor != m_dpScaleFactor) {
-            m_dpScaleFactor = newDpScaleFactor;
-            emit dpScaleFactorChanged();
-            emit themeUpdated();
-        }
-    });
-#endif
     if (!m_theme.isEmpty()) {
         loadTheme(m_theme);
     } else {

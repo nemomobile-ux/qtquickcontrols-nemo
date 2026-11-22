@@ -27,7 +27,6 @@ NemoImageProvider::NemoImageProvider()
 
 NemoImageProvider::~NemoImageProvider()
 {
-    delete m_client;
 }
 
 QImage NemoImageProvider::requestImage(const QString& id, QSize* size, const QSize& requestedSize)

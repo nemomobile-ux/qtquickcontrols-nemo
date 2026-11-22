@@ -108,6 +108,7 @@ public:
 
     QString fontFamily() const { return m_fontFamily; }
     QString fontStyleName() const { return m_fontStyleName; }
+    QString fontPath() const { return m_fontPath; }
 
     QString accentColor() const { return m_accentColor; }
     QString fillColor() const { return m_fillColor; }
@@ -117,7 +118,6 @@ public:
     QString backgroundAccentColor() const { return m_backgroundAccentColor; }
     qreal iconSizeLauncher() const { return m_iconSizeLauncher; }
     QString themePath() const { return m_theme; }
-    qreal itemWidthExtraLarge() const { return m_itemWidthExtraLarge; }
 
     float mmScaleFactor() const;
     float dpScaleFactor() const;
@@ -162,6 +162,7 @@ private:
     int m_fontWeightMedium; // 25
     QString m_fontFamily; // OpenSans
     QString m_fontStyleName; // Regular
+    QString m_fontPath;
 
     QString m_accentColor; // #0091e5
     QString m_fillColor; // #474747
