@@ -22,6 +22,7 @@
 
 #include <QObject>
 #include <QPointer>
+#include <memory>
 
 class NemoFocusSingleton : public QObject {
     Q_OBJECT
@@ -30,13 +31,12 @@ class NemoFocusSingleton : public QObject {
 public:
     NemoFocusSingleton(QObject* parent = nullptr);
     Q_INVOKABLE void nemoregister(QObject* edit);
-    std::shared_ptr<QObject> edit() const;
+    QObject* edit() const;
 
     static std::shared_ptr<NemoFocusSingleton> instance();
 
 private:
     QPointer<QObject> m_edit;
-    NemoFocusSingleton(QObject* parent = nullptr) { Q_UNUSED(parent) }
 };
 
 #endif // NEMOFOCUSSINGLETON_H

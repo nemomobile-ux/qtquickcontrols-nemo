@@ -56,6 +56,7 @@ Item {
 
         rotation: isUiPortrait ? 0 : 90
         visible: showBackButton && applicationWindow.pageStack.depth > 1
+                 && !(applicationWindow.hasOwnProperty("_isSideBySideMainMenuVisible") && applicationWindow._isSideBySideMainMenuVisible())
 
         Image {
             anchors.centerIn: parent
