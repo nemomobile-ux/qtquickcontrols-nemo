@@ -257,6 +257,18 @@ NemoWindow {
                         left: applicationWindow.isUiPortrait ? parent.left : toolBar.right
                     }
 
+                    onLoaded: {
+                        if (item && width > 0) {
+                            item.forceActiveFocus()
+                        }
+                    }
+
+                    onWidthChanged: {
+                        if (item && width > 0 && stackView.depth <= 1) {
+                            item.forceActiveFocus()
+                        }
+                    }
+
                     function recalcMainMenuWidth() {
                         if(sourceComponent === null) {
                             return 0
