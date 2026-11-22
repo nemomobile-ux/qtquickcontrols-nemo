@@ -59,17 +59,18 @@ Rectangle{
         }
     }
 
-    MouseArea{
-        anchors.fill: parent
-        onClicked: {
-            if(!glacierRollerItem.parent.parent.activated)
+    TapHandler {
+        onTapped: {
+            var roller = glacierRollerItem.parent.parent
+            var tappedIndex = index
+            if(!roller.activated)
             {
-                glacierRollerItem.parent.parent.activated = true;
+                roller.activated = true;
             }
             else
             {
-                glacierRollerItem.parent.parent.currentIndex = index
-                glacierRollerItem.parent.parent.activated = false
+                roller.currentIndex = tappedIndex
+                roller.activated = false
             }
         }
     }

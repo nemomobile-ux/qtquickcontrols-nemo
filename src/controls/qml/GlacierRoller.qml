@@ -87,9 +87,10 @@ Item {
             leftMargin: glacierRoller.viewLeftMargin
         }
 
-        pathItemCount: height/itemHeight
+        pathItemCount: view.showRow ? 1 : glacierRoller.activateSize
         preferredHighlightBegin: 0.5
         preferredHighlightEnd: 0.5
+        highlightRangeMode: PathView.StrictlyEnforceRange
         dragMargin: view.width
 
         path: Path {
@@ -98,6 +99,12 @@ Item {
         }
 
         snapMode: PathView.SnapToItem
+
+        onCurrentIndexChanged: {
+            if (glacierRoller.activated && glacierRoller.currentIndex !== currentIndex) {
+                glacierRoller.currentIndex = currentIndex
+            }
+        }
     }
 
     InverseMouseArea {
@@ -136,12 +143,17 @@ Item {
         if(activated)
         {
             view.showRow = false
+            view.highlightRangeMode = PathView.StrictlyEnforceRange
+            view.snapMode = PathView.SnapToItem
             activateAnimations.start()
         }
         else
         {
+            view.highlightRangeMode = PathView.NoHighlightRange
+            view.snapMode = PathView.NoSnap
             deActivateAnimations.start()
             view.positionViewAtIndex(currentIndex, PathView.Center)
+            select(currentIndex)
         }
     }
 
@@ -159,6 +171,12 @@ Item {
         NumberAnimation{target: view; property: "height"; to: itemHeight; duration: 150; easing.type: Easing.OutCubic}
         onStopped: {
             view.showRow = true
+            view.currentIndex = glacierRoller.currentIndex
+            view.positionViewAtIndex(glacierRoller.currentIndex, PathView.Center)
+            Qt.callLater(function() {
+                view.currentIndex = glacierRoller.currentIndex
+                view.positionViewAtIndex(glacierRoller.currentIndex, PathView.Center)
+            })
         }
     }
 }
