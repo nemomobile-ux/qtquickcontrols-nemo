@@ -25,7 +25,7 @@ endif()
 
 enable_testing()
 
-find_package(Qt6 COMPONENTS Core Gui Qml Quick ShaderTools Test REQUIRED)
+find_package(Qt6 COMPONENTS Core Gui Qml Quick ShaderTools Test LinguistTools REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(MLITE mlite6 IMPORTED_TARGET)
 
@@ -67,5 +67,15 @@ if(BUILD_CONTROLS)
 endif()
 
 add_subdirectory(tests)
+
+# Translations
+file(GLOB TS_FILES translations/*.ts)
+if(TS_FILES)
+    qt_add_translation(QM_FILES ${TS_FILES})
+    add_custom_target(translations DEPENDS ${QM_FILES})
+
+    install(FILES ${QM_FILES}
+        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/qtquickcontrols-nemo/translations)
+endif()
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
