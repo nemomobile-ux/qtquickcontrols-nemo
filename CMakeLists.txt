@@ -72,7 +72,7 @@ add_subdirectory(tests)
 file(GLOB TS_FILES translations/*.ts)
 if(TS_FILES)
     qt_add_translation(QM_FILES ${TS_FILES})
-    add_custom_target(translations DEPENDS ${QM_FILES})
+    add_custom_target(translations ALL DEPENDS ${QM_FILES})
 
     install(FILES ${QM_FILES}
         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/qtquickcontrols-nemo/translations)
